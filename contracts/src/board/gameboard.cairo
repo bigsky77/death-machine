@@ -15,6 +15,7 @@ from src.utils.xoroshiro import XOROSHIRO_ADDR, IXoroshiro, get_next_rnd
 from src.game.types import Grid, Star, Enemy, Planet, Escape, GameBoard 
 from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE   
 from src.game.events import boardSet 
+from src.game.spaceships import ShipState 
 from src.utils.utils import index_to_cords, cords_to_index
 
 //////////////////////////////////////////////////////////////
@@ -188,5 +189,37 @@ func init_board{range_check_ptr}(
     
     return init_board(board_len - 1, board + 224, dict);
 }
+
+func iterate_board{range_check_ptr}(
+  i: felt,
+  board_dimension: felt, 
+  board_size: felt, 
+  board: DictAccess*) ->(new_board: DictAccess*){
+  alloc_locals;
+
+  if(i == board_size){
+    return(new_board=board);
+    }
+  
+  let (new_board: GameBoard*) = alloc();
+  
+  let (ptr) = dict_read{dict_ptr=board}(key=i);
+  tempvar signle_grid = cast(ptr, GameBoard*);
+  
+  // todo add skull moves
+
+  return(new_board=board);
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 

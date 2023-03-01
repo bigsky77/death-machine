@@ -14,7 +14,7 @@ from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro import XOROSHIRO_ADDR 
-from src.board.gameboard import setBoard, get_board, init_board
+from src.board.gameboard import setBoard, get_board, init_board, iterate_board
 from src.game.types import GameBoard 
 from src.game.constants import STAR_RANGE, ns_instructions, N_TURNS, PC, BOARD_SIZE 
 from src.game.events import simulationSubmit, turnComplete, simulationComplete, shipMoved
@@ -125,7 +125,7 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         0,
     );
 
-    let (ships_new) = simulate_one_frame(
+    let (ships_new, board_new) = simulate_one_frame(
         board_dimension, 
         cycle, 
         instructions_sets_len, 
@@ -156,11 +156,59 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
     instructions: felt*,
     ships: DictAccess*,
     board_size: felt,
-    board_dict: DictAccess*
-) -> (ship_new: DictAccess*){
+    board: DictAccess*
+) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
 
   let (ship_new) = iterate_ships(board_dimension, ships, 0, instructions_len, instructions);
+  let (board_new) = iterate_board(0, board_dimension, board_size, board);
+  
+  cross_check_board(board_size, ship_new, board_new);
 
-  return(ship_new=ship_new);
+  return(ship_new=ship_new, board_new=board);
   }
+
+func cross_check_board{syscall_ptr: felt*, range_check_ptr}(
+    board_size: felt,
+    ships_new: DictAccess*, 
+    board_dict: DictAccess*) -> (ships_new: DictAccess*, board_new: DictAccess*){
+  
+  if(board_size == 0){
+      return(ships_new, board_dict);
+    }
+  
+  let ship_count = 3;  //todo: update to variable
+  let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
+  tempvar board = cast(ptr, GameBoard*);
+  
+  let (ship, updated_board) = check_ship(ship_count, ships_new, board, board_dict);
+  
+  return cross_check_board(board_size - 1, ships_new, updated_board);
+  }
+
+func check_ship{syscall_ptr: felt*, range_check_ptr}(
+    ship_count: felt, 
+    ships_new: DictAccess*, 
+    board: GameBoard*,
+    board_dict: DictAccess*) -> (ships_new: DictAccess*, board_dict: DictAccess*){
+  alloc_locals;
+
+  if(ship_count == 0){
+      return(ships_new, board_dict);
+    }
+  
+  let (ptr) = dict_read{dict_ptr=ships_new}(key=ship_count);
+  tempvar ship = cast(ptr, ShipState*);
+  
+  if(ship.index.x == board.x){
+      if(ship.index.y == board.y){
+
+        }
+    }
+
+  return check_ship(ship_count - 1, ships_new, board, board_dict);
+  }
+
+
+
+
