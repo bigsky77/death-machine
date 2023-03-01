@@ -1,0 +1,44 @@
+Intro
+
+  Hi, my name is Simon, creator of Death-Machine.  
+
+Context
+
+  Games will be a huge segment of the market.  
+
+Problem:
+
+  Even with increased l2 scalability lots of computation still needs to be offloaded
+
+Current Solutions
+
+  1) Zordle - first game to use WASM / recursive ZK-snarks in the browser
+  2) Dark-Forest ETH - fog of war to hide players location 
+
+Your Solution:
+
+  Death-Machine uses recursive zk-Snarks to execute game logic off chain and hide solutions.
+
+Details:
+
+  Imagine a layer-2 that lives on your computer for 5-minutes. 
+
+Traction 
+
+  Huge breakthroughs in the past-4 months. Libraries and client side provers coming on line. The time is now.  
+
+Bio
+
+  Software developer focused on zero-knowledge proof systems.
+
+Ask
+
+  Ship to mainnet April 4.  Help us get there.  
+
+
+Notes
+
+  Always have multiple parties
+  Signatures are the building block 
+
+

@@ -1,0 +1,200 @@
+[
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "isActive",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "Star",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "isActive",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "Enemy",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "id",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "x",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "Spaceship",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "data": [
+            {
+                "name": "star_array_len",
+                "type": "felt"
+            },
+            {
+                "name": "star_array",
+                "type": "Star*"
+            },
+            {
+                "name": "enemy_array_len",
+                "type": "felt"
+            },
+            {
+                "name": "enemy_array",
+                "type": "Enemy*"
+            },
+            {
+                "name": "player_address",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "boardSet",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "instructions_len",
+                "type": "felt"
+            },
+            {
+                "name": "instructions",
+                "type": "felt*"
+            },
+            {
+                "name": "spaceships_len",
+                "type": "felt"
+            },
+            {
+                "name": "spaceships",
+                "type": "Spaceship*"
+            }
+        ],
+        "keys": [],
+        "name": "simulationSubmit",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "get_next_rnd",
+        "outputs": [
+            {
+                "name": "rnd",
+                "type": "felt"
+            }
+        ],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "address",
+                "type": "felt"
+            }
+        ],
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "main",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "instructions_len",
+                "type": "felt"
+            },
+            {
+                "name": "instructions",
+                "type": "felt*"
+            },
+            {
+                "name": "spaceships_len",
+                "type": "felt"
+            },
+            {
+                "name": "spaceships",
+                "type": "Spaceship*"
+            }
+        ],
+        "name": "simulation",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "setBoard",
+        "outputs": [
+            {
+                "name": "player_address",
+                "type": "felt"
+            },
+            {
+                "name": "filled_star_array_len",
+                "type": "felt"
+            },
+            {
+                "name": "filled_star_array",
+                "type": "Star*"
+            }
+        ],
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getBoard",
+        "outputs": [
+            {
+                "name": "res",
+                "type": "Star"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
