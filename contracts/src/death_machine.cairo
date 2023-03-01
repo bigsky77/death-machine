@@ -14,11 +14,11 @@ from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro import XOROSHIRO_ADDR 
-from src.board.gameboard import setBoard, get_board, init_board, iterate_board
+from src.board.gameboard import setBoard, get_board, init_board, iterate_board, update_board_status
 from src.game.types import GameBoard 
 from src.game.constants import STAR_RANGE, ns_instructions, N_TURNS, PC, BOARD_SIZE 
-from src.game.events import simulationSubmit, turnComplete, simulationComplete, shipMoved
-from src.game.spaceships import InputShipState, ShipState, init_ships, iterate_ships
+from src.game.events import simulationSubmit, turnComplete, simulationComplete, shipMoved 
+from src.game.spaceships import InputShipState, ShipState, init_ships, iterate_ships, update_ship_status
 from src.game.instructions import InstructionSet, get_frame_instruction_set
 from src.game.summary import turn_summary
 
@@ -202,7 +202,16 @@ func check_ship{syscall_ptr: felt*, range_check_ptr}(
   
   if(ship.index.x == board.x){
       if(ship.index.y == board.y){
-
+        if(board.gridType == 1){
+          // you found a star 
+          let (board_updated) = update_board_status(board, board_dict); 
+          return(ships_new, board_updated);  
+          }
+          if(board.gridType == 2){
+            // you hit an enemy and are dead
+            let (ships_updated) = update_ship_status(ship, ships_new);
+            return(ships_updated, board_dict);
+            }
         }
     }
 

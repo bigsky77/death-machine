@@ -211,6 +211,16 @@ func iterate_board{range_check_ptr}(
   return(new_board=board);
   }
 
+func update_board_status{range_check_ptr}(board: GameBoard*, board_dict: DictAccess*) -> (
+    board_new: DictAccess*
+) {
+    alloc_locals;
+
+    tempvar board_new: GameBoard* = new GameBoard(board.x, board.y, board.gridType, 0);
+    dict_write{dict_ptr=board_dict}(key=0, new_value=cast(board_new, felt));
+    
+    return (board_new=board_dict);
+}
 
 
 
