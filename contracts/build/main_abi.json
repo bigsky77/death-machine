@@ -1,0 +1,307 @@
+[
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "isActive",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "Star",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "isActive",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "Enemy",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "isActive",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "Planet",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "id",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "type",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "status",
+                "offset": 2,
+                "type": "felt"
+            },
+            {
+                "name": "index",
+                "offset": 3,
+                "type": "Grid"
+            },
+            {
+                "name": "description",
+                "offset": 5,
+                "type": "felt"
+            }
+        ],
+        "name": "InputShipState",
+        "size": 6,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Grid",
+        "size": 2,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "key",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "prev_value",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "new_value",
+                "offset": 2,
+                "type": "felt"
+            }
+        ],
+        "name": "DictAccess",
+        "size": 3,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
+                "name": "id",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "type",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "status",
+                "offset": 2,
+                "type": "felt"
+            },
+            {
+                "name": "index",
+                "offset": 3,
+                "type": "Grid"
+            },
+            {
+                "name": "pc",
+                "offset": 5,
+                "type": "felt"
+            }
+        ],
+        "name": "ShipState",
+        "size": 6,
+        "type": "struct"
+    },
+    {
+        "data": [
+            {
+                "name": "star_array_len",
+                "type": "felt"
+            },
+            {
+                "name": "star_array",
+                "type": "Star*"
+            },
+            {
+                "name": "enemy_array_len",
+                "type": "felt"
+            },
+            {
+                "name": "enemy_array",
+                "type": "Enemy*"
+            },
+            {
+                "name": "planet_array_len",
+                "type": "felt"
+            },
+            {
+                "name": "planet_array",
+                "type": "Planet*"
+            },
+            {
+                "name": "player_address",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "boardSet",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "instructions_len",
+                "type": "felt"
+            },
+            {
+                "name": "instructions",
+                "type": "felt*"
+            },
+            {
+                "name": "spaceships_len",
+                "type": "felt"
+            },
+            {
+                "name": "spaceships",
+                "type": "InputShipState*"
+            },
+            {
+                "name": "player_address",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "simulationSubmit",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "spaceships_len",
+                "type": "felt"
+            },
+            {
+                "name": "spaceships",
+                "type": "DictAccess*"
+            }
+        ],
+        "keys": [],
+        "name": "turnComplete",
+        "type": "event"
+    },
+    {
+        "data": [],
+        "keys": [],
+        "name": "simulationComplete",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "ship",
+                "type": "ShipState"
+            }
+        ],
+        "keys": [],
+        "name": "shipMoved",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "name": "address",
+                "type": "felt"
+            }
+        ],
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "name": "instructions_sets_len",
+                "type": "felt"
+            },
+            {
+                "name": "instructions_sets",
+                "type": "felt*"
+            },
+            {
+                "name": "instructions_len",
+                "type": "felt"
+            },
+            {
+                "name": "instructions",
+                "type": "felt*"
+            },
+            {
+                "name": "ships_len",
+                "type": "felt"
+            },
+            {
+                "name": "ships",
+                "type": "InputShipState*"
+            }
+        ],
+        "name": "simulation",
+        "outputs": [],
+        "type": "function"
+    }
+]

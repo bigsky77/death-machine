@@ -1,4 +1,4 @@
-#!/home/simon/death-machine/death-machine-contracts/venv/bin/python
+#!/home/simon/death-machine/contracts/venv/bin/python3.9
 
 import os
 import sys

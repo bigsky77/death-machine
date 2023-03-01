@@ -23,7 +23,7 @@ async def starknet():
 async def test(starknet):
 
     # Deploy contract
-    contract = await starknet.deploy(source="./death-machine-contracts/src/death_machine.cairo")
+    contract = await starknet.deploy(source="./src/death_machine.cairo")
     LOGGER.info(f"> Deployed death_machine.cairo.")
     print(f"> Deployed death_machine.cairo.")
     await contract.simulator(
