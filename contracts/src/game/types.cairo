@@ -49,10 +49,4 @@ struct Instructions {
     instructionSet: felt*,
   }
 
-struct Spaceship {
-    id: felt,
-    x: felt,
-    y: felt,
-    isActive: felt,
-  }
 

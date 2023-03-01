@@ -63,5 +63,9 @@ async def start():
     print('export const contract_address=' + '"' + dm_contract_address + '"', file=file1);
     file1.close();
     
+    file2 = open('./tests/test_address.txt', 'w')
+    print(dm_contract_address, file=file2);
+    file2.close();
+
 if __name__ == "__main__":
     asyncio.run(start())

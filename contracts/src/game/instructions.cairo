@@ -6,7 +6,7 @@ from starkware.cairo.common.math import unsigned_div_rem
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_read
 
-from src.spaceships import ShipState
+from src.game.spaceships import ShipState
 
 struct InstructionSet {
     instructions_len: felt,

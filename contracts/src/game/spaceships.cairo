@@ -9,8 +9,8 @@ from starkware.cairo.common.memcpy import memcpy
 from starkware.cairo.common.math_cmp import is_le
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
-from src.types import Grid 
-from src.constants import ns_ships, ns_instructions
+from src.game.types import Grid 
+from src.game.constants import ns_ships, ns_instructions
 
 struct InputShipState {
     id: felt,
@@ -132,8 +132,6 @@ func update_ships_moved{range_check_ptr}(
 ) -> (ships_new: DictAccess*) {
     tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, ship.status, Grid(ship.index.x + x_inc, ship.index.y + y_inc), ship.pc);
     dict_write{dict_ptr=ships}(key=ship.id, new_value=cast(ship_new, felt));
-    
     return (ships_new=ships);
 }
-
 

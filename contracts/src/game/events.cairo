@@ -5,8 +5,8 @@
 %lang starknet
 
 from starkware.cairo.common.dict_access import DictAccess
-from src.spaceships import InputShipState, ShipState
-from src.types import Grid, Star, Enemy, Spaceship, Planet, GameBoard 
+from src.game.spaceships import InputShipState, ShipState
+from src.game.types import Grid, Star, Enemy, Planet, GameBoard 
 
 @event
 func boardSet(star_array_len: felt, star_array: Star*, enemy_array_len: felt, enemy_array: Enemy*, planet_array_len, planet_array: Planet*, player_address: felt){

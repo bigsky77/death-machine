@@ -13,13 +13,14 @@ from starkware.cairo.common.default_dict import default_dict_new, default_dict_f
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.types import GameBoard 
-from src.xoroshiro import XOROSHIRO_ADDR 
-from src.gameboard import setBoard, get_board
-from src.events import simulationSubmit, turnComplete, simulationComplete, shipMoved
-from src.constants import STAR_RANGE, ns_instructions, N_TURNS, PC, BOARD_SIZE 
-from src.spaceships import InputShipState, ShipState, init_ships, iterate_ships
-from src.instructions import InstructionSet, get_frame_instruction_set
+from src.utils.xoroshiro import XOROSHIRO_ADDR 
+from src.board.gameboard import setBoard, get_board, init_board
+from src.game.types import GameBoard 
+from src.game.constants import STAR_RANGE, ns_instructions, N_TURNS, PC, BOARD_SIZE 
+from src.game.events import simulationSubmit, turnComplete, simulationComplete, shipMoved
+from src.game.spaceships import InputShipState, ShipState, init_ships, iterate_ships
+from src.game.instructions import InstructionSet, get_frame_instruction_set
+from src.game.summary import turn_summary
 
 //////////////////////////////////////////////////////////////
 //                   CONSTRUCTOR INTERFACE
@@ -61,10 +62,15 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
   let (caller) = get_caller_address();
   
   simulationSubmit.emit(instructions_len, instructions, ships_len, ships, caller);
-    
+  
+  // initialize ships
   let (ship_dict: DictAccess*) = default_dict_new(default_value=0);
   let (ship_dict: DictAccess*) = init_ships(ships_len, ships, ship_dict, board_dimension);
   
+  // initialize board
+  let (board_dict: DictAccess*) = default_dict_new(default_value=0);
+  let (board_dict: DictAccess*) = init_board(BOARD_SIZE, gameboard, ship_dict);  
+
   simulation_loop(
     49, 
     0, 
@@ -74,7 +80,9 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
     instructions_len, 
     instructions, 
     ships_len, 
-    ship_dict);
+    ship_dict,
+    BOARD_SIZE,
+    board_dict);
 
   return();
   }
@@ -93,6 +101,8 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
   instructions: felt*, 
   ships_len: felt, 
   ships: DictAccess*,
+  board_size: felt,
+  board_dict: DictAccess*
   ) {
     alloc_locals;
     
@@ -115,9 +125,14 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         0,
     );
 
-    let (ships_new) = simulate_one_frame(board_dimension, cycle, instructions_sets_len, frame_instructions, ships);
-    
-    let (ptr) = dict_read{dict_ptr=ships_new}(key=0);
+    let (ships_new) = simulate_one_frame(
+        board_dimension, 
+        cycle, 
+        instructions_sets_len, 
+        frame_instructions, 
+        ships, 
+        board_size, 
+        board_dict);
     
     simulation_loop(
         n_cycles,
@@ -128,8 +143,9 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         instructions_len,
         instructions,
         ships_len,
-        ships_new);
-
+        ships_new,
+        board_size,
+        board_dict);
     return();
   }
 
@@ -139,6 +155,8 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
     instructions_len: felt,
     instructions: felt*,
     ships: DictAccess*,
+    board_size: felt,
+    board_dict: DictAccess*
 ) -> (ship_new: DictAccess*){
   alloc_locals;
 
