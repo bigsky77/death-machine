@@ -3,6 +3,8 @@
 
  This is the monorepo for DEATH-MACHINE a smart-contract game on Starknet.  
 
+<img src="./frontend/public/2023-02-03_02-03.png" width="250" height="250">
+
 ### System Overiew 
 
 #### Contracts
