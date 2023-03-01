@@ -162,11 +162,15 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
 
   let (ship_new) = iterate_ships(board_dimension, ships, 0, instructions_len, instructions);
   let (board_new) = iterate_board(0, board_dimension, board_size, board);
-  
-  cross_check_board(board_size, ship_new, board_new);
-
-  return(ship_new=ship_new, board_new=board);
+   
+  let (ships_final, board_final) = cross_check_board(board_size, ship_new, board_new);
+  //turnComplete.emit(3, ships_final);
+  return(ship_new=ships_final, board_new=board_final);
   }
+
+//////////////////////////////////////////////////////////////
+//                  BOARD CHECKS
+//////////////////////////////////////////////////////////////
 
 func cross_check_board{syscall_ptr: felt*, range_check_ptr}(
     board_size: felt,
@@ -205,12 +209,12 @@ func check_ship{syscall_ptr: felt*, range_check_ptr}(
         if(board.gridType == 1){
           // you found a star 
           let (board_updated) = update_board_status(board, board_dict); 
-          return(ships_new, board_updated);  
+          return check_ship(ship_count -1, ships_new, board, board_updated);  
           }
           if(board.gridType == 2){
             // you hit an enemy and are dead
             let (ships_updated) = update_ship_status(ship, ships_new);
-            return(ships_updated, board_dict);
+            return check_ship(ship_count -1, ships_updated, board, board_dict);
             }
         }
     }

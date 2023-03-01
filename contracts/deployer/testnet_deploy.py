@@ -10,6 +10,7 @@ from starknet_py.net.models.chains import StarknetChainId
 from starknet_py.net.udc_deployer.deployer import Deployer
 from starkware.starknet.public.abi import get_selector_from_name
 from starknet_py.net.client_models import Call
+from ../tests/test_simulator import test
 import os
 
 local_network_client = GatewayClient("http://localhost:5050")
@@ -63,9 +64,5 @@ async def start():
     print('export const contract_address=' + '"' + dm_contract_address + '"', file=file1);
     file1.close();
     
-    file2 = open('./tests/test_address.txt', 'w')
-    print(dm_contract_address, file=file2);
-    file2.close();
-
 if __name__ == "__main__":
     asyncio.run(start())
