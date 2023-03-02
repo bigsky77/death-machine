@@ -6,6 +6,7 @@ const PLANET_RANGE= 15;
 const N_TURNS = 49;
 const PC = 7;
 const BOARD_SIZE = 225;
+const BOARD_DIMENSION = 15;
 
 namespace ns_instructions {
     const W = 0;  // up
@@ -33,6 +34,6 @@ namespace ns_ships {
 }
 
 namespace ns_board {
-    const GRID_SIZE = 4;
+    const GRID_SIZE = 7;
 }
 

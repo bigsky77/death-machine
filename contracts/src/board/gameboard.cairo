@@ -62,19 +62,17 @@ func create_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_pt
 }
 
 func get_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(board_len: felt, board: SingleBlock*) -> (board_len: felt, board: SingleBlock*){
-  alloc_locals;
-  
-  let (board_updated: SingleBlock*) = alloc();
+    alloc_locals;
 
-  if(board_len == 0){
-      return(board_len, board);
-    }
-  
-  let (single_block) = Block.read(board_len);
-    assert board_updated[board_len] = single_block;
+    if(board_len == 0){
+        return(board_len, board);
+      }
+    
+    let (block: SingleBlock) = Block.read(board_len);
+    assert board[board_len - 1] = SingleBlock(block.id, block.type, block.status, block.index, block.new_index);
 
-  return get_board(board_len - 1, board_updated);
-  }
+    return get_board(board_len - 1, board);
+}
 
 //////////////////////////////////////////////////////////////
 //                        INIT BOARD
@@ -88,10 +86,21 @@ func init_board{range_check_ptr}(
         return (dict_new=dict);
     }
     
-    tempvar b: SingleBlock = [board];  
+    tempvar single_grid: SingleBlock = [board];
+    
+    let (ptr) = dict_read{dict_ptr=dict}(key=single_grid.id);
+    with_attr error_message("ids must be different") {
+        assert ptr = 0;
+    }
 
-    tempvar new_board: SingleBlock* = new SingleBlock(board_len, 0, 1, b.index, b.new_index);
-    dict_write{dict_ptr=dict}(key=board_len, new_value=cast(new_board, felt));
+    with_attr error_message("board not within bounds") {
+        assert [range_check_ptr] = dimension - single_grid.index.x;
+        assert [range_check_ptr + 1] = dimension - single_grid.index.y;
+    }
+    let range_check_ptr = range_check_ptr + 2;
+   
+    tempvar new_board: SingleBlock* = new SingleBlock(board_len, 0, 1, single_grid.index, single_grid.new_index);
+    dict_write{dict_ptr=dict}(key=single_grid.id, new_value=cast(new_board, felt));
    
     // todo double check correctness of board array
     return init_board(board_len - 1, board + ns_board.GRID_SIZE, dict, dimension);
@@ -109,8 +118,8 @@ func iterate_board{range_check_ptr}(
   
   let (board: SingleBlock*) = alloc();
   
-  let (ptr) = dict_read{dict_ptr=board_dict}(key=board_len);
-  tempvar single_grid = cast(ptr, SingleBlock*);
+  //let (ptr) = dict_read{dict_ptr=board_dict}(key=board_len);
+  //tempvar single_grid = cast(ptr, SingleBlock*);
   
   // todo add skull moves
 

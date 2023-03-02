@@ -10,7 +10,6 @@ from starknet_py.net.models.chains import StarknetChainId
 from starknet_py.net.udc_deployer.deployer import Deployer
 from starkware.starknet.public.abi import get_selector_from_name
 from starknet_py.net.client_models import Call
-from ../tests/test_simulator import test
 import os
 
 local_network_client = GatewayClient("http://localhost:5050")
