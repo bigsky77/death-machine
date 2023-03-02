@@ -23,16 +23,13 @@ async def starknet():
 async def test(starknet):
 
     # Deploy contract
-    xoroshiro = await starknet.deploy("./src/utils/xoroshiro.cairo", constructor_calldata=[str(1)])
-    contract = await starknet.deploy(source="./src/death_machine.cairo", constructor_calldata=[xoroshiro])
+    xoroshiro = await starknet.deploy("./src/utils/xoroshiro128_starstar.cairo", constructor_calldata=[1]);
+    contract = await starknet.deploy(source="./src/death_machine.cairo", constructor_calldata=[xoroshiro.contract_address])
     LOGGER.info(f"> Deployed death_machine.cairo.")
     print(f"> Deployed death_machine.cairo.")
-    await contract.simulator(
-        3,
-        [7, 7, 7],
-        21,
-        [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
-        3,
-        [{0, 0, 3, 3, 0}, {0, 0, 3, 4, 0}, {0, 0, 5, 5, 0}],
+    await contract.simulation(
+        [3, 7, 7, 7],
+        [21, 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+        [(0, 0, 1, (3, 3), 0), (0, 0, 1, (3, 4), 0), (0, 0, 1, (5, 5), 0)],
     ).call()
 
