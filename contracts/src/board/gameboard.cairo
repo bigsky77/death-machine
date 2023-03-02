@@ -124,18 +124,15 @@ func iterate_board{range_check_ptr}(
   return iterate_board(board_dimension, board_len - 1, board_dict);
   }
 
-func update_board_status{range_check_ptr}(board: SingleBlock*, board_dict: DictAccess*) -> (
-    board_new: DictAccess*
-) {
-    alloc_locals;
-
-    //tempvar board_new: SingleBlock* = new SingleBlock(board.x, Grid(), Grid(), 0);
-    //dict_write{dict_ptr=board_dict}(key=0, new_value=cast(board_new, felt));
-    
+func star_captured{range_check_ptr}(
+    i: felt, board_dict: DictAccess*
+) -> (board_new: DictAccess*) {
+    let (ptr) = dict_read{dict_ptr=board_dict}(key=i);
+    tempvar board = cast(ptr, SingleBlock*);
+    tempvar board_new: SingleBlock* = new SingleBlock(board.id, board.type, 0, Grid(board.index.x, board.index.y), Grid(board.index.x, board.index.y));
+    dict_write{dict_ptr=board_dict}(key=board.id, new_value=cast(board_new, felt));
     return (board_new=board_dict);
 }
-
-
 
 
 

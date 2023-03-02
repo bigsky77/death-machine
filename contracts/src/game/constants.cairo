@@ -37,3 +37,7 @@ namespace ns_board {
     const GRID_SIZE = 7;
 }
 
+namespace ns_dict {
+    const MULTIPLIER = 10 ** 7;
+    const MECH_MULTIPLIER = 10 ** 6;
+}

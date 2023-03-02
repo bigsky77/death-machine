@@ -20,13 +20,14 @@ from src.board.gameboard import (
   init_board, 
   iterate_board, 
   get_board,
-  update_board_status,
+  star_captured,
   SingleBlock
 )
 
 from src.game.constants import (
   STAR_RANGE, 
   ns_instructions, 
+  ns_dict,
   N_TURNS, 
   PC, 
   BOARD_SIZE, 
@@ -45,13 +46,16 @@ from src.game.spaceships import (
   InputShipState, 
   ShipState, 
   init_ships, 
-  iterate_ships, 
+  iterate_ships,
+  ship_destroyed,
   update_ship_status
   )
 
 from src.game.instructions import InstructionSet, get_frame_instruction_set
 
 from src.game.summary import turn_summary
+from src.game.types import Grid
+from src.utils.utils import cords_to_index 
 
 //////////////////////////////////////////////////////////////
 //                   CONSTRUCTOR INTERFACE
@@ -159,7 +163,8 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         BOARD_DIMENSION, 
         cycle, 
         instructions_sets_len, 
-        frame_instructions, 
+        frame_instructions,
+        ships_len,
         ships, 
         board_size, 
         board_dict);
@@ -184,16 +189,69 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
     cycle: felt,
     instructions_len: felt,
     instructions: felt*,
+    ships_len: felt,
     ships_dict: DictAccess*,
     board_size: felt,
     board_dict: DictAccess*
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
 
-  let (ship_new) = iterate_ships(BOARD_DIMENSION, ships_dict, 0, instructions_len, instructions);
   let (board_new) = iterate_board(BOARD_DIMENSION, board_size, board_dict);
-   
-  return(ship_new=ship_new, board_new=board_new);
+  let (ship_new) = iterate_ships(BOARD_DIMENSION, ships_dict, 0, instructions_len, instructions);
+  let (ship_updated, board_updated) = check_move(0, ships_len, ship_new, board_new);
+
+  return(ship_new=ship_updated, board_new=board_updated);
   }
+
+func check_move{syscall_ptr: felt*, range_check_ptr}(
+    i: felt, 
+    ships_len: felt, 
+    ships_dict: DictAccess*, 
+    board_dict: DictAccess*) -> (ships_dict: DictAccess*, board_dict: DictAccess*){
+  alloc_locals;
+
+  if(i == ships_len){
+      return(ships_dict, board_dict);
+    }
+  
+  let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
+  tempvar ship = cast(ptr, ShipState*);
+      
+  let (res) = check_grid(ship.index, board_dict);
+
+  // if you land on enemy grid you destroyed
+  if(res == 1){
+       let (ship_new) = ship_destroyed(i, ships_dict);
+       return check_move(i + 1, ships_len, ship_new, board_dict);
+    } 
+  
+  if(res == 2){
+       let (board_new) = star_captured(ship.id, board_dict);
+       return check_move(i + 1, ships_len, ships_dict, board_dict);
+    } 
+  
+  return check_move(i + 1, ships_len, ships_dict, board_dict);
+  }
+
+// todo get the right dict ptr
+func check_grid{syscall_ptr: felt*, range_check_ptr}(pos: Grid, board_dict: DictAccess*) -> (res: felt){
+  
+    tempvar key = pos.x * ns_dict.MULTIPLIER + pos.y;
+    let (ptr) = dict_read{dict_ptr=board_dict}(key=key);
+    tempvar single_grid = cast(ptr, SingleBlock*);
+    
+    if (single_grid.type == 0) {
+        return (res=0);
+    }
+    if(single_grid.type == 1){
+        return (res=1);
+      }
+    if(single_grid.type == 2){
+        return(res=2);
+      }
+    return(res=0);
+  }
+
+
 
 

@@ -19,7 +19,7 @@ func index_to_cords{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_
   return(loc_x + 1, loc_y + 1);
   }
 
-func cords_to_index{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(loc_x: felt, loc_y: felt) -> (index: felt){
+func cords_to_index{syscall_ptr: felt*, range_check_ptr}(loc_x: felt, loc_y: felt) -> (index: felt){
   alloc_locals;
 
   tempvar zero_based_x = loc_x - 1;

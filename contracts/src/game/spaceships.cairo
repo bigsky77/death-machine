@@ -148,3 +148,14 @@ func update_ship_status{range_check_ptr}(
     return (ships_new=ships_dict);
 }
 
+func ship_destroyed{range_check_ptr}(
+    i: felt, ships_dict: DictAccess*
+) -> (ships_new: DictAccess*) {
+    let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
+    tempvar ship = cast(ptr, ShipState*);
+    tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, 0, Grid(ship.index.x, ship.index.y), ship.pc);
+    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
+    return (ships_new=ships_dict);
+}
+
+
