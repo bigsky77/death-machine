@@ -12,10 +12,8 @@ from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro import XOROSHIRO_ADDR, IXoroshiro, get_next_rnd 
-from src.game.types import Grid, Star, Enemy, Planet, Escape 
+from src.game.types import Grid 
 from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE, ns_board, BOARD_SIZE   
-from src.game.events import boardSet 
-from src.game.spaceships import ShipState 
 from src.utils.utils import index_to_cords, cords_to_index
 
 //////////////////////////////////////////////////////////////

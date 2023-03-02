@@ -37,6 +37,7 @@ from src.game.events import (
   simulationSubmit, 
   turnComplete, 
   simulationComplete, 
+  newBoard,
   shipMoved 
 )
 
@@ -60,7 +61,6 @@ from src.game.summary import turn_summary
 func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(address: felt) {
   
     XOROSHIRO_ADDR.write(address);
-    //setBoard();
     return();
   }
 
@@ -78,6 +78,8 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
   ships: InputShipState*) {  
   alloc_locals;
   
+  setBoard();
+
   let is_valid_ship_len = is_le(ships_len, 3);
     with_attr error_message("ship length limited to 3") {
         assert is_valid_ship_len = 1;
@@ -87,6 +89,7 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
   let (new_board: SingleBlock*) = alloc();
   let (_, board) = get_board(BOARD_SIZE, new_board);
 
+  newBoard.emit(BOARD_SIZE, new_board);
   let (caller) = get_caller_address();
   
   simulationSubmit.emit(instructions_len, instructions, ships_len, ships, caller);
@@ -136,7 +139,7 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
     
     if(cycle  == n_cycles){
 
-    return ();
+      return ();
     }
 
     let (local frame_instructions: felt*) = alloc();
@@ -161,7 +164,7 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         board_size, 
         board_dict);
     
-    simulation_loop(
+     simulation_loop(
         n_cycles,
         cycle + 1,
         BOARD_DIMENSION,
@@ -190,65 +193,7 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
   let (ship_new) = iterate_ships(BOARD_DIMENSION, ships_dict, 0, instructions_len, instructions);
   let (board_new) = iterate_board(BOARD_DIMENSION, board_size, board_dict);
    
-  //let (ships_final, board_final) = cross_check_board(board_size, ship_new, board_new);
-  //turnComplete.emit(3, ships_final);
   return(ship_new=ship_new, board_new=board_new);
   }
-
-//////////////////////////////////////////////////////////////
-//                  BOARD CHECKS
-//////////////////////////////////////////////////////////////
-
-func cross_check_board{syscall_ptr: felt*, range_check_ptr}(
-    board_size: felt,
-    ships_dict: DictAccess*, 
-    board_dict: DictAccess*) -> (ships_new: DictAccess*, board_new: DictAccess*){
-  
-  if(board_size == 0){
-      return(ships_dict, board_dict);
-    }
-  
-  let ship_count = 3;  //todo: update to variable
-  let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size - 1);
-  tempvar board = cast(ptr, SingleBlock*);
-  
-  let (ships_new, board_new) = check_ship(ship_count, ships_dict, board, board_dict);
-  
-  return cross_check_board(board_size - 1, ships_new, board_new);
-  }
-
-func check_ship{syscall_ptr: felt*, range_check_ptr}(
-    ship_count: felt, 
-    ships_dict: DictAccess*, 
-    board: SingleBlock*,
-    board_dict: DictAccess*) -> (ships_new: DictAccess*, board_new: DictAccess*){
-  alloc_locals;
-
-  if(ship_count == 0){
-      return(ships_dict, board_dict);
-    }
-  
-  let (ptr) = dict_read{dict_ptr=ships_dict}(key=ship_count);
-  tempvar ship = cast(ptr, ShipState*);
-  
-  if(ship.index.x == board.index.x){
-      if(ship.index.y == board.index.y){
-        if(board.type == 1){
-          // you found a star 
-          let (board_updated) = update_board_status(board, board_dict); 
-          return check_ship(ship_count -1, ships_dict, board, board_updated);  
-          }
-          if(board.type == 2){
-            // you hit an enemy and are dead
-            let (ships_updated) = update_ship_status(ship, ships_dict);
-            return check_ship(ship_count -1, ships_updated, board, board_dict);
-            }
-        }
-    }
-
-  return check_ship(ship_count - 1, ships_dict, board, board_dict);
-  }
-
-
 
 

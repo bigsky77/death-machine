@@ -55,7 +55,7 @@ async def start():
 
     dm_contract = dm_deploy_call.deployed_contract
     dm_contract_address = str(dm_contract.address)
- 
+    
     #write address to file
     print("Contract Deployed", dm_contract.address)
     
