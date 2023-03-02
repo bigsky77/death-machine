@@ -29,11 +29,16 @@ struct ShipState {
 }
 
 func init_ships{range_check_ptr}(
-    ships_count: felt, ships: InputShipState*, dict: DictAccess*, dimension: felt
+    ships_count: felt, 
+    ships: InputShipState*, 
+    dict: DictAccess*, 
+    dimension: felt
 ) -> (dict_new: DictAccess*) {
+    
     if (ships_count == 0) {
         return (dict_new=dict);
     }
+
     tempvar ship: InputShipState = [ships];
 
     let (ptr) = dict_read{dict_ptr=dict}(key=ship.id);
@@ -48,31 +53,33 @@ func init_ships{range_check_ptr}(
     let range_check_ptr = range_check_ptr + 2;
 
     tempvar new_ship: ShipState* = new ShipState(ship.id, ship.type, ship.status, ship.index, 0);
+
     dict_write{dict_ptr=dict}(key=ship.id, new_value=cast(new_ship, felt));
+
     return init_ships(ships_count - 1, ships + ns_ships.INPUT_SHIP_SIZE, dict, dimension);
 }
 
 
 func iterate_ships{range_check_ptr}(
     board_dimension: felt,
-    ships: DictAccess*,
+    ships_dict: DictAccess*,
     i: felt,
     instructions_len: felt,
     instructions: felt*,
-) -> (ships: DictAccess*){
+) -> (ships_new: DictAccess*){
   alloc_locals;
   
   if(instructions_len == i) {
-        return (ships=ships);
+        return (ships_new=ships_dict);
     }
 
   tempvar instruction = [instructions + i];
-  let (ptr) = dict_read{dict_ptr=ships}(key=i);
+  let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
   tempvar ship = cast(ptr, ShipState*);
 
   let can_move_right = is_le(ship.index.x, board_dimension - 2);
   if (instruction == ns_instructions.D and can_move_right == 1) {
-        let (ships_new) = update_ships_moved(ship, ships, 1, 0);
+        let (ships_new) = update_ships_moved(ship, ships_dict, 1, 0);
         return iterate_ships(
             board_dimension,
             ships_new,
@@ -83,7 +90,7 @@ func iterate_ships{range_check_ptr}(
     }
   let can_move_left = is_le(1, ship.index.x);
     if (instruction == ns_instructions.A and can_move_left == 1) {
-        let (ships_new) = update_ships_moved(ship, ships, -1, 0);
+        let (ships_new) = update_ships_moved(ship, ships_dict, -1, 0);
         return iterate_ships(
             board_dimension,
             ships_new,
@@ -94,7 +101,7 @@ func iterate_ships{range_check_ptr}(
     }
     let can_move_down = is_le(ship.index.y, board_dimension - 2);
     if (instruction == ns_instructions.S and can_move_down == 1) {
-        let (ships_new) = update_ships_moved(ship, ships, 0, 1);
+        let (ships_new) = update_ships_moved(ship, ships_dict, 0, 1);
         return iterate_ships(
             board_dimension,
             ships_new,
@@ -105,7 +112,7 @@ func iterate_ships{range_check_ptr}(
     }
     let can_move_up = is_le(1, ship.index.y);
     if (instruction == ns_instructions.W and can_move_up == 1) {
-        let (ships_new) = update_ships_moved(ship, ships, 0, -1);
+        let (ships_new) = update_ships_moved(ship, ships_dict, 0, -1);
         return iterate_ships(
             board_dimension,
             ships_new,
@@ -114,32 +121,32 @@ func iterate_ships{range_check_ptr}(
             instructions
         );
     }
-  return iterate_ships(board_dimension, ships, i + 1, instructions_len, instructions);
+  return iterate_ships(board_dimension, ships_dict, i + 1, instructions_len, instructions);
   }
 
-func update_ships_pc{range_check_ptr}(ship: ShipState*, ships: DictAccess*) -> (
+func update_ships_pc{range_check_ptr}(ship: ShipState*, ships_dict: DictAccess*) -> (
     ships_new: DictAccess*
 ) {
     tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, ship.status, Grid(ship.index.x, ship.index.y), ship.pc - 1);
     
-    dict_write{dict_ptr=ships}(key=ship.id, new_value=cast(ship_new, felt));
+    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
     
-    return (ships_new=ships);
+    return (ships_new=ships_dict);
 }
 
 func update_ships_moved{range_check_ptr}(
-    ship: ShipState*, ships: DictAccess*, x_inc: felt, y_inc: felt
+    ship: ShipState*, ships_dict: DictAccess*, x_inc: felt, y_inc: felt
 ) -> (ships_new: DictAccess*) {
     tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, ship.status, Grid(ship.index.x + x_inc, ship.index.y + y_inc), ship.pc);
-    dict_write{dict_ptr=ships}(key=ship.id, new_value=cast(ship_new, felt));
-    return (ships_new=ships);
+    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
+    return (ships_new=ships_dict);
 }
 
 func update_ship_status{range_check_ptr}(
-    ship: ShipState*, ships: DictAccess*
+    ship: ShipState*, ships_dict: DictAccess*
 ) -> (ships_new: DictAccess*) {
     tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, 0, Grid(ship.index.x, ship.index.y), ship.pc);
-    dict_write{dict_ptr=ships}(key=ship.id, new_value=cast(ship_new, felt));
-    return (ships_new=ships);
+    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
+    return (ships_new=ships_dict);
 }
 

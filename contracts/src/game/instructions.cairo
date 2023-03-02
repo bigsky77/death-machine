@@ -16,7 +16,7 @@ struct InstructionSet {
 func get_frame_instruction_set{range_check_ptr}(
     cycle: felt,
     i: felt,
-    ships: DictAccess*,
+    ships_dict: DictAccess*,
     instructions_sets_len: felt,
     instructions_sets: felt*,
     instructions: felt*,
@@ -25,17 +25,20 @@ func get_frame_instruction_set{range_check_ptr}(
     offset: felt,
 ) -> (ships_new: DictAccess*) {
     if (instructions_sets_len == 0) {
-        return (ships_new=ships);
+        return (ships_new=ships_dict);
     }
+
     tempvar l = [instructions_sets];
-    let (ptr) = dict_read{dict_ptr=ships}(key=i);
+    let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
     tempvar ship = cast(ptr, ShipState*);
     let (_, r) = unsigned_div_rem(cycle + ship.pc, l);
+
     assert [frame_instructions + frame_instructions_len] = [instructions + r + offset];
+
     return get_frame_instruction_set(
         cycle,
         i + 1,
-        ships,
+        ships_dict,
         instructions_sets_len - 1,
         instructions_sets + 1,
         instructions,

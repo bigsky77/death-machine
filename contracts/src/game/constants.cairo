@@ -31,3 +31,8 @@ namespace ns_ships {
 
     const STATIC_COST_SINGLETON = 150;
 }
+
+namespace ns_board {
+    const GRID_SIZE = 4;
+}
+
