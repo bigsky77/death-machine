@@ -83,10 +83,11 @@ func iterate_ships{range_check_ptr}(
   let can_move_right = is_le(ship.index.x, board_dimension - 2);
   if (instruction == ns_instructions.D and can_move_right == 1) {
         let (ships_new) = update_ships_moved(ship, ships_dict, 1, 0);
+        let (ships_updated, board_updated, res) = check_grid(ship, ships_new, board_dict);
         return iterate_ships(
             board_dimension,
             ships_new,
-            board_dict,
+            board_updated,
             i + 1,
             instructions_len,
             instructions
@@ -95,10 +96,11 @@ func iterate_ships{range_check_ptr}(
   let can_move_left = is_le(1, ship.index.x);
     if (instruction == ns_instructions.A and can_move_left == 1) {
         let (ships_new) = update_ships_moved(ship, ships_dict, -1, 0);
+        let (ships_updated, board_updated, res) = check_grid(ship, ships_new, board_dict);
         return iterate_ships(
             board_dimension,
             ships_new,
-            board_dict,
+            board_updated,
             i + 1,
             instructions_len,
             instructions
@@ -107,10 +109,11 @@ func iterate_ships{range_check_ptr}(
     let can_move_down = is_le(ship.index.y, board_dimension - 2);
     if (instruction == ns_instructions.S and can_move_down == 1) {
         let (ships_new) = update_ships_moved(ship, ships_dict, 0, 1);
+        let (ships_updated, board_updated, res) = check_grid(ship, ships_new, board_dict);
         return iterate_ships(
             board_dimension,
             ships_new,
-            board_dict,
+            board_updated,
             i + 1,
             instructions_len,
             instructions
@@ -146,7 +149,7 @@ func check_grid{range_check_ptr}(
     
     // if grid is enemy type
     if(grid.type == 1){
-        return(ships_new=ships_dict, board_new=board_dict, res=1);
+      return(ships_new=ships_dict, board_new=board_dict, res=1);
       }
      
      return(ships_new=ships_dict, board_new=board_dict, res=0);
@@ -174,9 +177,9 @@ func update_ships_moved{range_check_ptr}(
 }
 
 func update_ship_status{range_check_ptr}(
-    ship: ShipState*, ships_dict: DictAccess*
+    ship: ShipState*, ships_dict: DictAccess*, status: felt
 ) -> (ships_new: DictAccess*) {
-    tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, 0, Grid(ship.index.x, ship.index.y), ship.pc);
+    tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, status, Grid(ship.index.x, ship.index.y), ship.pc);
     dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
     return (ships_new=ships_dict);
 }
