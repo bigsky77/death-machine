@@ -179,7 +179,7 @@ func update_ships_moved{range_check_ptr}(
 func update_ship_status{range_check_ptr}(
     ship: ShipState*, ships_dict: DictAccess*, status: felt
 ) -> (ships_new: DictAccess*) {
-    tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, status, Grid(ship.index.x, ship.index.y), ship.pc);
+    tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, 0, Grid(ship.index.x, ship.index.y), ship.pc);
     dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
     return (ships_new=ships_dict);
 }

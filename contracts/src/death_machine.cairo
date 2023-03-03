@@ -129,7 +129,6 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
     alloc_locals;
     
     if(cycle  == n_cycles){
-      
       // emit ship state
       let (ships_arr: ShipState*) = alloc();
       let (lens, state) = summary(ships_len, ships_arr, ships_dict);
@@ -233,4 +232,5 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt, board_
   board_summary(board_size - 1, board_arr, board_dict);
   return(board_size, board_arr);
   }
+
 

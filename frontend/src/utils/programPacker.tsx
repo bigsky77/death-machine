@@ -37,7 +37,7 @@ export function packProgram(
         ships_array.push({
             id: index,
             type: 0,
-            status: 0, // open
+            status: 1, // open
             index: grid,
             description: "0",
         })
