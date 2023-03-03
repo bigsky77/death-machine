@@ -86,7 +86,7 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
   
   // initialize board
   let (board_dict: DictAccess*) = default_dict_new(default_value=0);
-  let (board_dict: DictAccess*) = init_board(BOARD_SIZE, board_dict);
+  let (board_dict: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, board_dict);
 
   // initialize ships
   let (ship_dict: DictAccess*) = default_dict_new(default_value=0);
@@ -155,13 +155,14 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         0,
     );
 
-    let (ships_new) = simulate_one_frame(
+    let (ships_new, board_new) = simulate_one_frame(
         BOARD_DIMENSION, 
         cycle, 
         instructions_sets_len, 
         frame_instructions,
         ships_len,
         ships, 
+        board_dict,
         board_size 
         );
     
@@ -175,7 +176,7 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
         instructions,
         ships_len,
         ships_new,
-        board_dict,
+        board_new,
         board_size
         );
     return();
@@ -188,15 +189,19 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
     instructions: felt*,
     ships_len: felt,
     ships_dict: DictAccess*,
+    board_dict: DictAccess*,
     board_size: felt,
-) -> (ship_new: DictAccess*){
+) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
 
-  let (ship_new) = iterate_ships(BOARD_DIMENSION, ships_dict, 0, instructions_len, instructions);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, ships_dict, board_dict, 0, instructions_len, instructions);
 
-  return(ship_new=ship_new);
+  return(ship_new=ship_new, board_new=board_new);
   }
 
+//////////////////////////////////////////////////////////////
+//                   END GAME SUMMARY 
+//////////////////////////////////////////////////////////////
 
 // get a summary of the game
 func summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ships: ShipState*, ships_dict: DictAccess*) -> (ships_len: felt, ships: ShipState*){
@@ -221,7 +226,7 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt, board_
   if(board_size == 0){
       return(board_size, board_arr);
     }
-
+  
   let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
   tempvar board = cast(ptr, SingleBlock*);
   assert board_arr[board_size - 1] = SingleBlock(board.id, board.type, board.status, board.index, board.new_index);

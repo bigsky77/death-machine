@@ -33,7 +33,8 @@ func Block_Id() -> (id: felt){
 
   }
 
-func init_board{range_check_ptr}(
+func init_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    dimension: felt,
     board_size: felt, 
     dict: DictAccess*, 
 ) -> (dict_new: DictAccess*) {
@@ -42,10 +43,24 @@ func init_board{range_check_ptr}(
         return (dict_new=dict);
     }
     
+    let (block_type) = generate_type();
     let (x, y) = index_to_cords(board_size);
-    tempvar new_block: SingleBlock* = new SingleBlock(board_size, 1, 1, Grid(x=x,y=y), Grid(x=0,y=0));
+   
+    tempvar new_block: SingleBlock* = new SingleBlock(board_size, block_type, 1, Grid(x=x,y=y), Grid(x=0,y=0));
     dict_write{dict_ptr=dict}(key=new_block.id, new_value=cast(new_block, felt));
 
-    return init_board(board_size - 1, dict);
+    return init_board(dimension, board_size - 1, dict);
 }
+
+func generate_type{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (block_type: felt){
+    let (r) = get_next_rnd();
+    let (_, res) = unsigned_div_rem(r, 3); 
+    return(block_type=res);
+  }
+
+
+
+
+
+
 

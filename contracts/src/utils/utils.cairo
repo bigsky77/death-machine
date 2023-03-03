@@ -19,7 +19,7 @@ func index_to_cords{range_check_ptr}(index: felt) -> (loc_x: felt, loc_y: felt){
   return(loc_x, loc_y);
   }
 
-func cords_to_index{syscall_ptr: felt*, range_check_ptr}(loc_x: felt, loc_y: felt) -> (index: felt){
+func cords_to_index{range_check_ptr}(loc_x: felt, loc_y: felt) -> (index: felt){
   alloc_locals;
 
   tempvar zero_based_x = loc_x - 1;
