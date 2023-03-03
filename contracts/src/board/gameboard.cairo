@@ -13,7 +13,7 @@ from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro import XOROSHIRO_ADDR, IXoroshiro, get_next_rnd 
 from src.game.types import Grid 
-from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE, ns_board, BOARD_SIZE   
+from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE, ns_board, ns_dict, BOARD_SIZE   
 from src.utils.utils import index_to_cords, cords_to_index
 
 //////////////////////////////////////////////////////////////
@@ -43,20 +43,22 @@ func setBoard{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}()
   }
 
 func create_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    blocks_len: felt, 
-    blocks: SingleBlock*) 
-    -> (blocks_len: felt, blocks: SingleBlock*){
+    board_len: felt, 
+    board: SingleBlock*) 
+    -> (board_len: felt, board_new: SingleBlock*){
     alloc_locals;
     
-    if(blocks_len == 0){
-      return(blocks_len, blocks);
+    if(board_len == 0){
+
+      return(board_len, board);
       }
     
-    let(x, y) = index_to_cords(blocks_len);
-    tempvar new_block = SingleBlock(blocks_len, 0, 1, Grid(x=x, y=y), Grid(0,0));
-    Block.write(blocks_len, new_block); 
-
-    return create_board(blocks_len - 1, blocks);
+    let(x, y) = index_to_cords(board_len);
+    tempvar board_new = SingleBlock(board_len, 0, 1, Grid(x=x, y=y), Grid(0,0));
+    assert board[board_len] = board_new;
+    Block.write(board_len, board_new); 
+    
+    return create_board(board_len - 1, board);
 }
 
 func get_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(board_len: felt, board: SingleBlock*) -> (board_len: felt, board: SingleBlock*){
@@ -87,7 +89,7 @@ func init_board{range_check_ptr}(
     tempvar single_grid: SingleBlock = [board];
     
     let (ptr) = dict_read{dict_ptr=dict}(key=single_grid.id);
-    with_attr error_message("ids must be different") {
+    with_attr error_message("grid ids must be different") {
         assert ptr = 0;
     }
 
@@ -97,10 +99,9 @@ func init_board{range_check_ptr}(
     }
     let range_check_ptr = range_check_ptr + 2;
    
-    tempvar new_board: SingleBlock* = new SingleBlock(board_len, 0, 1, single_grid.index, single_grid.new_index);
+    tempvar new_board: SingleBlock* = new SingleBlock(single_grid.id, 0, 1, single_grid.index, single_grid.new_index);
     dict_write{dict_ptr=dict}(key=single_grid.id, new_value=cast(new_board, felt));
    
-    // todo double check correctness of board array
     return init_board(board_len - 1, board + ns_board.GRID_SIZE, dict, dimension);
 }
 
@@ -124,17 +125,16 @@ func iterate_board{range_check_ptr}(
   return iterate_board(board_dimension, board_len - 1, board_dict);
   }
 
-func star_captured{range_check_ptr}(
-    i: felt, board_dict: DictAccess*
-) -> (board_new: DictAccess*) {
-    let (ptr) = dict_read{dict_ptr=board_dict}(key=i);
-    tempvar board = cast(ptr, SingleBlock*);
-    tempvar board_new: SingleBlock* = new SingleBlock(board.id, board.type, 0, Grid(board.index.x, board.index.y), Grid(board.index.x, board.index.y));
-    dict_write{dict_ptr=board_dict}(key=board.id, new_value=cast(board_new, felt));
-    return (board_new=board_dict);
+func check_grid_free{range_check_ptr}(pos: Grid, board_dict: DictAccess*) -> (
+    board_new: DictAccess*, is_free: felt
+) {
+    tempvar key = pos.x * ns_dict.MULTIPLIER + pos.y;
+    let (ptr) = dict_read{dict_ptr=board_dict}(key=key);
+    if (ptr == 0) {
+        return (board_new=board_dict, is_free=1);
+    }
+    return (board_new=board_dict, is_free=0);
 }
-
-
 
 
 

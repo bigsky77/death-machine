@@ -6,13 +6,7 @@
 
 from starkware.cairo.common.dict_access import DictAccess
 from src.game.spaceships import InputShipState, ShipState
-from src.game.types import Grid, Star, Enemy, Planet, GameBoard 
 from src.board.gameboard import SingleBlock 
-
-@event
-func newBoard(board_len: felt, board: SingleBlock*){
-
-  }
 
 
 @event
@@ -31,6 +25,7 @@ func simulationComplete(){
   }
 
 @event
-func shipMoved(ship: ShipState){
+func gameComplete(ships_len: felt, ships: ShipState*){
 
   }
+

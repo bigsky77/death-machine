@@ -13,24 +13,12 @@ namespace ns_instructions {
     const A = 1;  // left
     const S = 2;  // down
     const D = 3;  // right
-    const Z = 4;  // get
-    const X = 5;  // put
-    const G = 6;  // block-get
-    const H = 7;  // block-put
-    const C = 8;  // careless put
     const SKIP = 50;  // skip
 }
 
 namespace ns_ships {
     const INPUT_SHIP_SIZE = 6;
     const SHIP_SIZE = 6;
-
-    const OPEN = 0;
-    const CLOSE = 1;
-
-    const SINGLETON = 0;
-
-    const STATIC_COST_SINGLETON = 150;
 }
 
 namespace ns_board {
@@ -39,5 +27,5 @@ namespace ns_board {
 
 namespace ns_dict {
     const MULTIPLIER = 10 ** 7;
-    const MECH_MULTIPLIER = 10 ** 6;
+    const SHIP_MULTIPLIER = 10 ** 6;
 }

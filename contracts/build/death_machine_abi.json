@@ -22,13 +22,13 @@
                 "type": "Grid"
             },
             {
-                "name": "new_index",
+                "name": "description",
                 "offset": 5,
-                "type": "Grid"
+                "type": "felt"
             }
         ],
-        "name": "SingleBlock",
-        "size": 7,
+        "name": "InputShipState",
+        "size": 6,
         "type": "struct"
     },
     {
@@ -71,38 +71,6 @@
                 "type": "Grid"
             },
             {
-                "name": "description",
-                "offset": 5,
-                "type": "felt"
-            }
-        ],
-        "name": "InputShipState",
-        "size": 6,
-        "type": "struct"
-    },
-    {
-        "members": [
-            {
-                "name": "id",
-                "offset": 0,
-                "type": "felt"
-            },
-            {
-                "name": "type",
-                "offset": 1,
-                "type": "felt"
-            },
-            {
-                "name": "status",
-                "offset": 2,
-                "type": "felt"
-            },
-            {
-                "name": "index",
-                "offset": 3,
-                "type": "Grid"
-            },
-            {
                 "name": "pc",
                 "offset": 5,
                 "type": "felt"
@@ -111,21 +79,6 @@
         "name": "ShipState",
         "size": 6,
         "type": "struct"
-    },
-    {
-        "data": [
-            {
-                "name": "board_len",
-                "type": "felt"
-            },
-            {
-                "name": "board",
-                "type": "SingleBlock*"
-            }
-        ],
-        "keys": [],
-        "name": "newBoard",
-        "type": "event"
     },
     {
         "data": [
@@ -176,17 +129,6 @@
         "type": "event"
     },
     {
-        "data": [
-            {
-                "name": "ship",
-                "type": "ShipState"
-            }
-        ],
-        "keys": [],
-        "name": "shipMoved",
-        "type": "event"
-    },
-    {
         "inputs": [
             {
                 "name": "address",
@@ -227,5 +169,20 @@
         "name": "simulation",
         "outputs": [],
         "type": "function"
+    },
+    {
+        "data": [
+            {
+                "name": "ships_len",
+                "type": "felt"
+            },
+            {
+                "name": "ships",
+                "type": "ShipState*"
+            }
+        ],
+        "keys": [],
+        "name": "gameComplete",
+        "type": "event"
     }
 ]

@@ -9,6 +9,7 @@ from starkware.cairo.common.memcpy import memcpy
 from starkware.cairo.common.math_cmp import is_le
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
+
 from src.game.types import Grid 
 from src.game.constants import ns_ships, ns_instructions
 
@@ -59,7 +60,6 @@ func init_ships{range_check_ptr}(
     return init_ships(ships_count - 1, ships + ns_ships.INPUT_SHIP_SIZE, dict, dimension);
 }
 
-
 func iterate_ships{range_check_ptr}(
     board_dimension: felt,
     ships_dict: DictAccess*,
@@ -76,7 +76,7 @@ func iterate_ships{range_check_ptr}(
   tempvar instruction = [instructions + i];
   let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
   tempvar ship = cast(ptr, ShipState*);
-
+  
   let can_move_right = is_le(ship.index.x, board_dimension - 2);
   if (instruction == ns_instructions.D and can_move_right == 1) {
         let (ships_new) = update_ships_moved(ship, ships_dict, 1, 0);
