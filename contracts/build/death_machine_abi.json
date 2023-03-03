@@ -81,6 +81,38 @@
         "type": "struct"
     },
     {
+        "members": [
+            {
+                "name": "id",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "type",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "status",
+                "offset": 2,
+                "type": "felt"
+            },
+            {
+                "name": "index",
+                "offset": 3,
+                "type": "Grid"
+            },
+            {
+                "name": "new_index",
+                "offset": 5,
+                "type": "Grid"
+            }
+        ],
+        "name": "SingleBlock",
+        "size": 7,
+        "type": "struct"
+    },
+    {
         "data": [
             {
                 "name": "instructions_len",
@@ -129,6 +161,36 @@
         "type": "event"
     },
     {
+        "data": [
+            {
+                "name": "ships_len",
+                "type": "felt"
+            },
+            {
+                "name": "ships",
+                "type": "ShipState*"
+            }
+        ],
+        "keys": [],
+        "name": "gameComplete",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "board_len",
+                "type": "felt"
+            },
+            {
+                "name": "board",
+                "type": "SingleBlock*"
+            }
+        ],
+        "keys": [],
+        "name": "boardComplete",
+        "type": "event"
+    },
+    {
         "inputs": [
             {
                 "name": "address",
@@ -169,20 +231,5 @@
         "name": "simulation",
         "outputs": [],
         "type": "function"
-    },
-    {
-        "data": [
-            {
-                "name": "ships_len",
-                "type": "felt"
-            },
-            {
-                "name": "ships",
-                "type": "ShipState*"
-            }
-        ],
-        "keys": [],
-        "name": "gameComplete",
-        "type": "event"
     }
 ]

@@ -29,117 +29,23 @@ struct SingleBlock {
 }
 
 @storage_var
-func Block(index: felt) -> (singleBlock: SingleBlock){
+func Block_Id() -> (id: felt){
 
   }
-
-func setBoard{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(){
-    alloc_locals;
-
-    let (blocks: SingleBlock*) = alloc();
-    create_board(BOARD_SIZE, blocks);
-
-    return();
-  }
-
-func create_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    board_len: felt, 
-    board: SingleBlock*) 
-    -> (board_len: felt, board_new: SingleBlock*){
-    alloc_locals;
-    
-    if(board_len == 0){
-
-      return(board_len, board);
-      }
-    
-    let(x, y) = index_to_cords(board_len);
-    tempvar board_new = SingleBlock(board_len, 0, 1, Grid(x=x, y=y), Grid(0,0));
-    assert board[board_len] = board_new;
-    Block.write(board_len, board_new); 
-    
-    return create_board(board_len - 1, board);
-}
-
-func get_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(board_len: felt, board: SingleBlock*) -> (board_len: felt, board: SingleBlock*){
-    alloc_locals;
-
-    if(board_len == 0){
-        return(board_len, board);
-      }
-    
-    let (block: SingleBlock) = Block.read(board_len);
-    assert board[board_len - 1] = SingleBlock(block.id, block.type, block.status, block.index, block.new_index);
-
-    return get_board(board_len - 1, board);
-}
-
-//////////////////////////////////////////////////////////////
-//                        INIT BOARD
-//////////////////////////////////////////////////////////////
 
 func init_board{range_check_ptr}(
-    board_len: felt, board: SingleBlock*, dict: DictAccess*, dimension: felt) -> (dict_new: DictAccess*) {
-    alloc_locals;
-
-    if (board_len == 0) {
+    board_size: felt, 
+    dict: DictAccess*, 
+) -> (dict_new: DictAccess*) {
+    
+    if (board_size == 0) {
         return (dict_new=dict);
     }
     
-    tempvar single_grid: SingleBlock = [board];
-    
-    let (ptr) = dict_read{dict_ptr=dict}(key=single_grid.id);
-    with_attr error_message("grid ids must be different") {
-        assert ptr = 0;
-    }
+    let (x, y) = index_to_cords(board_size);
+    tempvar new_block: SingleBlock* = new SingleBlock(board_size, 1, 1, Grid(x=x,y=y), Grid(x=0,y=0));
+    dict_write{dict_ptr=dict}(key=new_block.id, new_value=cast(new_block, felt));
 
-    with_attr error_message("board not within bounds") {
-        assert [range_check_ptr] = dimension - single_grid.index.x;
-        assert [range_check_ptr + 1] = dimension - single_grid.index.y;
-    }
-    let range_check_ptr = range_check_ptr + 2;
-   
-    tempvar new_board: SingleBlock* = new SingleBlock(single_grid.id, 0, 1, single_grid.index, single_grid.new_index);
-    dict_write{dict_ptr=dict}(key=single_grid.id, new_value=cast(new_board, felt));
-   
-    return init_board(board_len - 1, board + ns_board.GRID_SIZE, dict, dimension);
+    return init_board(board_size - 1, dict);
 }
-
-func iterate_board{range_check_ptr}(
-  board_dimension: felt, 
-  board_len: felt, 
-  board_dict: DictAccess*) ->(board_new: DictAccess*){
-  alloc_locals;
-
-  if(board_len == 0){
-    return(board_new=board_dict);
-    }
-  
-  let (board: SingleBlock*) = alloc();
-  
-  //let (ptr) = dict_read{dict_ptr=board_dict}(key=board_len);
-  //tempvar single_grid = cast(ptr, SingleBlock*);
-  
-  // todo add skull moves
-
-  return iterate_board(board_dimension, board_len - 1, board_dict);
-  }
-
-func check_grid_free{range_check_ptr}(pos: Grid, board_dict: DictAccess*) -> (
-    board_new: DictAccess*, is_free: felt
-) {
-    tempvar key = pos.x * ns_dict.MULTIPLIER + pos.y;
-    let (ptr) = dict_read{dict_ptr=board_dict}(key=key);
-    if (ptr == 0) {
-        return (board_new=board_dict, is_free=1);
-    }
-    return (board_new=board_dict, is_free=0);
-}
-
-
-
-
-
-
-
 

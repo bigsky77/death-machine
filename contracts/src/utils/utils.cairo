@@ -9,7 +9,7 @@ from starkware.cairo.common.math import assert_le, assert_nn_le, unsigned_div_re
 from starkware.cairo.common.math_cmp import is_le, is_nn
 from starkware.cairo.common.cairo_builtins import BitwiseBuiltin, HashBuiltin
 
-func index_to_cords{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(index: felt) -> (loc_x: felt, loc_y: felt){
+func index_to_cords{range_check_ptr}(index: felt) -> (loc_x: felt, loc_y: felt){
   alloc_locals;
 
   tempvar zero_based_index = index;

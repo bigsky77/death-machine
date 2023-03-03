@@ -29,3 +29,7 @@ func gameComplete(ships_len: felt, ships: ShipState*){
 
   }
 
+@event
+func boardComplete(board_len: felt, board: SingleBlock*){
+
+  }
