@@ -22,9 +22,9 @@ func index_to_cords{range_check_ptr}(index: felt) -> (loc_x: felt, loc_y: felt){
 func cords_to_index{range_check_ptr}(loc_x: felt, loc_y: felt) -> (index: felt){
   alloc_locals;
 
-  tempvar zero_based_x = loc_x - 1;
-  tempvar zero_based_y = loc_y - 1;
-  let index = zero_based_y * 15 + zero_based_x;
+  tempvar zero_based_x = loc_x;
+  tempvar zero_based_y = loc_y;
+  let index = zero_based_x * 15 + zero_based_y;
 
   return(index=index);
   }
