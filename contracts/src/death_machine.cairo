@@ -15,7 +15,7 @@ from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro import XOROSHIRO_ADDR 
 
-from src.board.gameboard import init_board, SingleBlock
+from src.board.gameboard import init_board, iterate_board, SingleBlock
 
 from src.game.constants import (
   STAR_RANGE, 
@@ -192,7 +192,8 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
     board_size: felt,
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
-
+  
+  let (board_new) = iterate_board(BOARD_DIMENSION, BOARD_SIZE, board_dict);
   let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
@@ -228,7 +229,7 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt, board_
   
   let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
   tempvar board = cast(ptr, SingleBlock*);
-  assert board_arr[board_size - 1] = SingleBlock(board.id, board.type, board.status, board.index, board.new_index);
+  assert board_arr[board_size - 1] = SingleBlock(board.id, board.type, board.status, board.index, board.raw_index);
   board_summary(board_size - 1, board_arr, board_dict);
   return(board_size, board_arr);
   }

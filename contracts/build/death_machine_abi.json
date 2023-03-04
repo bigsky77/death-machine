@@ -103,7 +103,7 @@
                 "type": "Grid"
             },
             {
-                "name": "new_index",
+                "name": "raw_index",
                 "offset": 5,
                 "type": "Grid"
             }

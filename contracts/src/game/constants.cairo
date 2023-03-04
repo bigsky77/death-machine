@@ -23,6 +23,7 @@ namespace ns_ships {
 
 namespace ns_board {
     const GRID_SIZE = 7;
+    const MAX_MOVE = 2;
 }
 
 namespace ns_dict {

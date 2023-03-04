@@ -180,15 +180,15 @@ func check_grid{range_check_ptr}(
       }
 
     // if grid is enemy type
-  //if(grid.type == 1){
-  //    tempvar new_ship: ShipState* = new ShipState(ship.id, 0, 0, ship.index, ship.pc);
-  //    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(new_ship, felt));
-  //    return(ships_new=ships_dict, board_new=board_dict, res=1);
-  //    }
+  if(grid.type == 1){
+      tempvar new_ship: ShipState* = new ShipState(ship.id, 0, 0, ship.index, ship.pc);
+      dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(new_ship, felt));
+      return(ships_new=ships_dict, board_new=board_dict, res=1);
+      }
     
     // if grid is star type
     if(grid.type == 2){
-      tempvar new_block: SingleBlock* = new SingleBlock(grid.id, 0, 0, grid.index, grid.new_index);
+      tempvar new_block: SingleBlock* = new SingleBlock(grid.id, 0, 0, grid.index, grid.raw_index);
       dict_write{dict_ptr=board_dict}(key=grid.id, new_value=cast(new_block, felt));
       return(ships_new=ships_dict, board_new=board_dict, res=2);
       }
