@@ -115,6 +115,48 @@
     {
         "data": [
             {
+                "name": "ship_id",
+                "type": "felt"
+            },
+            {
+                "name": "ship_x",
+                "type": "felt"
+            },
+            {
+                "name": "ship_y",
+                "type": "felt"
+            },
+            {
+                "name": "turn",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "ShipDestroyed",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "x",
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "type": "felt"
+            },
+            {
+                "name": "turn",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "StarCaptured",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
                 "name": "instructions_len",
                 "type": "felt"
             },

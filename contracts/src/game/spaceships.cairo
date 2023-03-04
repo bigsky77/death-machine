@@ -31,6 +31,18 @@ struct ShipState {
     pc: felt,
 }
 
+// ------ EVENTS ------
+
+@event
+func ShipDestroyed(ship_id: felt, ship_x: felt, ship_y: felt, turn: felt){
+
+  }
+
+@event
+func StarCaptured(x: felt, y: felt, turn: felt){
+
+  }
+
 func init_ships{range_check_ptr}(
     ships_count: felt, 
     ships: InputShipState*, 
@@ -56,14 +68,14 @@ func init_ships{range_check_ptr}(
     let range_check_ptr = range_check_ptr + 2;
 
     tempvar new_ship: ShipState* = new ShipState(ship.id, ship.type, ship.status, ship.index, 0);
-
     dict_write{dict_ptr=dict}(key=ship.id, new_value=cast(new_ship, felt));
 
     return init_ships(ships_count - 1, ships + ns_ships.INPUT_SHIP_SIZE, dict, dimension);
 }
 
-func iterate_ships{range_check_ptr}(
+func iterate_ships{syscall_ptr: felt*, range_check_ptr}(
     board_dimension: felt,
+    cycle: felt,
     ships_dict: DictAccess*,
     board_dict: DictAccess*,
     i: felt,
@@ -80,13 +92,28 @@ func iterate_ships{range_check_ptr}(
   let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
   tempvar ship = cast(ptr, ShipState*);
   
+  if(ship.status == 0){
+      return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i + 1, instructions_len, instructions);
+    }
+
   let (ships_dict, board_dict, res) = check_grid(ship, ships_dict, board_dict);
   
+  if(res == 1){
+      ShipDestroyed.emit(ship.id, ship.index.x, ship.index.y, cycle); 
+      return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i + 1, instructions_len, instructions);
+    }
+  
+  if(res == 2){
+      StarCaptured.emit(ship.index.x, ship.index.y, cycle); 
+      return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i, instructions_len, instructions);
+    }
+
   let can_move_right = is_le(ship.index.x, board_dimension - 2);
   if (instruction == ns_instructions.D and can_move_right == 1) {
         let (ships_new) = update_ships_moved(ship, ships_dict, 1, 0);
         return iterate_ships(
             board_dimension,
+            cycle,
             ships_new,
             board_dict,
             i + 1,
@@ -99,6 +126,7 @@ func iterate_ships{range_check_ptr}(
         let (ships_new) = update_ships_moved(ship, ships_dict, -1, 0);
         return iterate_ships(
             board_dimension,
+            cycle,
             ships_new,
             board_dict,
             i + 1,
@@ -111,6 +139,7 @@ func iterate_ships{range_check_ptr}(
         let (ships_new) = update_ships_moved(ship, ships_dict, 0, 1);
         return iterate_ships(
             board_dimension,
+            cycle,
             ships_new,
             board_dict,
             i + 1,
@@ -123,6 +152,7 @@ func iterate_ships{range_check_ptr}(
         let (ships_new) = update_ships_moved(ship, ships_dict, 0, -1);
         return iterate_ships(
             board_dimension,
+            cycle,
             ships_new,
             board_dict,
             i + 1,
@@ -130,7 +160,7 @@ func iterate_ships{range_check_ptr}(
             instructions
         );
     }
-  return iterate_ships(board_dimension, ships_dict, board_dict, i + 1, instructions_len, instructions);
+  return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i + 1, instructions_len, instructions);
   }
 
 func check_grid{range_check_ptr}(
@@ -140,7 +170,6 @@ func check_grid{range_check_ptr}(
     ships_new: DictAccess*, board_new: DictAccess*, res: felt){
     alloc_locals;
 
-    //let i = ship.index.x * ns_dict.MULTIPLIER + ship.index.y;
     let (i) = cords_to_index(ship.index.x, ship.index.y); 
     let (ptr) = dict_read{dict_ptr=board_dict}(key=i);
     tempvar grid = cast(ptr, SingleBlock*);  
@@ -151,10 +180,19 @@ func check_grid{range_check_ptr}(
       }
 
     // if grid is enemy type
-    if(grid.type == 1){
-      return(ships_new=ships_dict, board_new=board_dict, res=1);
+  //if(grid.type == 1){
+  //    tempvar new_ship: ShipState* = new ShipState(ship.id, 0, 0, ship.index, ship.pc);
+  //    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(new_ship, felt));
+  //    return(ships_new=ships_dict, board_new=board_dict, res=1);
+  //    }
+    
+    // if grid is star type
+    if(grid.type == 2){
+      tempvar new_block: SingleBlock* = new SingleBlock(grid.id, 0, 0, grid.index, grid.new_index);
+      dict_write{dict_ptr=board_dict}(key=grid.id, new_value=cast(new_block, felt));
+      return(ships_new=ships_dict, board_new=board_dict, res=2);
       }
-     
+
      return(ships_new=ships_dict, board_new=board_dict, res=0);
     }
 
@@ -180,21 +218,10 @@ func update_ships_moved{range_check_ptr}(
 }
 
 func update_ship_status{range_check_ptr}(
-    ship: ShipState*, ships_dict: DictAccess*, status: felt
+    ship: ShipState*, ships_dict: DictAccess*
 ) -> (ships_new: DictAccess*) {
     tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, 0, Grid(ship.index.x, ship.index.y), ship.pc);
     dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
     return (ships_new=ships_dict);
 }
-
-func ship_destroyed{range_check_ptr}(
-    i: felt, ships_dict: DictAccess*
-) -> (ships_new: DictAccess*) {
-    let (ptr) = dict_read{dict_ptr=ships_dict}(key=i);
-    tempvar ship = cast(ptr, ShipState*);
-    tempvar ship_new: ShipState* = new ShipState(ship.id, ship.type, 0, Grid(ship.index.x, ship.index.y), ship.pc);
-    dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(ship_new, felt));
-    return (ships_new=ships_dict);
-}
-
 

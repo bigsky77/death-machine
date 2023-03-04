@@ -41,7 +41,6 @@ from src.game.spaceships import (
   ShipState, 
   init_ships, 
   iterate_ships,
-  ship_destroyed,
   update_ship_status
   )
 
@@ -128,13 +127,14 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
   ) {
     alloc_locals;
     
+    let (ships_arr: ShipState*) = alloc();
+    let (block_arr: SingleBlock*) = alloc();
+
     if(cycle  == n_cycles){
       // emit ship state
-      let (ships_arr: ShipState*) = alloc();
-      let (lens, state) = summary(ships_len, ships_arr, ships_dict);
+      let (lens, state) = end_game_summary(ships_len, ships_arr, ships_dict);
       gameComplete.emit(lens, state);
       
-      let (block_arr: SingleBlock*) = alloc();
       let (block_len, block_state) = board_summary(225, block_arr, board_dict);
       boardComplete.emit(block_len, block_state);
       
@@ -193,7 +193,7 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
 
-  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, ships_dict, board_dict, 0, instructions_len, instructions);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
   }
@@ -203,7 +203,7 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
 //////////////////////////////////////////////////////////////
 
 // get a summary of the game
-func summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ships: ShipState*, ships_dict: DictAccess*) -> (ships_len: felt, ships: ShipState*){
+func end_game_summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ships: ShipState*, ships_dict: DictAccess*) -> (ships_len: felt, ships: ShipState*){
   alloc_locals;
   
   if(ships_len == 0){
@@ -214,7 +214,7 @@ func summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ships: ShipSt
   tempvar ship = cast(ptr, ShipState*);
   assert ships[ships_len - 1] = ShipState(ship.id, ship.type, ship.status, ship.index, ship.pc);
 
-  summary(ships_len - 1, ships, ships_dict);
+  end_game_summary(ships_len - 1, ships, ships_dict);
   return(ships_len, ships);
   }
 
