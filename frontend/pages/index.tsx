@@ -4,11 +4,15 @@ import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import React, { useMemo, useState, useEffect } from "react";
 import Layout from '../src/components/Layout'
-import { BLANK_SOLUTION } from "../src/constants/constants";
+import { BLANK_SOLUTION, DIM, N_CYCLES } from "../src/constants/constants";
 import { coordinateToIndex, programsToInstructionSets, packProgram } from "../src/utils/programPacker";
 import { DEATHMACHINE_ADDR, DEATHMACHINE_ABI } from "../src/components/death_machine_contract";
 import { useAllEvents } from "../lib/api"
 import { Grid } from "../src/components/Grid"
+import simulator from "../src/components/simulator";
+import { BoardConfig } from "../src/types/BordConfig";
+import ShipState, {ShipStatus, ShipType} from '../src/types/ShipState';
+import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
 
 export default function Home() {
 
@@ -16,10 +20,12 @@ export default function Home() {
   const [spaceships, updateSpaceShips] = useState([{id: 1, location: 200, selected: false},
                                                    {id: 2, location: 150, selected: false},
                                                    {id: 3, location: 100, selected: false}])
-  const [gameBoard, updateGameBoard] = useState(Array(225).fill(""));
-  const [stars, updateStars] = useState(Array(40).fill(""));
-  const [enemies, updateEnemies] = useState(Array(20).fill(""));
 
+  const [ATOMS, updateAtoms] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.index));
+  const [gameBoard, updateGameBoard] = useState(Array(225).fill(""));
+  const [shipDescriptions, setShipDescriptions] = useState<string[]>(
+        BLANK_SOLUTION.ships.map((ship) => ship.description)
+    );
   const [programs, setPrograms] = useState<string[]>(BLANK_SOLUTION.programs);
   const [pc, setPc] = useState(0);
   
@@ -27,41 +33,13 @@ export default function Home() {
   const [animationFrame, setAnimationFrame] = useState<number>(0);
   const [frames, setFrames] = useState<Frame[]>(49); 
   const [loop, setLoop] = useState<NodeJS.Timer>();
-    
+
+  const ANIM_FRAME_LATENCY_DAW = 300;
   const runnable = true; //placeholder
   const N_CYCLES = 100; //placeholder
 
   const { data } = useAllEvents();
   console.log("all events", data)
-
-  async function generateGameBoard() {
-          const events = await data.DeathMachine
-          console.log("Death Events", events[0])
-
-          let new_stars = events[0].star_array; 
-          let star_arr = [];
-          for (let i = 0; i < new_stars.length; i++){
-            let res = coordinateToIndex(new_stars[i].x, new_stars[i].y);
-            star_arr.push(res);
-            }
-          updateStars(star_arr);
-          console.log("stars", stars);
- 
-          let new_enemy = events[0].enemy_array; 
-          let enemy_arr = [];
-          for (let i = 0; i < new_enemy.length; i++){
-            let res = coordinateToIndex(new_enemy[i].x, new_enemy[i].y);
-            enemy_arr.push(res);
-            }
-          updateEnemies(enemy_arr);
-
-          let a = Math.floor(Math.random() * 225) + 1;
-          let b = Math.floor(Math.random() * 225) + 1;  
-          let c = Math.floor(Math.random() * 225) + 1;  
-          updateSpaceShips([{id: "a", location: a, selected: false},
-                            {id: "b", location: b, selected: false},
-                            {id: "c", location: c, selected: false}])
-  }
 
   const updateShipLocation = (id, newLocation) => {
       const updatedShips = spaceships.map((spaceship) => {
@@ -84,9 +62,115 @@ export default function Home() {
         });
       updateSpaceShips(selectedSpaceShip);
     }
-  
-  function handleClick(mode: string) {
 
+  const shipInitStates: ShipState[] = shipInitPositions.map((pos, ship_i) => {
+          return {
+              status: ShipStatus.ALIVE,
+              index: pos,
+              id: `ship${ship_i}`,
+              typ: ShipType.SINGLETON,
+              description: shipDescriptions[ship_i],
+              pc_next: 0,
+          };
+      });
+
+  const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
+          return {
+              status: AtomStatus.ACTIVE,
+              index: atom,
+              id: `atom${i}`,
+              typ: atom.typ,
+              possessed_by: null,
+          };
+      });
+
+  function handleClick(mode: string) {
+        if (mode == "NextFrame" && animationState != "Run") {
+            if (!frames) return;
+            setAnimationFrame((prev) => (prev < N_CYCLES ? prev + 1 : prev));
+        } else if (mode == "PrevFrame" && animationState != "Run") {
+            if (!frames) return;
+            setAnimationFrame((prev) => (prev > 0 ? prev - 1 : prev));
+        }
+
+        // Run simulation
+        else if (mode == "ToggleRun") {
+            // If in Run => go to Pause
+            if (animationState == "Run") {
+                clearInterval(loop); // kill the timer
+                setAnimationState("Pause");
+            }
+
+            // If in Pause => resume Run without simulation
+            else if (animationState == "Pause") {
+                // Begin animation
+                setAnimationState("Run");
+                const latency = ANIM_FRAME_LATENCY_DAW
+                setLoop(
+                    setInterval(() => {
+                        simulationLoop(frames);
+                    }, latency)
+                );
+            }
+
+            // If in Stop => perform simulation then go to Run
+            else if (animationState == "Stop" && runnable) {
+                // Parse program into array of instructions and store to react state
+                let instructionSets = programsToInstructionSets(programs);
+                console.log("running instructionSets", instructionSets);
+
+                // Prepare input
+                const boardConfig: BoardConfig = {
+                    dimension: DIM,
+                    // atom_faucets: FAUCET_POS_S.map((faucet_pos, index) => {
+                    //     return {
+                    //         id: `atom_faucet${index}`,
+                    //         typ: AtomType.VANILLA,
+                    //         index: { x: faucet_pos.x, y: faucet_pos.y },
+                    //     };
+                    // }),
+                    // atom_sinks: SINK_POS_S.map((sink_pos, index) => {
+                    //     return {
+                    //         id: `atom_sink${index}`,
+                    //         index: { x: sink_pos.x, y: sink_pos.y },
+                    //     };
+                    // }),
+                    // operators: operators,
+                };
+
+                // Run simulation to get all frames and set to reference
+                const simulatedFrames = simulator(
+                    N_CYCLES,
+                    shipInitStates,
+                    atomInitStates,
+                    instructionSets, // instructions
+                    boardConfig
+                ) as Frame[];
+                setFrames(simulatedFrames);
+
+                simulatedFrames.forEach((f: Frame, frame_i: number) => {
+                     const s = f.atoms.map(function(v){return JSON.stringify(v)}).join('\n')
+                     console.log(frame_i, f.atoms)
+                     console.log(frame_i, f.notes)
+                });
+                // const final_delivery = simulatedFrames[simulatedFrames.length - 1].delivered_accumulated;
+
+                // Begin animation
+                setAnimationState("Run");
+                const latency = ANIM_FRAME_LATENCY_DAW
+                setLoop(
+                    setInterval(() => {
+                        simulationLoop(simulatedFrames);
+                    }, latency)
+                );
+                // console.log('Running with instruction:', instructions)
+            }
+        } else {
+            // Stop
+            clearInterval(loop); // kill the timer
+            setAnimationState("Stop");
+            setAnimationFrame((_) => 0);
+        }
     }
 
   function handleSlideChange(evt) {
@@ -98,11 +182,9 @@ export default function Home() {
   
   const simulationLoop = (frames: Frame[]) => {
         setAnimationFrame((prev) => {
-            if (prev >= 100) {
-                generateGameBoard();
+            if (prev >= frames.length - 1) {
                 return 0;
             } else {
-                generateGameBoard();
                 return prev + 1;
             }
         });
@@ -119,64 +201,6 @@ export default function Home() {
         });
     } 
 
-    //
-    // Handle click event for animation control
-    //
-    function handleClick(mode: string) {
-        if (mode == "NextFrame" && animationState != "Run") {
-            if (!frames) return;
-            setAnimationFrame((prev) => (prev < N_CYCLES ? prev + 1 : prev));
-            setPc((prev) => (prev < 7 ? prev + 1 : prev));
-        } else if (mode == "PrevFrame" && animationState != "Run") {
-            if (!frames) return;
-            setAnimationFrame((prev) => (prev > 0 ? prev - 1 : prev));
-            setPc((prev) => (prev > 0 ? prev - 1 : prev));
-        }
-
-        // Run simulation
-        else if (mode == "ToggleRun") {
-            // If in Run => go to Pause
-            if (animationState == "Run") {
-                clearInterval(loop); // kill the timer
-                setAnimationState("Pause");
-            }
-
-            // If in Pause => resume Run without simulation
-            else if (animationState == "Pause") {
-                // Begin animation
-                setAnimationState("Run");
-                const latency = 300;
-                setLoop(
-                    setInterval(() => {
-                        simulationLoop(frames);
-                        programCounterLoop();
-                    }, latency)
-                );
-            }
-
-            // If in Stop => perform simulation then go to Run
-            else if (animationState == "Stop" && runnable) {
-                // Parse program into array of instructions and store to react state
-                let instructionSets = programsToInstructionSets(programs);
-                console.log("running instructionSets", instructionSets);
-
-                setAnimationState("Run");
-                const latency = 300;
-                setLoop(
-                    setInterval(() => {
-                        simulationLoop(frames);
-                        programCounterLoop();
-                    }, latency)
-                );
-                // console.log('Running with instruction:', instructions)
-            }
-        } else {
-            // Stop
-            clearInterval(loop); // kill the timer
-            setAnimationState("Stop");
-            setAnimationFrame((_) => 0);
-        }
-    }
 
   const calls = useMemo(() => {
     const program_instruction_set = programsToInstructionSets(programs);
@@ -195,14 +219,13 @@ export default function Home() {
 
     return (
     <>
-      <Layout 
+      <Layout
+        animationFrame={animationFrame}
+        frames={frames}
         callData={calls}
         pc={pc}
         spaceships={spaceships} 
-        stars={stars}
-        enemies={enemies}
-        selectSpaceship={selectSpaceship} 
-        generateGameBoard={generateGameBoard}
+        selectSpaceship={selectSpaceship}
         onProgramsChange={setPrograms}
         programs={programs}
         midScreenControlProps={{

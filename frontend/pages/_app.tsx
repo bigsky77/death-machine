@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     const devnet = "http://127.0.0.1:5050";
     
     return (
-        <StarknetConfig connectors={connectors} defaultProvider={new SequencerProvider({ baseUrl: devnet })}>
+        <StarknetConfig connectors={connectors} defaultProvider={new SequencerProvider({ baseUrl: testnet1 })}>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
             <Component {...pageProps} />
         </StarknetConfig>

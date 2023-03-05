@@ -16,7 +16,9 @@ import MidScreenControl from './ui_settings/MidScreenControl'
 import { useAccount, useStarknetExecute, useTransactionReceipt } from "@starknet-react/core";
 import backGroundImage from "../../../../media/ghost-2023-02-26_14-01.png"
 
-export default function Layout({pc,  
+export default function Layout({animationFrame,
+                                frames,
+                                pc,
                                 spaceships, 
                                 stars,
                                 enemies,
@@ -100,7 +102,11 @@ export default function Layout({pc,
                                     handleSlideChange={midScreenControlHandleSlideChange} />
             <InstructionConsole pc={pc} selectSpaceship={selectSpaceship}  spaceships={spaceships} onProgramsChange={onProgramsChange} programs={programs}/>
             <Grid sx={{ width: 530, height: 500, border: '1px grey' }}>
-              <GameGrid spaceships={spaceships} stars={stars} enemies={enemies} />
+            <GameGrid animationFrame={animationFrame}
+                      frames={frames}
+                      spaceships={spaceships}
+                      stars={stars}
+                      enemies={enemies} />
             </Grid>
           </Grid>
         </Box>

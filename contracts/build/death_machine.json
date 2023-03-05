@@ -1894,7 +1894,7 @@
             "0x480a7ff67fff8000",
             "0x480a7ff77fff8000",
             "0x480a7ffb7fff8000",
-            "0x480a7ffc7fff8000",
+            "0x48127ffa7fff8000",
             "0x480680017fff8000",
             "0x0",
             "0x480a7ff87fff8000",
@@ -6909,49 +6909,6 @@
                 "destination": "src.game.constants.BOARD_SIZE",
                 "type": "alias"
             },
-            "src.board.gameboard.Block_Id": {
-                "type": "namespace"
-            },
-            "src.board.gameboard.Block_Id.Args": {
-                "full_name": "src.board.gameboard.Block_Id.Args",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "src.board.gameboard.Block_Id.HashBuiltin": {
-                "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
-                "type": "alias"
-            },
-            "src.board.gameboard.Block_Id.ImplicitArgs": {
-                "full_name": "src.board.gameboard.Block_Id.ImplicitArgs",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "src.board.gameboard.Block_Id.Return": {
-                "cairo_type": "()",
-                "type": "type_definition"
-            },
-            "src.board.gameboard.Block_Id.SIZEOF_LOCALS": {
-                "type": "const",
-                "value": 0
-            },
-            "src.board.gameboard.Block_Id.hash2": {
-                "destination": "starkware.cairo.common.hash.hash2",
-                "type": "alias"
-            },
-            "src.board.gameboard.Block_Id.normalize_address": {
-                "destination": "starkware.starknet.common.storage.normalize_address",
-                "type": "alias"
-            },
-            "src.board.gameboard.Block_Id.storage_read": {
-                "destination": "starkware.starknet.common.syscalls.storage_read",
-                "type": "alias"
-            },
-            "src.board.gameboard.Block_Id.storage_write": {
-                "destination": "starkware.starknet.common.syscalls.storage_write",
-                "type": "alias"
-            },
             "src.board.gameboard.DictAccess": {
                 "destination": "starkware.cairo.common.dict_access.DictAccess",
                 "type": "alias"
@@ -6966,10 +6923,6 @@
             },
             "src.board.gameboard.HashBuiltin": {
                 "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
-                "type": "alias"
-            },
-            "src.board.gameboard.IXoroshiro": {
-                "destination": "src.utils.xoroshiro.IXoroshiro",
                 "type": "alias"
             },
             "src.board.gameboard.PLANET_RANGE": {
@@ -7014,10 +6967,6 @@
                 },
                 "size": 7,
                 "type": "struct"
-            },
-            "src.board.gameboard.XOROSHIRO_ADDR": {
-                "destination": "src.utils.xoroshiro.XOROSHIRO_ADDR",
-                "type": "alias"
             },
             "src.board.gameboard.alloc": {
                 "destination": "starkware.cairo.common.alloc.alloc",
@@ -12563,6 +12512,10 @@
             "src.utils.xoroshiro.IXoroshiro.NEXT_SELECTOR": {
                 "type": "const",
                 "value": 61533030813145926228424371470791590558807317304760520711116737482313355940
+            },
+            "src.utils.xoroshiro.IXoroshiro.RESET_SEED_SELECTOR": {
+                "type": "const",
+                "value": 367214940760309615542391802563727223553333340958487661681506275512719965715
             },
             "src.utils.xoroshiro.IXoroshiro.Return": {
                 "cairo_type": "()",

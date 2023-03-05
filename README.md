@@ -11,11 +11,11 @@ Cairo contracts.  This directory contains the game code written in Cairo, as wel
 
 To set up the python virtual environement in the directory run.
 
-`python3.9 -m venv venv
+`python3.9 -m venv venv`
 
-source venv/bin/activate
+`source venv/bin/activate`
 
-pip install poetry`
+`pip install poetry`
 
 and then.
 
@@ -38,7 +38,7 @@ The main folders in the directory are laid out below.  Cairo smart-contracts are
 │  └──  utils
 ├──  tests
 ```
-
+  * [ ] 
 #### Backend
 
 Starknet event indexer using Apibara.

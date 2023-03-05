@@ -2,32 +2,32 @@ import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 
-export default function GameGrid({spaceships, stars, enemies, updateSpaceships}) {
+export default function GameGrid({animationFrame, frames, spaceships, stars, enemies, updateSpaceships}) {
   const ROW_CONST = 225; 
   const [boxes, setBoxes] = useState(Array(225).fill(""));
   //const stars = ["🌠", "🌠", "🪐"]
   const escape =[]
 
-  useEffect(() => {   
-    const randomize = () => {
+  useEffect(() => {
+    // ensure frames is defined
+    if (frames && animationFrame) {
+    const setBoard = () => {
       setBoxes(boxes.map((box, i) => {
-        if (stars.includes(i + 1)) {
-          return '🌠';
-    } else if (spaceships.some(ship => ship.location === i)) {
-          return '🚀';
-    } else if (enemies.includes(i + 1)) {
-          return '💀';
-    } else if (escape.includes(i + 1)) {
-        return '🌌';
-    } else {
-        return '';
+        const x = i % 15;
+        const y = Math.floor(i / 15);
+        if(frames[animationFrame].ships.find(ship => ship.index.x === x && ship.index.y === y)){
+          return "🚀"
+        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y)){
+          return  "🌠"
+        }
+      }
+      ))
     }
-         
-      }));
-    };
-   
-    randomize();
-  },[spaceships])
+    setBoard();
+    }
+    console.log("Board", boxes)
+    console.log("Frame", frames[animationFrame]);
+  },[animationFrame]);
   
   function checkAdjacent(a) {
     for(let i = 0; i < spaceships.length; i++){
@@ -75,3 +75,12 @@ function Square({value, color}) {
         }}>{value}</Box>
     );
   }
+
+function convertIndexToXY(index) {
+  // Calculate the x and y coordinates based on the index
+  const x = (index - 1) % 15;
+  const y = Math.floor((index - 1) / 15);
+
+  // Return the (x, y) coordinate as an object
+  return { x: x, y: y };
+}

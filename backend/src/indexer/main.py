@@ -40,13 +40,3 @@ async def start(server_url, mongo_url, restart):
         mongo_url=mongo_url,
     )
 
-#from indexer.graphql import run_graphql_api
-
-#@cli.command()
-#@click.option("--mongo-url", default=None, help="MongoDB url.")
-#@async_command
-#async def graphql(mongo_url):
-#    """Start the GraphQL server."""
-#    await run_graphql_api(
-#        mongo_url=mongo_url,
- #   )

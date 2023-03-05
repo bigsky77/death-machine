@@ -12,7 +12,7 @@ from starkware.cairo.common.math_cmp import is_le, is_in_range
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.utils.xoroshiro import XOROSHIRO_ADDR, IXoroshiro, get_next_rnd 
+from src.utils.xoroshiro import get_next_rnd 
 from src.game.types import Grid 
 from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE, ns_board, ns_dict, BOARD_SIZE   
 from src.utils.utils import index_to_cords, cords_to_index
@@ -29,17 +29,12 @@ struct SingleBlock {
     raw_index: Grid,
 }
 
-@storage_var
-func Block_Id() -> (id: felt){
-
-  }
-
 func init_board{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
     dimension: felt,
     board_size: felt, 
     dict: DictAccess*, 
 ) -> (dict_new: DictAccess*) {
-    
+     
     if (board_size == 0) {
         return (dict_new=dict);
     }

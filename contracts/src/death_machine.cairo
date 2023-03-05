@@ -73,7 +73,6 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
   ships: InputShipState*) {  
   alloc_locals;
   
-
   let is_valid_ship_len = is_le(ships_len, 3);
     with_attr error_message("ship length limited to 3") {
         assert is_valid_ship_len = 1;
@@ -194,7 +193,8 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
   alloc_locals;
   
   let (board_new) = iterate_board(BOARD_DIMENSION, BOARD_SIZE, board_dict);
-  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_new, 0, instructions_len, instructions);
+
 
   return(ship_new=ship_new, board_new=board_new);
   }
