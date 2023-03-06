@@ -33,4 +33,8 @@ func boardComplete(board_len: felt, board: SingleBlock*){
 
   }
 
+@event
+func boardSummary(board_len: felt, board: SingleBlock*){
+
+  }
 

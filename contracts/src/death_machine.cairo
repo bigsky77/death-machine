@@ -13,7 +13,7 @@ from starkware.cairo.common.default_dict import default_dict_new, default_dict_f
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.utils.xoroshiro import XOROSHIRO_ADDR 
+from src.utils.xoroshiro import XOROSHIRO_ADDR, reset 
 
 from src.board.gameboard import init_board, iterate_board, SingleBlock
 
@@ -33,6 +33,7 @@ from src.game.events import (
   turnComplete, 
   gameComplete,
   boardComplete,
+  boardSummary,
   simulationComplete, 
 )
 
@@ -52,10 +53,32 @@ from src.utils.utils import cords_to_index
 //                   CONSTRUCTOR INTERFACE
 //////////////////////////////////////////////////////////////
 
+@storage_var
+func GAME_KEY() -> (i: felt){
+
+  }
+
 @constructor
 func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(address: felt) {
   
     XOROSHIRO_ADDR.write(address);
+    GAME_KEY.write(1);
+    //generate_board();
+    return();
+  }
+
+func generate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}() {
+    alloc_locals; 
+
+    let (board_dict_init: DictAccess*) = default_dict_new(default_value=0);
+    let (board_dict_init: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, board_dict_init);
+    
+    let (block_arr_init: SingleBlock*) = alloc();
+    let (block_len_init, block_state_new) = board_summary(225, block_arr_init, board_dict_init);
+    boardSummary.emit(block_len_init, block_state_new);
+    
+    let (i) = GAME_KEY.read();
+    reset(i);
     return();
   }
 
@@ -111,7 +134,7 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
 //                  SIMULATE LOOP
 //////////////////////////////////////////////////////////////
 
-func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
+func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
   n_cycles: felt,
   cycle: felt,
   BOARD_DIMENSION: felt,
@@ -136,6 +159,9 @@ func simulation_loop{syscall_ptr: felt*, range_check_ptr}(
       
       let (block_len, block_state) = board_summary(225, block_arr, board_dict);
       boardComplete.emit(block_len, block_state);
+
+      let (i_new) = GAME_KEY.read();
+      GAME_KEY.write(i_new + 1);
       
       return ();
     }

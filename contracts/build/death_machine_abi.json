@@ -113,6 +113,17 @@
         "type": "struct"
     },
     {
+        "inputs": [
+            {
+                "name": "seed",
+                "type": "felt"
+            }
+        ],
+        "name": "reset",
+        "outputs": [],
+        "type": "function"
+    },
+    {
         "data": [
             {
                 "name": "ship_id",
@@ -230,6 +241,21 @@
         ],
         "keys": [],
         "name": "boardComplete",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "board_len",
+                "type": "felt"
+            },
+            {
+                "name": "board",
+                "type": "SingleBlock*"
+            }
+        ],
+        "keys": [],
+        "name": "boardSummary",
         "type": "event"
     },
     {
