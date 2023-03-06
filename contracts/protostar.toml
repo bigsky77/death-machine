@@ -4,4 +4,4 @@ lib-path = "lib"
 
 [contracts]
 death_machine = ["src/death_machine.cairo"]
-
+xoroshiro = ["src/utils/xoroshiro128_starstar.cairo"]
