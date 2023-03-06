@@ -5,7 +5,7 @@ export const BLANK_COLOR = '#f2f1ed'
 
 export const DB_NAME = 'DEATHMACHINE'
 export const N_CYCLES = 49
-export const INSTRUCTION_KEYS = ['w','a','s','d','x','k','h'];
+export const INSTRUCTION_KEYS = ['w','a','s','d'];
 export const DIM = 15
 export type InstructionKey = typeof INSTRUCTION_KEYS[number];
 
@@ -28,6 +28,14 @@ export const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+const atomType = ["STAR","STAR", "STAR", "PLANET", "PLANET", "BLANK", "BLANK", "BLANK", "ENEMY"];
+
+const initialArray = Array(225).fill("").map((item, index) => ({
+  id: `star${index + 1}`,
+  typ: atomType[Math.floor(Math.random() * 9)],
+  status: "ACTIVE",
+  index: { x: Math.floor(index / 15), y: index % 15 },
+}));
 
 export const BLANK_SOLUTION: Solution = {
     ships: [
@@ -36,10 +44,5 @@ export const BLANK_SOLUTION: Solution = {
         {id: 'ship2', type: 1, status: 1, index: { x:3, y:5 }, description: 3, pc_next: 0},
     ],
     programs: ['x,x,x,x,x,x,x', 'x,x,x,x,x,x,x', 'x,x,x,x,x,x,x'],
-    atoms: [
-      {id: 'star1', type: 1, status: 0, index: {x:10, y:13}},
-      {id: 'star2', type: 1, status: 1, index: {x:11, y:13}},
-      {id: 'star3', type: 1, status: 1, index: {x:12, y:13}},
-      {id: 'star4', type: 1, status: 1, index: {x:13, y:13}},
-    ],
+    atoms: initialArray,
 }

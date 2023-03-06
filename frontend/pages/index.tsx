@@ -22,6 +22,8 @@ export default function Home() {
                                                    {id: 3, location: 100, selected: false}])
 
   const [ATOMS, updateAtoms] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.index));
+  const [atomType, updateAtomType] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.typ));
+
   const [gameBoard, updateGameBoard] = useState(Array(225).fill(""));
   const [shipDescriptions, setShipDescriptions] = useState<string[]>(
         BLANK_SOLUTION.ships.map((ship) => ship.description)
@@ -36,7 +38,7 @@ export default function Home() {
 
   const ANIM_FRAME_LATENCY_DAW = 300;
   const runnable = true; //placeholder
-  const N_CYCLES = 100; //placeholder
+  const N_CYCLES = 49; //placeholder
 
   const { data } = useAllEvents();
   console.log("all events", data)
@@ -65,7 +67,7 @@ export default function Home() {
 
   const shipInitStates: ShipState[] = shipInitPositions.map((pos, ship_i) => {
           return {
-              status: ShipStatus.ALIVE,
+              status: "ACTIVE",
               index: pos,
               id: `ship${ship_i}`,
               typ: ShipType.SINGLETON,
@@ -76,10 +78,10 @@ export default function Home() {
 
   const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
           return {
-              status: AtomStatus.ACTIVE,
+              status: "ACTIVE",
               index: atom,
               id: `atom${i}`,
-              typ: atom.typ,
+              typ: atomType[i],
               possessed_by: null,
           };
       });
@@ -122,21 +124,7 @@ export default function Home() {
                 // Prepare input
                 const boardConfig: BoardConfig = {
                     dimension: DIM,
-                    // atom_faucets: FAUCET_POS_S.map((faucet_pos, index) => {
-                    //     return {
-                    //         id: `atom_faucet${index}`,
-                    //         typ: AtomType.VANILLA,
-                    //         index: { x: faucet_pos.x, y: faucet_pos.y },
-                    //     };
-                    // }),
-                    // atom_sinks: SINK_POS_S.map((sink_pos, index) => {
-                    //     return {
-                    //         id: `atom_sink${index}`,
-                    //         index: { x: sink_pos.x, y: sink_pos.y },
-                    //     };
-                    // }),
-                    // operators: operators,
-                };
+                  };
 
                 // Run simulation to get all frames and set to reference
                 const simulatedFrames = simulator(

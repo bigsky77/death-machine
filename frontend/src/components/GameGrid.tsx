@@ -15,13 +15,22 @@ export default function GameGrid({animationFrame, frames, spaceships, stars, ene
       setBoxes(boxes.map((box, i) => {
         const x = i % 15;
         const y = Math.floor(i / 15);
-        if(frames[animationFrame].ships.find(ship => ship.index.x === x && ship.index.y === y)){
+        if(frames[animationFrame].ships.find(ship => ship.index.x === x && ship.index.y === y && ship.status === "ACTIVE")){
           return "🚀"
-        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y)){
-          return  "🌠"
+        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "STAR" && atom.status === "ACTIVE")){
+          return "🌠"
+        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "PLANET" && atom.status === "ACTIVE")){
+          // planet emoji
+          return "🪐"
+        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.status === "INACTIVE")){
+          // planet emoji
+          return "-"
+        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "ENEMY")){
+          return "💀"
+        } else {
+          return "";
         }
-      }
-      ))
+      }))
     }
     setBoard();
     }
@@ -46,7 +55,7 @@ export default function GameGrid({animationFrame, frames, spaceships, stars, ene
           if (rowDiff <= 1 && colDiff <= 1 && spaceships[i].selected) {
               return '#FC72FF';
           } else if(rowDiff <= 1 && colDiff <= 1 ) {
-                return 'black'
+                return ''
             }
       }
       return '';

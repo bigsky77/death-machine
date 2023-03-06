@@ -111,7 +111,6 @@ function _simulate_one_cycle (
     var ships_new: Shipstate[] = []
     var atoms_new: AtomState[] = JSON.parse(JSON.stringify(atoms_curr)) // object cloning
     var grid_populated_bools_new: { [key: string] : boolean } = JSON.parse(JSON.stringify(grid_populated_bools)) // object cloning
-    var cost_accumulated_new = frame_curr.cost_accumulated // a primitive type variable (number) can be cloned by '='
     var notes = ''
 
     // Iterate through ships
@@ -135,18 +134,17 @@ function _simulate_one_cycle (
             // non-blocking
             ship_new.pc_next += 1
 
-            if (ship.index.x < boardConfig.dimension-1) {
+            if (ship.index.x < boardConfig.dimension-1 && ship.status == "ACTIVE") {
                 // move ship
                 ship_new.index = {x:ship.index.x+1, y:ship.index.y}
 
-                // move atom if possessed by this ship
-                let has_moved_atom = false
                 atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.status == AtomStatus.POSSESSED && atom.possessed_by == ship.id){
+                    if (atom.typ != "ENEMY" && atom.status == "ACTIVE" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
                         var atom_new = theArray[i]
-                        atom_new.index.x += 1
+                        atom_new.status = "INACTIVE"
                         theArray[i] = atom_new
-                        has_moved_atom = true
+                    } else if (atom.typ == "ENEMY" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
+                        ship_new.status = "INACTIVE"
                     }
                 });
 
@@ -163,18 +161,17 @@ function _simulate_one_cycle (
             // non-blocking
             ship_new.pc_next += 1
 
-            if (ship.index.x > 0) {
+            if (ship.index.x > 0 && ship.status == "ACTIVE") {
                 // move ship
                 ship_new.index = {x:ship.index.x-1, y:ship.index.y}
 
-                // move atom if possessed by this ship
-                let has_moved_atom = false
                 atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.status == AtomStatus.POSSESSED && atom.possessed_by == ship.id){
+                    if (atom.typ != "ENEMY" && atom.status == "ACTIVE" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
                         var atom_new = theArray[i]
-                        atom_new.index.x -= 1
+                        atom_new.status = "INACTIVE"
                         theArray[i] = atom_new
-                        has_moved_atom = true
+                    } else if (atom.typ == "ENEMY" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
+                        ship_new.status = "INACTIVE"
                     }
                 });
 
@@ -186,7 +183,7 @@ function _simulate_one_cycle (
                 notes += 'fail/'
             }
         }
-        else if (instruction == 's'){ // y-positive
+        else if (instruction == 's' && ship.status == "ACTIVE"){ // y-positive
 
             // non-blocking
             ship_new.pc_next += 1
@@ -194,14 +191,13 @@ function _simulate_one_cycle (
             if (ship.index.y < boardConfig.dimension-1) {
                 ship_new.index = {x:ship.index.x, y:ship.index.y+1}
 
-                // move atom if possessed by this ship
-                let has_moved_atom = false
                 atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.status == AtomStatus.POSSESSED && atom.possessed_by == ship.id){
+                    if (atom.typ != "ENEMY" && atom.status == "ACTIVE" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
                         var atom_new = theArray[i]
-                        atom_new.index.y += 1
+                        atom_new.status = "INACTIVE"
                         theArray[i] = atom_new
-                        has_moved_atom = true
+                    } else if (atom.typ == "ENEMY" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
+                        ship_new.status = "INACTIVE"
                     }
                 });
 
@@ -213,7 +209,7 @@ function _simulate_one_cycle (
                 notes += 'fail/'
             }
         }
-        else if (instruction == 'w'){ // y-negative
+        else if (instruction == 'w' && ship.status == "ACTIVE"){ // y-negative
 
             // non-blocking
             ship_new.pc_next += 1
@@ -221,14 +217,13 @@ function _simulate_one_cycle (
             if (ship.index.y > 0) {
                 ship_new.index = {x:ship.index.x, y:ship.index.y-1}
 
-                // move atom if possessed by this ship
-                let has_moved_atom = false
                 atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.status == AtomStatus.POSSESSED && atom.possessed_by == ship.id){
+                    if (atom.typ != "ENEMY" && atom.status == "ACTIVE" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
                         var atom_new = theArray[i]
-                        atom_new.index.y -= 1
+                        atom_new.status = "INACTIVE"
                         theArray[i] = atom_new
-                        has_moved_atom = true
+                    } else if (atom.typ == "ENEMY" && atom.index.x == ship_new.index.x && atom.index.y == ship_new.index.y){
+                        ship_new.status = "INACTIVE"
                     }
                 });
 
@@ -240,192 +235,7 @@ function _simulate_one_cycle (
                 notes += 'fail/'
             }
         }
-        else if (instruction == 'z'){ // GET
 
-            // non-blocking
-            ship_new.pc_next += 1
-
-            if (
-                    (ship.status == Shipstatus.OPEN) &&
-                    (grid_populated_bools_new[JSON.stringify(ship.index)] == true) // atom available for grab here
-            ) {
-                ship_new.status = Shipstatus.CLOSE
-                grid_populated_bools_new[JSON.stringify(ship.index)] = false
-
-                atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if ( isIdenticalGrid(atom.index, ship.index) && atom.status==AtomStatus.FREE ){
-                        var atom_new = theArray[i]
-                        atom_new.status = AtomStatus.POSSESSED
-                        atom_new.possessed_by = ship.id
-                        theArray[i] = atom_new
-                    }
-                });
-
-                // update cost
-                cost_accumulated_new += DYNAMIC_COSTS.SINGLETON_GET
-
-                // add note
-                notes += 'success/'
-            }
-            else {
-                // add note
-                notes += 'fail/'
-            }
-        }
-        else if (instruction == 'x'){ // PUT
-
-            // non-blocking
-            ship_new.pc_next += 1
-
-            if (
-                    (ship.status == ShipStatus.CLOSE) &&
-                    (grid_populated_bools_new[JSON.stringify(ship.index)] == false) // can drop atom here
-            ) {
-                ship_new.status = Shipstatus.OPEN
-                grid_populated_bools_new[JSON.stringify(ship.index)] = true
-
-                atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.possessed_by == ship.id){
-                        var atom_new = theArray[i]
-                        atom_new.status = AtomStatus.FREE
-                        atom_new.possessed_by = null
-                        theArray[i] = atom_new
-                    }
-                });
-
-                // add note
-                notes += 'success/'
-            }
-            else {
-                // add note
-                notes += 'fail/'
-            }
-        }
-        else if (instruction == 'g'){ // block-until-pickup
-            // Note: the ship will wait at this instruction until its location has a free atom to be picked up;
-            // it then picks up the free atom in the same frame, and proceed to its next instruction in the next frame;
-            // if the ship is closed when encountering this instruction (i.e. not able to pick up), this instruction is treated as no-op.
-
-            if (ship.status == Shipstatus.CLOSE) { // treated as no-op; does not incur cost
-                ship_new.pc_next += 1
-
-                // add note
-                notes += 'no-op/'
-            }
-            else if (grid_populated_bools_new[JSON.stringify(ship.index)] == false) { // no atom for pick-up
-                ship_new.pc_next = ship.new.pc_next // blocked
-
-                // update cost
-                cost_accumulated_new += DYNAMIC_COSTS.SINGLETON_BLOCKED
-
-                // add note
-                notes += 'blocked/'
-            }
-            else {
-                ship_new.pc_next += 1
-
-                // pick up the atom
-                // TODO: refactor the following code which is copied from the if statement for GET
-                ship_new.status = Shipstatus.CLOSE
-                grid_populated_bools_new[JSON.stringify(ship.index)] = false
-
-                atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if ( isIdenticalGrid(atom.index, ship.index) && atom.status==AtomStatus.FREE ){
-                        var atom_new = theArray[i]
-                        atom_new.status = AtomStatus.POSSESSED
-                        atom_new.possessed_by = ship.id
-                        theArray[i] = atom_new
-                    }
-                });
-
-                // update cost
-                cost_accumulated_new += DYNAMIC_COSTS.SINGLETON_GET
-
-                // add note
-                notes += 'success/'
-            }
-
-        }
-        else if (instruction == 'h'){ // block-until-drop
-            // the ship will wait at this instruction until its location is empty for drop-off;
-            // it then drops off the atom in possession in the same frame, and proceed to its next instruction in the next frame;
-            // if the ship is open when encountering this instruction
-            // (i.e. not possessing an atom for drop-off), this instruction is treated as no-op.
-
-
-            if (ship.status == Shipstatus.OPEN) { // treated as no-op; does not incur cost
-                ship_new.pc_next += 1
-
-                // add note
-                notes += 'no-op/'
-            }
-            else if (grid_populated_bools_new[JSON.stringify(ship.index)] == true) { // can't drop because grid populated
-                ship_new.pc_next = ship.new.pc_next // blocked
-
-                // update cost
-                cost_accumulated_new += DYNAMIC_COSTS.SINGLETON_BLOCKED
-
-                // add note
-                notes += 'blocked/'
-            }
-            else {
-                ship_new.pc_next += 1
-
-                // drop the atom
-                // TODO: refactor the following code which is copied from the if statement for PUT
-
-                ship_new.status = Shipstatus.OPEN
-                grid_populated_bools_new[JSON.stringify(ship.index)] = true
-
-                atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.possessed_by == ship.id){
-                        var atom_new = theArray[i]
-                        atom_new.status = AtomStatus.FREE
-                        atom_new.possessed_by = null
-                        theArray[i] = atom_new
-                    }
-                });
-
-                // update cost
-                cost_accumulated_new += DYNAMIC_COSTS.SINGLETON_PUT
-
-                // add note
-                notes += 'success/'
-            }
-        }
-        else if (instruction == 'c'){ // CARELESS PUT
-
-            // non-blocking
-            ship_new.pc_next += 1
-
-            if (ship.status == Shipstatus.CLOSE) {
-                ship_new.status = Shipstatus.OPEN
-                let index = 0
-                let populated = grid_populated_bools_new[JSON.stringify(ship.index)]
-
-                atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
-                    if (atom.possessed_by == ship.id && !populated){
-                        var atom_new = theArray[i]
-                        atom_new.status = AtomStatus.FREE
-                        atom_new.possessed_by = null
-                        theArray[i] = atom_new
-                        grid_populated_bools_new[JSON.stringify(ship.index)] = true
-                    } else if (atom.possessed_by == ship.id){
-                        index = i
-                    }
-                });
-
-                if (index != 0){
-                    atoms_new.splice(index, 1)
-                }
-
-                // update cost
-                cost_accumulated_new += DYNAMIC_COSTS.SINGLETON_CARELESS_PUT
-
-                // add note
-                notes += 'success/'
-            }
-        }
         else if (instruction == '.'){
             // non-blocking
             ship_new.pc_next += 1
@@ -440,10 +250,7 @@ function _simulate_one_cycle (
    const frame_new: Frame = {
         ships: ships_new,
         atoms: atoms_new,
-        //operatorStates: operator_states_new,
         grid_populated_bools: grid_populated_bools_new,
-        //delivered_accumulated: delivered_accumulated_new,
-        //cost_accumulated: cost_accumulated_new,
         notes: notes,
     }
     return frame_new
