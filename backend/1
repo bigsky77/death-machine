@@ -1,7 +1,7 @@
 version: '3'
 services:
   devnet:
-    image: shardlabs/starknet-devnet:next-arm-seed0
+    image: shardlabs/starknet-devnet:next-seed0
     command:
     - "--host=0.0.0.0"
     - "--port=5050"
@@ -9,7 +9,7 @@ services:
     ports:
     - 5050:5050
     networks:
-        - devnet
+    - devnet
   
   apibara:
     image: apibara/starknet:92f85b8d7d926ee3e055e638dea91227ffa611e0
@@ -18,8 +18,8 @@ services:
     # apibara requires devnet to be available, which is not always the case
     # when the containers first launch
     # so restart it until it's working
-    #depends_on:
-    #- devnet
+    depends_on:
+    - devnet
     restart: always
     command:
     - "/usr/local/bin/apibara-starknet"
@@ -31,7 +31,7 @@ services:
     volumes:
     - apibara-data:/data
     networks:
-        - devnet
+    - devnet
 
 networks:
   devnet:

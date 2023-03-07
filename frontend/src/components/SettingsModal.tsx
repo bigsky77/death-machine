@@ -35,7 +35,17 @@ export default function SettingModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const makeshift_button_style = {border: "1px solid black", marginLeft: "0.6rem", marginRight: "0.2rem", height: "2rem", width: "2rem", backgroundColor: BLANK_COLOR };
+  const makeshift_button_style = {border: "1px solid black",
+                                  borderRadius: "0",
+                                  marginLeft: "0.6rem",
+                                  marginRight: "0.2rem",
+                                  height: "2rem",
+                                  width: "2rem",
+                                  backgroundColor: BLANK_COLOR,
+                                  '&:hover': {
+                                    border: '2px solid #FC72FF',
+                                    boxShadow: '4px 4px 0px #000000'}
+                                 };
   
   const MenuItemStyled = ({ children, sx = {}, disabled=false }: { children: React.ReactNode; sx?: SxProps; disabled?: boolean }) => {
         return (
@@ -47,7 +57,7 @@ export default function SettingModal() {
   
   return (
     <div>
-      <Button onClick={handleOpen} style={makeshift_button_style}><SettingsIcon sx={{color: 'black'}}/></Button>
+      <Button onClick={handleOpen} sx={makeshift_button_style}><SettingsIcon sx={{color: 'black' }}/></Button>
       <Modal
         open={open}
         onClose={handleClose}

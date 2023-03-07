@@ -62,8 +62,10 @@ func GAME_KEY() -> (i: felt){
 func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(address: felt) {
   
     XOROSHIRO_ADDR.write(address);
+
     GAME_KEY.write(1);
-    //generate_board();
+    generate_board();
+
     return();
   }
 

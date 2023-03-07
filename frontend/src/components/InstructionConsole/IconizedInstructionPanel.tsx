@@ -41,7 +41,7 @@ const IconizedInstructionPanel = ({
                             marginRight: "0.3rem",
                             padding: "0.3rem",
                             border: "1px solid #CCCCCC",
-                            borderRadius: "0.8rem",
+                            borderRadius: "2",
                             backgroundColor: colors[key],
                             transitionDuration: "50ms",
                             cursor: "pointer",

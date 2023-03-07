@@ -14,7 +14,6 @@ import InstructionConsole from './InstructionConsole/InstructionConsole'
 import EventReader from './EventReader'
 import MidScreenControl from './ui_settings/MidScreenControl'
 import { useAccount, useStarknetExecute, useTransactionReceipt } from "@starknet-react/core";
-import backGroundImage from "../../../../media/ghost-2023-02-26_14-01.png"
 
 export default function Layout({animationFrame,
                                 frames,

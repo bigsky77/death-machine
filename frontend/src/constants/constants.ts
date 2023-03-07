@@ -37,6 +37,7 @@ const initialArray = Array(225).fill("").map((item, index) => ({
   index: { x: Math.floor(index / 15), y: index % 15 },
 }));
 
+
 export const BLANK_SOLUTION: Solution = {
     ships: [
         {id: 'ship0', type: 1, status: 1, index: { x:3, y:3 }, description: 1, pc_next: 0},

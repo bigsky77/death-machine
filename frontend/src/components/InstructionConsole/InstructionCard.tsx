@@ -109,12 +109,12 @@ export default function InstructionCard(
   
   return(
       <>
-      <Box display="flex" onClick={() => selectSpaceship(id)} sx={{borderRadius: "4px", 
+      <Box display="flex" onClick={() => selectSpaceship(id)} sx={{borderRadius: "1",
                                                        backgroundColor: spaceships[spaceshipIndex].selected ? '#FFFFFFFF' : "",
                                                        boxShadow: spaceships[spaceshipIndex].selected ? "4" : "", 
                                                        border: spaceships[spaceshipIndex].selected ? "1px solid #FC72FF" : "1px solid black", 
                                                        height: "40px", pt: "5px", 
-                                                       ":hover": {border: '1px solid #FC72FF'} }} > 
+                                                                   ":hover": {border: '2px solid #FC72FF', boxShadow: '4px 4px 0px #000000'} }}>
       <Image src={Starship} height={30} sx={{height: "10px", width: "20px", color: "black"}}/>
       
       <Stack spacing={1} direction="row" ml={4} pt={0.2} mb={2}>

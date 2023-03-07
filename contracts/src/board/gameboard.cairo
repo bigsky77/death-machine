@@ -79,11 +79,16 @@ func generate_type{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_p
       return(block_type=0);
       }
 
-    let y = is_le(res, 7);
+    let y = is_le(res, 6);
     if(y == 1){  
       return(block_type=2);
       }
-
+    
+    let z = is_le(res, 9);
+    if(z == 1){  
+      return(block_type=3);
+      }
+    
     let b = is_le(res, 10);
     if(b == 1){  
       return(block_type=1);

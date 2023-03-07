@@ -15,7 +15,6 @@ import ShipState, {ShipStatus, ShipType} from '../src/types/ShipState';
 import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
 
 export default function Home() {
-
   const [shipInitPositions, setShipInitPositions] = useState<Grid[]>(BLANK_SOLUTION.ships.map((ship) => ship.index));
   const [spaceships, updateSpaceShips] = useState([{id: 1, location: 200, selected: false},
                                                    {id: 2, location: 150, selected: false},

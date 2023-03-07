@@ -39,9 +39,13 @@ export default function GameGrid({animationFrame, frames, spaceships, stars, ene
   },[animationFrame]);
   
   function checkAdjacent(a) {
-    for(let i = 0; i < spaceships.length; i++){
-        const b = spaceships[i].location;
-          if (a === b) continue;
+    if(frames[animationFrame]){
+    for(let i = 0; i < frames[animationFrame].ships; i++){
+        const b = frames[animationFrame].ships[i];
+        // convert b to index between 1-225
+        const bIndex = b.index.x + b.index.y * 15;
+        console.log("bIndex", bIndex)
+          if (a === bIndex) continue;
 
           const rowA = Math.floor(a / 15);
           const colA = a % 15;
@@ -55,10 +59,13 @@ export default function GameGrid({animationFrame, frames, spaceships, stars, ene
           if (rowDiff <= 1 && colDiff <= 1 && spaceships[i].selected) {
               return '#FC72FF';
           } else if(rowDiff <= 1 && colDiff <= 1 ) {
-                return ''
+                return 'black'
             }
-      }
+        }
       return '';
+    } else {
+      return '';
+    }
     };
 
 return (
