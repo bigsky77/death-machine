@@ -9,10 +9,10 @@ services:
     ports:
     - 5050:5050
     networks:
-        - devnet
+    - devnet
   
   apibara:
-    image: apibara/starknet:92f85b8d7d926ee3e055e638dea91227ffa611e0
+    image: apibara/starknet:d36179acdb61e469f3fabe1055575ebcd34ee12e-arm64v8  
     ports:
     - 7171:7171
     # apibara requires devnet to be available, which is not always the case
@@ -31,7 +31,7 @@ services:
     volumes:
     - apibara-data:/data
     networks:
-        - devnet
+    - devnet
 
 networks:
   devnet:
