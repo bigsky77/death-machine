@@ -19,13 +19,28 @@ import StarShipBox from './StarShipBox'
 import StarShipBoxBlank from './StarShipBoxBlank'
 import InstructionCard from './InstructionCard.tsx'
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import Grid from "../../types/Grid";
+
+interface MainControllerProps {
+  pc: number;
+  shipSelected;
+  updateShipSelected;
+  onShipInitPositionsChange: (shipInitPositions: Grid[]) => void;
+  shipInitPositions: Grid[],
+  spaceships: string[],
+  onProgramsChange: (programs: string[]) => void;
+  programs: string[];
+}
 
 export default function MainController({
   pc, 
-  selectSpaceship, 
+  shipSelected,
+  updateShipSelected,
+  onShipInitPositionsChange,
+  shipInitPositions,
   spaceships, 
   onProgramsChange, 
-  programs}: props) { 
+  programs}: MainControllerProps) {
   
   let programKeyDownInit = {};
   for (const key of INSTRUCTION_KEYS) {
@@ -49,6 +64,12 @@ export default function MainController({
 
         console.log("key pressed", key);
     };
+
+  function handleShipInitPositionChange(ship_i: number, position: Grid) {
+        let newPositions = JSON.parse(JSON.stringify(shipInitPositions));
+        newPositions[ship_i] = position;
+        onShipInitPositionsChange(newPositions);
+    }
 
   return(        
       <Box
@@ -84,11 +105,17 @@ export default function MainController({
               >
       </p>
         <IconizedInstructionPanel programKeyDown={programKeyDown}/>
-          <InstructionCard id="a" 
-                       spaceshipIndex={0} 
+          <InstructionCard
+                       id="a"
+                       shipIndex={0}
                        pc={pc} 
-                       program={programs[0]} 
-                       selectSpaceship={selectSpaceship}
+                       program={programs[0]}
+                       shipSelected={shipSelected[0]}
+                       updateShipSelected={updateShipSelected}
+                       position={shipInitPositions[0]}
+                       onPositionChange={(index, position) => {
+                                              handleShipInitPositionChange(index, position);
+                                          }}
                        onProgramChange={(index, program) =>
                                             onProgramsChange(programs.map((p, i) => (i === index ? program : p)))
                                          }
@@ -99,11 +126,17 @@ export default function MainController({
                                               handleKeyInputProgram(event, "up");
                                           }}
                        spaceships={spaceships} sx={{p: "2rem"}} />
-          <InstructionCard id="b" 
-                       spaceshipIndex={1} 
+          <InstructionCard
+                       id="b"
+                       shipIndex={1}
                        pc={pc} 
                        program={programs[1]} 
-                       selectSpaceship={selectSpaceship}
+                       shipSelected={shipSelected[1]}
+                       updateShipSelected={updateShipSelected}
+                       position={shipInitPositions[1]}
+                       onPositionChange={(index, position) => {
+                                              handleShipInitPositionChange(index, position);
+                                          }}
                        onProgramChange={(index, program) =>
                                               onProgramsChange(programs.map((p, i) => (i === index ? program : p)))
                                           }
@@ -115,11 +148,17 @@ export default function MainController({
                                               handleKeyInputProgram(event, "up");
                                           }}
                        spaceships={spaceships} sx={{p: "2rem"}} />
-          <InstructionCard id="c" 
-                       spaceshipIndex={2} 
+          <InstructionCard
+                       id="c"
+                       shipIndex={2}
                        pc={pc} 
                        program={programs[2]} 
-                       selectSpaceship={selectSpaceship}
+                       shipSelected={shipSelected[2]}
+                       updateShipSelected={updateShipSelected}
+                       position={shipInitPositions[2]}
+                       onPositionChange={(index, position) => {
+                                              handleShipInitPositionChange(index, position);
+                                          }}
                        onProgramChange={(index, program) =>
                                               onProgramsChange(programs.map((p, i) => (i === index ? program : p)))
                                           }

@@ -18,12 +18,15 @@ import { useTranslation } from "react-i18next";
 import styles from "../../../styles/Home.module.css";
 import Image from 'next/image'
 import Starship from '../../../public/starship.png'
+import Grid from "../../types/Grid";
 
-interface SpaceShipInputProps {
-    spaceshipIndex: number;
-    id,
-    spaceships, 
-    selectSpaceship,
+interface ShipInputProps {
+    shipIndex: number;
+    position: Grid;
+    onPositionChange: (shipIndex: number, position: Grid) => void;
+    id: number,
+    shipSelected,
+    updateShipSelected
     program: string;
     pc: number;
     onProgramChange: (mechIndex: number, program: string) => void;
@@ -34,16 +37,18 @@ interface SpaceShipInputProps {
 
 export default function InstructionCard(
     {
-    spaceshipIndex,
+    shipIndex,
+    position,
+    onPositionChange,
     id,
-    spaceships,
-    selectSpaceship,
+    shipSelected,
+    updateShipSelected,
     program, 
     pc, 
     onProgramChange,
     onProgramDelete,
     handleKeyDown: onKeyDown,
-    handleKeyUp}: SpaceShipInputProps) {
+    handleKeyUp}: ShipInputProps) {
   const { t } = useTranslation();
 
   const instructions: string[] = program ? program.split(",") : [];
@@ -94,7 +99,7 @@ export default function InstructionCard(
       } else if (Object.keys(INSTRUCTION_ICON_MAP).includes(instruction)) {
           const newInstructions = [...instructions];
           newInstructions[selectedInstructionIndex] = instruction;
-          onProgramChange(spaceshipIndex, newInstructions.join(","));
+          onProgramChange(shipIndex, newInstructions.join(","));
       }
   };
 
@@ -109,21 +114,62 @@ export default function InstructionCard(
   
   return(
       <>
-      <Box display="flex" onClick={() => selectSpaceship(id)} sx={{borderRadius: "1",
-                                                       backgroundColor: spaceships[spaceshipIndex].selected ? '#FFFFFFFF' : "",
-                                                       boxShadow: spaceships[spaceshipIndex].selected ? "4" : "", 
-                                                       border: spaceships[spaceshipIndex].selected ? "1px solid #FC72FF" : "1px solid black", 
+      <Box display="flex" onClick={() => updateShipSelected(id)} sx={{borderRadius: "1",
+                                                       backgroundColor: shipSelected ? '#FFFFFFFF' : "",
+                                                       boxShadow: shipSelected ? "4" : "",
+                                                       border: shipSelected ? "1px solid #FC72FF" : "1px solid black",
                                                        height: "40px", pt: "5px", 
-                                                                   ":hover": {border: '2px solid #FC72FF', boxShadow: '4px 4px 0px #000000'} }}>
+                                                       ":hover": {border: '2px solid #FC72FF', boxShadow: '4px 4px 0px #000000'} }}>
       <Image src={Starship} height={30} sx={{height: "10px", width: "20px", color: "black"}}/>
       
-      <Stack spacing={1} direction="row" ml={4} pt={0.2} mb={2}>
+      <Stack spacing={2} direction="row" ml={1.5} pt={0.2} mb={2}>
         <div className={styles.programWrapper} style={{height: "25px", 
                                               borderRadius: "5px", 
                                               backgroundColor: "#FFFFFF00" }}>
-         {instructions.map((instruction, index) => (
+        <input
+            className={styles.program}
+            onChange={(event) => {
+                if (isNaN(parseInt(event.target.value))) return;
+                onPositionChange(shipIndex, {
+                    ...position,
+                    x: parseInt(event.target.value),
+                });
+            }}
+            defaultValue={position.x}
+            value={position.x}
+            style={{
+                width: "25px",
+                height: "25px",
+                textAlign: "center",
+                border: "1px solid #CCCCCC",
+                borderRadius: "10px 0 0 10px",
+            }}
+        ></input>
+
+        <input
+            className={styles.program}
+            onChange={(event) => {
+                if (isNaN(parseInt(event.target.value))) return;
+                onPositionChange(shipIndex, {
+                    ...position,
+                    y: parseInt(event.target.value),
+                });
+            }}
+            defaultValue={position.y}
+            value={position.y}
+            style={{
+                width: "25px",
+                height: "25px",
+                textAlign: "center",
+                marginRight: "0.8rem",
+                border: "1px solid #CCCCCC",
+                borderLeft: "0px",
+                borderRadius: "0 10px 10px 0",
+            }}
+        ></input>
+        {instructions.map((instruction, index) => (
            <SingleInstruction
-                    key={`input-row-${spaceshipIndex}`}
+                    key={`input-row-${shipIndex}`}
                     instruction={instruction}
                     active={currentInstructionIndex === index}
                     selected={selectedInstructionIndex === index}

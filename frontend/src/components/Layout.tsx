@@ -14,24 +14,28 @@ import InstructionConsole from './InstructionConsole/InstructionConsole'
 import EventReader from './EventReader'
 import MidScreenControl from './ui_settings/MidScreenControl'
 import { useAccount, useStarknetExecute, useTransactionReceipt } from "@starknet-react/core";
+import   WelcomeApp  from "./WelcomeOverlay";
 
 export default function Layout({animationFrame,
                                 frames,
                                 pc,
-                                spaceships, 
+                                shipSelected,
+                                updateShipSelected,
                                 stars,
                                 enemies,
                                 selectSpaceship, 
                                 generateGameBoard, 
                                 onProgramsChange, 
                                 programs, 
-                                midScreenControlProps, 
+                                midScreenControlProps,
+                                onShipInitPositionsChange,
+                                shipInitPositions,
                                 midScreenControlHandleClick,
                                 midScreenControlHandleSlideChange,
                                 handleClick, 
                                 handleSlideChange,
                                 callData}: props) {
-  
+
   const { account, address, status } = useAccount();
   const { execute } = useStarknetExecute({ calls: callData });
   
@@ -92,6 +96,7 @@ export default function Layout({animationFrame,
                 display="flex" 
                 flexDirection="column" 
                 columnSpacing={0} gap={1}>
+            <WelcomeApp />
             <MainController generateGameBoard={generateGameBoard} handleClickSubmit={handleClickSubmit}/>
             <MidScreenControl runnable={midScreenControlProps.runnable}
                                     animationFrame={midScreenControlProps.animationFrame}
@@ -99,13 +104,18 @@ export default function Layout({animationFrame,
                                     animationState={midScreenControlProps.animationState}
                                     handleClick={midScreenControlHandleClick}
                                     handleSlideChange={midScreenControlHandleSlideChange} />
-            <InstructionConsole pc={pc} selectSpaceship={selectSpaceship}  spaceships={spaceships} onProgramsChange={onProgramsChange} programs={programs}/>
+            <InstructionConsole pc={pc}
+                                shipSelected={shipSelected}
+                                updateShipSelected={updateShipSelected}
+                                onShipInitPositionsChange={onShipInitPositionsChange}
+                                shipInitPositions={shipInitPositions}
+                                onProgramsChange={onProgramsChange}
+                                programs={programs}/>
             <Grid sx={{ width: 530, height: 500, border: '1px grey' }}>
             <GameGrid animationFrame={animationFrame}
                       frames={frames}
-                      spaceships={spaceships}
-                      stars={stars}
-                      enemies={enemies} />
+                      shipSelected={shipSelected}
+                      />
             </Grid>
           </Grid>
         </Box>

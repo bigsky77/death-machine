@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 
-export default function GameGrid({animationFrame, frames, spaceships, stars, enemies, updateSpaceships}) {
+export default function GameGrid({animationFrame, frames, shipSelected, updateSpaceships}) {
   const ROW_CONST = 225; 
-  const [boxes, setBoxes] = useState(Array(225).fill(""));
-  //const stars = ["🌠", "🌠", "🪐"]
-  const escape =[]
+  const [boxes, setBoxes] = useState(Array(225).fill("🌠"));
 
   useEffect(() => {
     // ensure frames is defined

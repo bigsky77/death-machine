@@ -16,9 +16,7 @@ import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
 
 export default function Home() {
   const [shipInitPositions, setShipInitPositions] = useState<Grid[]>(BLANK_SOLUTION.ships.map((ship) => ship.index));
-  const [spaceships, updateSpaceShips] = useState([{id: 1, location: 200, selected: false},
-                                                   {id: 2, location: 150, selected: false},
-                                                   {id: 3, location: 100, selected: false}])
+  const [shipSelected, updateShipSelected] = useState(BLANK_SOLUTION.ships.map((ship) => ship.selected));
 
   const [ATOMS, updateAtoms] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.index));
   const [atomType, updateAtomType] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.typ));
@@ -211,8 +209,8 @@ export default function Home() {
         frames={frames}
         callData={calls}
         pc={pc}
-        spaceships={spaceships} 
-        selectSpaceship={selectSpaceship}
+        shipSelected={shipSelected}
+        updateShipSelected={updateShipSelected}
         onProgramsChange={setPrograms}
         programs={programs}
         midScreenControlProps={{
@@ -223,6 +221,8 @@ export default function Home() {
                 }}
         midScreenControlHandleClick={handleClick}
         midScreenControlHandleSlideChange={handleSlideChange}
+        shipInitPositions={shipInitPositions}
+        onShipInitPositionsChange={setShipInitPositions}
         />
     </>
   )
