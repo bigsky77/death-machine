@@ -1,5 +1,17 @@
 version: '3'
 services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: apibara
+      MONGO_INITDB_ROOT_PASSWORD: apibara
+    ports:
+    - 27018:27017
+    volumes:
+    - mongo-data:/data/db
+
+
   devnet:
     image: shardlabs/starknet-devnet:next-arm-seed0
     command:
@@ -8,8 +20,8 @@ services:
     - "--disable-rpc-request-validation"
     ports:
     - 5050:5050
-    networks:
-    - devnet
+      #    networks:
+      #- devnet
   
   apibara:
     image: apibara/starknet:d36179acdb61e469f3fabe1055575ebcd34ee12e-arm64v8  
@@ -30,11 +42,12 @@ services:
     - OTEL_SDK_DISABLED=true # disable tracing/metrics
     volumes:
     - apibara-data:/data
-    networks:
-    - devnet
+      #networks:
+      #   - devnet
 
 networks:
   devnet:
 
 volumes:
   apibara-data:
+  mongo-data:
