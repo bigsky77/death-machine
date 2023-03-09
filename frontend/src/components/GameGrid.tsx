@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 
-export default function GameGrid({animationFrame, frames, shipSelected, updateSpaceships}) {
+export default function GameGrid({animationFrame, frames, shipInitPositions, shipSelected, updateSpaceships}) {
   const ROW_CONST = 225; 
   const [boxes, setBoxes] = useState(Array(225).fill("🌠"));
 
@@ -34,7 +34,7 @@ export default function GameGrid({animationFrame, frames, shipSelected, updateSp
     }
     console.log("Board", boxes)
     console.log("Frame", frames[animationFrame]);
-  },[animationFrame]);
+  },[animationFrame, shipInitPositions]);
   
   function checkAdjacent(a) {
     if(frames[animationFrame]){

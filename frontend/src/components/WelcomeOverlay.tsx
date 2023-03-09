@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Box, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { Typography } from '@mui/material';
-import gruvMachine from '../../public/gruv-machine.png';
+import gruvMachine from '../../public/gruvbox-smol.png';
+import Image from 'next/image'
 
 function WelcomeOverlay({ onClose }) {
   return (
@@ -31,6 +32,8 @@ function WelcomeOverlay({ onClose }) {
           flexDirection: 'column',
           justifyContent: 'space-between',
           backgroundImage: `url(${gruvMachine})`,
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
         }}
       >
         <Box sx={{pl: 10, alignItems: 'center', justifyContent: 'center'}}>
@@ -51,7 +54,6 @@ function WelcomeOverlay({ onClose }) {
           size="small"
           sx={{pl: 0, pr: 1, top: 160}}
         />
-          <p>Click "Begin" to start.</p>
         </Box>
         <Button variant="contained" onClick={onClose}>
           Join Waitlist
@@ -61,11 +63,12 @@ function WelcomeOverlay({ onClose }) {
   );
 }
 
-export default function WelcomeApp() {
+export default function WelcomeApp({generateBoard}: props) {
   const [showWelcome, setShowWelcome] = useState(true);
 
   function handleWelcomeClose() {
     setShowWelcome(false);
+    generateBoard();
   }
 
   return (

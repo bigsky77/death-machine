@@ -34,6 +34,7 @@ export default function Layout({animationFrame,
                                 midScreenControlHandleSlideChange,
                                 handleClick, 
                                 handleSlideChange,
+                                generateBoard,
                                 callData}: props) {
 
   const { account, address, status } = useAccount();
@@ -96,7 +97,7 @@ export default function Layout({animationFrame,
                 display="flex" 
                 flexDirection="column" 
                 columnSpacing={0} gap={1}>
-            <WelcomeApp />
+            <WelcomeApp generateBoard={generateBoard}/>
             <MainController generateGameBoard={generateGameBoard} handleClickSubmit={handleClickSubmit}/>
             <MidScreenControl runnable={midScreenControlProps.runnable}
                                     animationFrame={midScreenControlProps.animationFrame}
@@ -115,6 +116,7 @@ export default function Layout({animationFrame,
             <GameGrid animationFrame={animationFrame}
                       frames={frames}
                       shipSelected={shipSelected}
+                      shipInitPositions={shipInitPositions}
                       />
             </Grid>
           </Grid>

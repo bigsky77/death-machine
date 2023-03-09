@@ -1,11 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import Layout from '../src/components/Layout'
 import { BLANK_SOLUTION, DIM, N_CYCLES } from "../src/constants/constants";
-import { coordinateToIndex, programsToInstructionSets, packProgram } from "../src/utils/programPacker";
+import { programsToInstructionSets, packProgram } from "../src/utils/programPacker";
 import { DEATHMACHINE_ADDR, DEATHMACHINE_ABI } from "../src/components/death_machine_contract";
 import { useAllEvents } from "../lib/api"
 import { Grid } from "../src/components/Grid"
@@ -21,7 +17,6 @@ export default function Home() {
   const [ATOMS, updateAtoms] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.index));
   const [atomType, updateAtomType] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.typ));
 
-  const [gameBoard, updateGameBoard] = useState(Array(225).fill(""));
   const [shipDescriptions, setShipDescriptions] = useState<string[]>(
         BLANK_SOLUTION.ships.map((ship) => ship.description)
     );
@@ -35,7 +30,6 @@ export default function Home() {
 
   const ANIM_FRAME_LATENCY_DAW = 300;
   const runnable = true; //placeholder
-  const N_CYCLES = 49; //placeholder
 
   const { data } = useAllEvents();
   console.log("all events", data)
@@ -47,7 +41,7 @@ export default function Home() {
             }
             return spaceship;
         });
-      updateSpaceShips(updatedShips);
+      updateShips(updatedShips);
     }
 
   const selectSpaceship= (id) => {
@@ -59,7 +53,7 @@ export default function Home() {
               }
             return spaceship;
         });
-      updateSpaceShips(selectedSpaceShip);
+      updateShipSelected(selectedSpaceShip);
     }
 
   const shipInitStates: ShipState[] = shipInitPositions.map((pos, ship_i) => {
@@ -82,6 +76,24 @@ export default function Home() {
               possessed_by: null,
           };
       });
+
+  function generateBoard(){
+    let instructionSets = programsToInstructionSets(programs);
+    const boardConfig: BoardConfig = {
+          dimension: DIM,
+        };
+
+      const simulatedFrames = simulator(
+          N_CYCLES,
+          shipInitStates,
+          atomInitStates,
+          instructionSets, // instructions
+          boardConfig
+      ) as Frame[];
+
+      setFrames(simulatedFrames);
+      setAnimationFrame(1);
+  }
 
   function handleClick(mode: string) {
         if (mode == "NextFrame" && animationState != "Run") {
@@ -175,18 +187,6 @@ export default function Home() {
         });
     };
 
-  const programCounterLoop = () => {
-      setPc((prev) => {
-          if(prev >= 7){
-              generateGameBoard
-              return 0;
-            } else {
-                return prev + 1;
-              }
-        });
-    } 
-
-
   const calls = useMemo(() => {
     const program_instruction_set = programsToInstructionSets(programs);
     console.log("program_instruction_set", program_instruction_set)
@@ -223,6 +223,7 @@ export default function Home() {
         midScreenControlHandleSlideChange={handleSlideChange}
         shipInitPositions={shipInitPositions}
         onShipInitPositionsChange={setShipInitPositions}
+        generateBoard={generateBoard}
         />
     </>
   )

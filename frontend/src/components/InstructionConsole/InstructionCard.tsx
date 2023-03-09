@@ -75,7 +75,7 @@ export default function InstructionCard(
         if (event.code === "Backspace") {
             // Backspace - Remove last instruction
             const newProgram = instructions.slice(0, -1);
-            onProgramChange(spaceshipIndex, newProgram.join(","));
+            onProgramChange(shipIndex, newProgram.join(","));
         } else {
             onKeyDown(event);
             console.log("program", instructions)
@@ -90,7 +90,7 @@ export default function InstructionCard(
               ...instructions.slice(0, selectedInstructionIndex),
               ...instructions.slice(selectedInstructionIndex + 1),
           ];
-          onProgramChange(spaceshipIndex, newProgram.join(","));
+          onProgramChange(shipIndex, newProgram.join(","));
           setSelectedInstructionIndex((prev) => (prev > 0 ? prev - 1 : 0));
       } else if (event.key === "ArrowLeft") {
           setSelectedInstructionIndex((prev) => (prev > 0 ? prev - 1 : 0));
@@ -108,7 +108,7 @@ export default function InstructionCard(
             return;
         } else {
             const newProgram = [...instructions, instruction].join(",");
-            onProgramChange(spaceshipIndex, newProgram);
+            onProgramChange(shipIndex, newProgram);
         }
   };
   
@@ -142,7 +142,7 @@ export default function InstructionCard(
                 height: "25px",
                 textAlign: "center",
                 border: "1px solid #CCCCCC",
-                borderRadius: "10px 0 0 10px",
+                borderRadius: "2px 0 0 2px",
             }}
         ></input>
 
@@ -164,7 +164,7 @@ export default function InstructionCard(
                 marginRight: "0.8rem",
                 border: "1px solid #CCCCCC",
                 borderLeft: "0px",
-                borderRadius: "0 10px 10px 0",
+                borderRadius: "0 2px 2px 0",
             }}
         ></input>
         {instructions.map((instruction, index) => (
