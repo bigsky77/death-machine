@@ -8,37 +8,63 @@ uint256_abi = {
     ],
 }
 
-boardSet_abi = {
-    "name": "boardSet",
+boardSummary_abi = {
+    "name": "boardSummary",
     "type": "event",
     "keys": [],
     "outputs": [
-        {"name": "star_array_len", "type": "felt"},
-        {"name": "star_array", "type": "Star*"},
-        {"name": "enemy_array_len", "type": "felt"},
-        {"name": "enemy_array", "type": "Enemy*"},
-        {"name": "player_address", "type": "felt"},
+        { "name": "board_len", "type": "felt"},
+        { "name": "board", "type": "SingleBlock*"},
     ],
 }
 
-star_abi = {
-    "name": "Star",
+singleblock_abi = {
+    "name": "SingleBlock",
     "type": "struct",
-    "size": 3,
+    "size": 7,
     "members": [
-        {"name": "x", "offset": 0, "type": "felt"},
-        {"name": "y", "offset": 1, "type": "felt"},
-        {"name": "isActive", "offset": 2, "type": "felt"},
-    ],
+            {
+                "name": "id",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "type",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "status",
+                "offset": 2,
+                "type": "felt"
+            },
+            {
+                "name": "index",
+                "offset": 3,
+                "type": "Grid"
+            },
+            {
+                "name": "raw_index",
+                "offset": 5,
+                "type": "Grid"
+            }
+        ],
 }
 
-enemy_abi = {
-    "name": "Enemy",
-    "type": "struct",
-    "size": 3,
-    "members": [
-        {"name": "x", "offset": 0, "type": "felt"},
-        {"name": "y", "offset": 1, "type": "felt"},
-        {"name": "isActive", "offset": 2, "type": "felt"},
-    ],
+grid_abi = {
+        "members": [
+            {
+                "name": "x",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "y",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Grid",
+        "size": 2,
+        "type": "struct"
 }

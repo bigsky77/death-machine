@@ -11,7 +11,6 @@ services:
     volumes:
     - mongo-data:/data/db
 
-
   devnet:
     image: shardlabs/starknet-devnet:next-arm-seed0
     command:

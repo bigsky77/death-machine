@@ -32,7 +32,7 @@ async def start(server_url, mongo_url, restart):
     if server_url is None:
         server_url = "goerli.starknet.a5a.ch:443"
     if mongo_url is None:
-        mongo_url = "mongodb://apibara:apibara@localhost:27017"
+        mongo_url = "mongodb://apibara:apibara@localhost:27018"
 
     await run_indexer(
         restart=restart,
