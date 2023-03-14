@@ -10,10 +10,10 @@ from starkware.cairo.common.math_cmp import is_le
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.game.types import Grid 
+from src.block.grid import Grid 
 from src.game.constants import ns_ships, ns_instructions, ns_dict
 from src.utils.utils import cords_to_index 
-from src.board.gameboard import SingleBlock
+from src.block.gameboard import SingleBlock
 
 struct InputShipState {
     id: felt,

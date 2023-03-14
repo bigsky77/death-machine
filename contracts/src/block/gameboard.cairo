@@ -13,7 +13,7 @@ from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro import get_next_rnd 
-from src.game.types import Grid 
+from src.block.grid import Grid 
 from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE, ns_board, ns_dict, BOARD_SIZE   
 from src.utils.utils import index_to_cords, cords_to_index
 
@@ -57,7 +57,7 @@ func iterate_board{syscall_ptr: felt*, range_check_ptr}(
     if(board_size == 0){
         return(dict_new=board_dict);
       }
-    
+
     let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
     tempvar grid = cast(ptr, SingleBlock*);
     
@@ -71,25 +71,25 @@ func iterate_board{syscall_ptr: felt*, range_check_ptr}(
 
 func generate_type{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (block_type: felt){
     let (r) = get_next_rnd();
-    let (_, res) = unsigned_div_rem(r, 10); 
+    let (_, res) = unsigned_div_rem(r, 100); 
     
     // randomly assing grid type in range
-    let x = is_le(res, 3);
+    let x = is_le(res, 30);
     if(x == 1){
       return(block_type=0);
       }
 
-    let y = is_le(res, 6);
+    let y = is_le(res, 70);
     if(y == 1){  
       return(block_type=2);
       }
     
-    let z = is_le(res, 9);
+    let z = is_le(res, 95);
     if(z == 1){  
       return(block_type=3);
       }
     
-    let b = is_le(res, 10);
+    let b = is_le(res, 100);
     if(b == 1){  
       return(block_type=1);
       }
