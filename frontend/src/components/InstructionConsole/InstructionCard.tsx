@@ -26,7 +26,7 @@ interface ShipInputProps {
     onPositionChange: (shipIndex: number, position: Grid) => void;
     id: number,
     shipSelected,
-    updateShipSelected
+    selectShip,
     program: string;
     pc: number;
     onProgramChange: (mechIndex: number, program: string) => void;
@@ -42,7 +42,7 @@ export default function InstructionCard(
     onPositionChange,
     id,
     shipSelected,
-    updateShipSelected,
+    selectShip,
     program, 
     pc, 
     onProgramChange,
@@ -114,7 +114,7 @@ export default function InstructionCard(
   
   return(
       <>
-      <Box display="flex" onClick={() => updateShipSelected(id)} sx={{borderRadius: "1",
+      <Box display="flex" onClick={() => selectShip(shipIndex)} sx={{borderRadius: "1",
                                                        backgroundColor: shipSelected ? '#FFFFFFFF' : "",
                                                        boxShadow: shipSelected ? "4" : "",
                                                        border: shipSelected ? "1px solid #FC72FF" : "1px solid black",

@@ -24,22 +24,21 @@ import Grid from "../../types/Grid";
 interface MainControllerProps {
   pc: number;
   shipSelected;
+  selectShip;
   updateShipSelected;
-  onShipInitPositionsChange: (shipInitPositions: Grid[]) => void;
+  onShipInitPositionsChange;
   shipInitPositions: Grid[],
-  spaceships: string[],
-  onProgramsChange: (programs: string[]) => void;
   programs: string[];
 }
 
 export default function MainController({
   pc, 
   shipSelected,
+  selectShip,
   updateShipSelected,
   onShipInitPositionsChange,
   shipInitPositions,
-  spaceships, 
-  onProgramsChange, 
+  onProgramsChange,
   programs}: MainControllerProps) {
   
   let programKeyDownInit = {};
@@ -111,7 +110,7 @@ export default function MainController({
                        pc={pc} 
                        program={programs[0]}
                        shipSelected={shipSelected[0]}
-                       updateShipSelected={updateShipSelected}
+                       selectShip={selectShip}
                        position={shipInitPositions[0]}
                        onPositionChange={(index, position) => {
                                               handleShipInitPositionChange(index, position);
@@ -125,14 +124,14 @@ export default function MainController({
                        handleKeyUp={(event) => {
                                               handleKeyInputProgram(event, "up");
                                           }}
-                       spaceships={spaceships} sx={{p: "2rem"}} />
+                       sx={{p: "2rem"}} />
           <InstructionCard
                        id="b"
                        shipIndex={1}
                        pc={pc} 
                        program={programs[1]} 
                        shipSelected={shipSelected[1]}
-                       updateShipSelected={updateShipSelected}
+                       selectShip={selectShip}
                        position={shipInitPositions[1]}
                        onPositionChange={(index, position) => {
                                               handleShipInitPositionChange(index, position);
@@ -147,14 +146,14 @@ export default function MainController({
                        handleKeyUp={(event) => {
                                               handleKeyInputProgram(event, "up");
                                           }}
-                       spaceships={spaceships} sx={{p: "2rem"}} />
+                       sx={{p: "2rem"}} />
           <InstructionCard
                        id="c"
                        shipIndex={2}
                        pc={pc} 
                        program={programs[2]} 
                        shipSelected={shipSelected[2]}
-                       updateShipSelected={updateShipSelected}
+                       selectShip={selectShip}
                        position={shipInitPositions[2]}
                        onPositionChange={(index, position) => {
                                               handleShipInitPositionChange(index, position);
@@ -168,7 +167,7 @@ export default function MainController({
                       handleKeyUp={(event) => {
                                               handleKeyInputProgram(event, "up");
                                           }}
-                       spaceships={spaceships} sx={{p: "2rem"}} />
+                       sx={{p: "2rem"}} />
           <Box mt={2} mb={4} sx={{border: '1px solid black',
                                   height: "40px", borderRadius: '1px',
                                   bgcolor: '#FC72FF',

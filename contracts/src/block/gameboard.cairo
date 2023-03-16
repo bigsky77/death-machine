@@ -65,9 +65,13 @@ func iterate_board{syscall_ptr: felt*, range_check_ptr}(
       return iterate_board(dimension, board_size - 1, board_dict);
       }
     
-    //let(board_updated) = generate_move(board_dict, grid, ran);
+    //let(board_updated) = generate_move(board_dict, grid);
     return iterate_board(dimension, board_size - 1, board_dict);
 }
+
+//////////////////////////////////////////////////////////////
+//                    TYPE AND MOVE GENERATOR 
+//////////////////////////////////////////////////////////////
 
 func generate_type{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (block_type: felt){
     let (r) = get_next_rnd();
@@ -97,9 +101,26 @@ func generate_type{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_p
     return(block_type=0);
   }
 
+func generate_move{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(grid: SingleBlock*, board_dict: DictAccess*) -> (board_updated: DictAccess*){
+  alloc_locals;
+  let (r) = get_next_rnd();
+  let (_, res) = unsigned_div_rem(r, 1); 
+   
+  let (board_updated) = update_enemy_moved(gird, board_dict, x_inc, y_inc);
+  return(board_updated);
+}
 
 
-
-
-
+func update_enemy_moved{range_check_ptr}(
+    grid: SingleBlock*, board_dict: DictAccess*, x_inc: felt, y_inc: felt
+) -> (board_new: DictAccess*) {
+    tempvar grid_new: SingleBlock* = new SingleBlock(
+      grid.id, 
+      grid.type, 
+      grid.status, 
+      Grid(grid.index.x + x_inc, grid.index.y + y_inc), 
+      grid.raw_index);
+    dict_write{dict_ptr=board_dict}(key=grid.id, new_value=cast(grid_new, felt));
+    return (board_new=board_dict);
+}
 

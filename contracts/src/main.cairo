@@ -25,6 +25,7 @@ func moves_commited() -> (count: felt) {
 @storage_var
 func moves_revealed() -> (count: felt) {
 }
+
 //////////////////////////////////////////////////////////////
 //                   CONSTRUCTOR 
 //////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@ func commit{
   commit_hash(caller, move_hash);
   let (n) = moves_commited.read();
   moves_commited.write(n + 1);
+
   return();
   }
 
@@ -81,6 +83,7 @@ func reveal_moves{
   
   let (n_commited) = moves_commited.read();
   if(n_revealed == n_commited){
+    // need a function to deserialize player moves and run the through
     // run simulation , store score, and incriment block    
     }
   

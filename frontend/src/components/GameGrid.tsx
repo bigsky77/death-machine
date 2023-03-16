@@ -1,84 +1,88 @@
-import React, { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
+import React, { useState, useEffect } from 'react';
+import { Box, Grid } from '@mui/material';
 
-export default function GameGrid({animationFrame, frames, shipInitPositions, shipSelected, updateSpaceships}) {
-  const ROW_CONST = 225; 
-  const [boxes, setBoxes] = useState(Array(225).fill("🌠"));
+export default function GameGrid({ animationFrame, frames, shipInitPositions, shipSelected, updateSpaceships }) {
+  const ROW_CONST = 225;
+  const [boxes, setBoxes] = useState(Array(ROW_CONST).fill("🌠"));
+
+  const isEnemyAdjacent = (index, frames, animationFrame) => {
+    if (!frames || !frames[animationFrame]) {
+      return false;
+    }
+
+    const x = index % 15;
+    const y = Math.floor(index / 15);
+
+    const adjacentSquares = [
+      { x: x - 1, y: y - 1 },
+      { x: x, y: y - 1 },
+      { x: x + 1, y: y - 1 },
+      { x: x - 1, y: y },
+      { x: x + 1, y: y },
+      { x: x - 1, y: y + 1 },
+      { x: x, y: y + 1 },
+      { x: x + 1, y: y + 1 },
+    ];
+
+    return adjacentSquares.some((square) =>
+      frames[animationFrame].atoms.find(
+        (atom) =>
+          atom.index.x === square.x &&
+          atom.index.y === square.y &&
+          atom.typ === "ENEMY"
+      )
+    );
+  };
+
+  const checkAdjacent = (index) => {
+    if (!frames || !animationFrame) {
+      return "";
+    }
+
+    if (isEnemyAdjacent(index, frames, animationFrame)) {
+      return "red";
+    } else {
+      return "";
+    }
+  };
 
   useEffect(() => {
-    // ensure frames is defined
     if (frames && animationFrame) {
-    const setBoard = () => {
-      setBoxes(boxes.map((box, i) => {
-        const x = i % 15;
-        const y = Math.floor(i / 15);
-        if(frames[animationFrame].ships.find(ship => ship.index.x === x && ship.index.y === y && ship.status === "ACTIVE")){
-          return "🚀"
-        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "STAR" && atom.status === "ACTIVE")){
-          return "🌠"
-        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "PLANET" && atom.status === "ACTIVE")){
-          // planet emoji
-          return "🪐"
-        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.status === "INACTIVE")){
-          // planet emoji
-          return "-"
-        } else if(frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "ENEMY")){
-          return "💀"
-        } else {
-          return "";
-        }
-      }))
+      const setBoard = () => {
+        setBoxes(boxes.map((box, i) => {
+          const x = i % 15;
+          const y = Math.floor(i / 15);
+          if (frames[animationFrame].ships.find(ship => ship.index.x === x && ship.index.y === y && ship.status === "ACTIVE")) {
+            return "🚀";
+          } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "STAR" && atom.status === "ACTIVE")) {
+            return "🌠";
+          } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "PLANET" && atom.status === "ACTIVE")) {
+            return "🪐";
+          } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.status === "INACTIVE")) {
+            return "-";
+          } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "ENEMY")) {
+            return "💀";
+          } else {
+            return "";
+          }
+        }));
+      };
+      setBoard();
     }
-    setBoard();
-    }
-    console.log("Board", boxes)
-    console.log("Frame", frames[animationFrame]);
-  },[animationFrame, shipInitPositions]);
-  
-  function checkAdjacent(a) {
-    if(frames[animationFrame]){
-    for(let i = 0; i < frames[animationFrame].ships; i++){
-        const b = frames[animationFrame].ships[i];
-        // convert b to index between 1-225
-        const bIndex = b.index.x + b.index.y * 15;
-        console.log("bIndex", bIndex)
-          if (a === bIndex) continue;
+  }, [animationFrame, shipInitPositions]);
 
-          const rowA = Math.floor(a / 15);
-          const colA = a % 15;
-
-          const rowB = Math.floor(b / 15);
-          const colB = b % 15;
-
-          const rowDiff = Math.abs(rowA - rowB);
-          const colDiff = Math.abs(colA - colB);
-
-          if (rowDiff <= 1 && colDiff <= 1 && spaceships[i].selected) {
-              return '#FC72FF';
-          } else if(rowDiff <= 1 && colDiff <= 1 ) {
-                return 'black'
-            }
-        }
-      return '';
-    } else {
-      return '';
-    }
-    };
-
-return (
-    <Box sx={{width: '100%'}}>
-     <Grid container rowSpacing={1} gap={0.5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Grid container rowSpacing={1} gap={0.5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {boxes.map((value, index) => (
           <Square key={index} value={value} color={checkAdjacent(index)} />
         ))}
-      </Grid> 
+      </Grid>
     </Box>
   );
 }
 
 function Square({value, color}) {
-
     return(
       <Box sx={{height: 31, width: 31, border: '1px solid #FEB239', bgcolor: color, ":hover": {
                     bgcolor: '#FC72FF',

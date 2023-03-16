@@ -196,27 +196,6 @@
         {
             "data": [
                 {
-                    "name": "spaceships_len",
-                    "type": "felt"
-                },
-                {
-                    "name": "spaceships",
-                    "type": "ShipState*"
-                }
-            ],
-            "keys": [],
-            "name": "turnComplete",
-            "type": "event"
-        },
-        {
-            "data": [],
-            "keys": [],
-            "name": "simulationComplete",
-            "type": "event"
-        },
-        {
-            "data": [
-                {
                     "name": "ships_len",
                     "type": "felt"
                 },
@@ -325,8 +304,8 @@
         "attributes": [
             {
                 "accessible_scopes": [
-                    "src.game.spaceships",
-                    "src.game.spaceships.init_ships"
+                    "src.game.ships",
+                    "src.game.ships.init_ships"
                 ],
                 "end_pc": 752,
                 "flow_tracking_data": {
@@ -335,13 +314,13 @@
                         "offset": 13
                     },
                     "reference_ids": {
-                        "src.game.spaceships.init_ships.dict": 388,
-                        "src.game.spaceships.init_ships.dimension": 385,
-                        "src.game.spaceships.init_ships.ptr": 389,
-                        "src.game.spaceships.init_ships.range_check_ptr": 386,
-                        "src.game.spaceships.init_ships.ship": 387,
-                        "src.game.spaceships.init_ships.ships": 383,
-                        "src.game.spaceships.init_ships.ships_count": 382
+                        "src.game.ships.init_ships.dict": 388,
+                        "src.game.ships.init_ships.dimension": 385,
+                        "src.game.ships.init_ships.ptr": 389,
+                        "src.game.ships.init_ships.range_check_ptr": 386,
+                        "src.game.ships.init_ships.ship": 387,
+                        "src.game.ships.init_ships.ships": 383,
+                        "src.game.ships.init_ships.ships_count": 382
                     }
                 },
                 "name": "error_message",
@@ -350,8 +329,8 @@
             },
             {
                 "accessible_scopes": [
-                    "src.game.spaceships",
-                    "src.game.spaceships.init_ships"
+                    "src.game.ships",
+                    "src.game.ships.init_ships"
                 ],
                 "end_pc": 760,
                 "flow_tracking_data": {
@@ -360,13 +339,13 @@
                         "offset": 13
                     },
                     "reference_ids": {
-                        "src.game.spaceships.init_ships.dict": 388,
-                        "src.game.spaceships.init_ships.dimension": 385,
-                        "src.game.spaceships.init_ships.ptr": 389,
-                        "src.game.spaceships.init_ships.range_check_ptr": 386,
-                        "src.game.spaceships.init_ships.ship": 387,
-                        "src.game.spaceships.init_ships.ships": 383,
-                        "src.game.spaceships.init_ships.ships_count": 382
+                        "src.game.ships.init_ships.dict": 388,
+                        "src.game.ships.init_ships.dimension": 385,
+                        "src.game.ships.init_ships.ptr": 389,
+                        "src.game.ships.init_ships.range_check_ptr": 386,
+                        "src.game.ships.init_ships.ship": 387,
+                        "src.game.ships.init_ships.ships": 383,
+                        "src.game.ships.init_ships.ships_count": 382
                     }
                 },
                 "name": "error_message",
@@ -375,8 +354,8 @@
             },
             {
                 "accessible_scopes": [
-                    "src.game.spaceships",
-                    "src.game.spaceships.check_grid"
+                    "src.game.ships",
+                    "src.game.ships.check_grid"
                 ],
                 "end_pc": 1047,
                 "flow_tracking_data": {
@@ -385,13 +364,13 @@
                         "offset": 17
                     },
                     "reference_ids": {
-                        "src.game.spaceships.check_grid.board_dict": 477,
-                        "src.game.spaceships.check_grid.grid": 479,
-                        "src.game.spaceships.check_grid.i": 476,
-                        "src.game.spaceships.check_grid.ptr": 478,
-                        "src.game.spaceships.check_grid.range_check_ptr": 475,
-                        "src.game.spaceships.check_grid.ship": 471,
-                        "src.game.spaceships.check_grid.ships_dict": 472
+                        "src.game.ships.check_grid.board_dict": 477,
+                        "src.game.ships.check_grid.grid": 479,
+                        "src.game.ships.check_grid.i": 476,
+                        "src.game.ships.check_grid.ptr": 478,
+                        "src.game.ships.check_grid.range_check_ptr": 475,
+                        "src.game.ships.check_grid.ship": 471,
+                        "src.game.ships.check_grid.ships_dict": 472
                     }
                 },
                 "name": "error_message",
@@ -1044,13 +1023,13 @@
             "0x1104800180018000",
             "0x800000000000010ffffffffffffffffffffffffffffffffffffffffffffff63",
             "0x480680017fff8000",
-            "0xa",
+            "0x64",
             "0x1104800180018000",
             "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffe01",
             "0x48127ffd7fff8000",
             "0x48127ffe7fff8000",
             "0x480680017fff8000",
-            "0x3",
+            "0x1e",
             "0x1104800180018000",
             "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffe66",
             "0x482480017fff8000",
@@ -1066,7 +1045,7 @@
             "0x48127ffd7fff8000",
             "0x48127fdd7fff8000",
             "0x480680017fff8000",
-            "0x6",
+            "0x46",
             "0x1104800180018000",
             "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffe56",
             "0x482480017fff8000",
@@ -1082,7 +1061,7 @@
             "0x48127ffd7fff8000",
             "0x48127fbc7fff8000",
             "0x480680017fff8000",
-            "0x9",
+            "0x5f",
             "0x1104800180018000",
             "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffe46",
             "0x482480017fff8000",
@@ -1098,7 +1077,7 @@
             "0x48127ffd7fff8000",
             "0x48127f9b7fff8000",
             "0x480680017fff8000",
-            "0xa",
+            "0x64",
             "0x1104800180018000",
             "0x800000000000010fffffffffffffffffffffffffffffffffffffffffffffe36",
             "0x482480017fff8000",
@@ -3778,16 +3757,12 @@
                 ],
                 "type": "reference"
             },
-            "__main__.Grid": {
-                "destination": "src.game.types.Grid",
-                "type": "alias"
-            },
             "__main__.HashBuiltin": {
                 "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
                 "type": "alias"
             },
             "__main__.InputShipState": {
-                "destination": "src.game.spaceships.InputShipState",
+                "destination": "src.game.ships.InputShipState",
                 "type": "alias"
             },
             "__main__.InstructionSet": {
@@ -3807,11 +3782,11 @@
                 "type": "alias"
             },
             "__main__.ShipState": {
-                "destination": "src.game.spaceships.ShipState",
+                "destination": "src.game.ships.ShipState",
                 "type": "alias"
             },
             "__main__.SingleBlock": {
-                "destination": "src.board.gameboard.SingleBlock",
+                "destination": "src.block.gameboard.SingleBlock",
                 "type": "alias"
             },
             "__main__.XOROSHIRO_ADDR": {
@@ -3847,7 +3822,7 @@
                 "full_name": "__main__.board_summary.Args",
                 "members": {
                     "board_arr": {
-                        "cairo_type": "src.board.gameboard.SingleBlock*",
+                        "cairo_type": "src.block.gameboard.SingleBlock*",
                         "offset": 1
                     },
                     "board_dict": {
@@ -3878,7 +3853,7 @@
                 "type": "struct"
             },
             "__main__.board_summary.Return": {
-                "cairo_type": "(board_size: felt, board: src.board.gameboard.SingleBlock*)",
+                "cairo_type": "(board_size: felt, board: src.block.gameboard.SingleBlock*)",
                 "type": "type_definition"
             },
             "__main__.board_summary.SIZEOF_LOCALS": {
@@ -4396,7 +4371,7 @@
                 "type": "reference"
             },
             "__main__.board_summary.board": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "__main__.board_summary.board",
                 "references": [
                     {
@@ -4405,13 +4380,13 @@
                             "offset": 7
                         },
                         "pc": 1784,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
             },
             "__main__.board_summary.board_arr": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "__main__.board_summary.board_arr",
                 "references": [
                     {
@@ -4420,7 +4395,7 @@
                             "offset": 0
                         },
                         "pc": 1771,
-                        "value": "[cast(fp + (-4), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(fp + (-4), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -4757,7 +4732,7 @@
                 "full_name": "__main__.end_game_summary.Args",
                 "members": {
                     "ships": {
-                        "cairo_type": "src.game.spaceships.ShipState*",
+                        "cairo_type": "src.game.ships.ShipState*",
                         "offset": 1
                     },
                     "ships_dict": {
@@ -4788,7 +4763,7 @@
                 "type": "struct"
             },
             "__main__.end_game_summary.Return": {
-                "cairo_type": "(ships_len: felt, ships: src.game.spaceships.ShipState*)",
+                "cairo_type": "(ships_len: felt, ships: src.game.ships.ShipState*)",
                 "type": "type_definition"
             },
             "__main__.end_game_summary.SIZEOF_LOCALS": {
@@ -5269,7 +5244,7 @@
                 "type": "reference"
             },
             "__main__.end_game_summary.ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
+                "cairo_type": "src.game.ships.ShipState*",
                 "full_name": "__main__.end_game_summary.ship",
                 "references": [
                     {
@@ -5278,13 +5253,13 @@
                             "offset": 7
                         },
                         "pc": 1706,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
             "__main__.end_game_summary.ships": {
-                "cairo_type": "src.game.spaceships.ShipState*",
+                "cairo_type": "src.game.ships.ShipState*",
                 "full_name": "__main__.end_game_summary.ships",
                 "references": [
                     {
@@ -5293,7 +5268,7 @@
                             "offset": 0
                         },
                         "pc": 1692,
-                        "value": "[cast(fp + (-4), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(fp + (-4), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -5421,7 +5396,7 @@
                 "type": "reference"
             },
             "__main__.generate_board.block_arr_init": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "__main__.generate_board.block_arr_init",
                 "references": [
                     {
@@ -5430,7 +5405,7 @@
                             "offset": 3
                         },
                         "pc": 1437,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -5451,7 +5426,7 @@
                 "type": "reference"
             },
             "__main__.generate_board.block_state_new": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "__main__.generate_board.block_state_new",
                 "references": [
                     {
@@ -5460,7 +5435,7 @@
                             "offset": 0
                         },
                         "pc": 1445,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -5781,11 +5756,11 @@
                 "type": "alias"
             },
             "__main__.init_board": {
-                "destination": "src.board.gameboard.init_board",
+                "destination": "src.block.gameboard.init_board",
                 "type": "alias"
             },
             "__main__.init_ships": {
-                "destination": "src.game.spaceships.init_ships",
+                "destination": "src.game.ships.init_ships",
                 "type": "alias"
             },
             "__main__.is_le": {
@@ -5797,11 +5772,11 @@
                 "type": "alias"
             },
             "__main__.iterate_board": {
-                "destination": "src.board.gameboard.iterate_board",
+                "destination": "src.block.gameboard.iterate_board",
                 "type": "alias"
             },
             "__main__.iterate_ships": {
-                "destination": "src.game.spaceships.iterate_ships",
+                "destination": "src.game.ships.iterate_ships",
                 "type": "alias"
             },
             "__main__.ns_dict": {
@@ -6134,7 +6109,7 @@
                         "offset": 0
                     },
                     "ships": {
-                        "cairo_type": "src.game.spaceships.InputShipState*",
+                        "cairo_type": "src.game.ships.InputShipState*",
                         "offset": 5
                     },
                     "ships_len": {
@@ -6467,7 +6442,7 @@
                 "type": "reference"
             },
             "__main__.simulation.ships": {
-                "cairo_type": "src.game.spaceships.InputShipState*",
+                "cairo_type": "src.game.ships.InputShipState*",
                 "full_name": "__main__.simulation.ships",
                 "references": [
                     {
@@ -6476,7 +6451,7 @@
                             "offset": 0
                         },
                         "pc": 1459,
-                        "value": "[cast(fp + (-3), src.game.spaceships.InputShipState**)]"
+                        "value": "[cast(fp + (-3), src.game.ships.InputShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -6582,10 +6557,6 @@
                     }
                 ],
                 "type": "reference"
-            },
-            "__main__.simulationComplete": {
-                "destination": "src.game.events.simulationComplete",
-                "type": "alias"
             },
             "__main__.simulationSubmit": {
                 "destination": "src.game.events.simulationSubmit",
@@ -6705,7 +6676,7 @@
                 "type": "reference"
             },
             "__main__.simulation_loop.block_arr": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "__main__.simulation_loop.block_arr",
                 "references": [
                     {
@@ -6714,7 +6685,7 @@
                             "offset": 8
                         },
                         "pc": 1587,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     },
                     {
                         "ap_tracking_data": {
@@ -6722,7 +6693,7 @@
                             "offset": 8
                         },
                         "pc": 1588,
-                        "value": "[cast(fp, src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(fp, src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -6743,7 +6714,7 @@
                 "type": "reference"
             },
             "__main__.simulation_loop.block_state": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "__main__.simulation_loop.block_state",
                 "references": [
                     {
@@ -6752,7 +6723,7 @@
                             "offset": 0
                         },
                         "pc": 1606,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -7183,7 +7154,7 @@
                 "type": "reference"
             },
             "__main__.simulation_loop.ships_arr": {
-                "cairo_type": "src.game.spaceships.ShipState*",
+                "cairo_type": "src.game.ships.ShipState*",
                 "full_name": "__main__.simulation_loop.ships_arr",
                 "references": [
                     {
@@ -7192,7 +7163,7 @@
                             "offset": 5
                         },
                         "pc": 1585,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -7243,7 +7214,7 @@
                 "type": "reference"
             },
             "__main__.simulation_loop.state": {
-                "cairo_type": "src.game.spaceships.ShipState*",
+                "cairo_type": "src.game.ships.ShipState*",
                 "full_name": "__main__.simulation_loop.state",
                 "references": [
                     {
@@ -7252,7 +7223,7 @@
                             "offset": 0
                         },
                         "pc": 1598,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -7400,16 +7371,12 @@
                 ],
                 "type": "reference"
             },
-            "__main__.turnComplete": {
-                "destination": "src.game.events.turnComplete",
-                "type": "alias"
-            },
             "__main__.unsigned_div_rem": {
                 "destination": "starkware.cairo.common.math.unsigned_div_rem",
                 "type": "alias"
             },
             "__main__.update_ship_status": {
-                "destination": "src.game.spaceships.update_ship_status",
+                "destination": "src.game.ships.update_ship_status",
                 "type": "alias"
             },
             "__wrappers__.constructor": {
@@ -7987,7 +7954,7 @@
                 "type": "reference"
             },
             "__wrappers__.simulation.__calldata_arg_ships": {
-                "cairo_type": "src.game.spaceships.InputShipState*",
+                "cairo_type": "src.game.ships.InputShipState*",
                 "full_name": "__wrappers__.simulation.__calldata_arg_ships",
                 "references": [
                     {
@@ -7996,7 +7963,7 @@
                             "offset": 12
                         },
                         "pc": 1548,
-                        "value": "cast([ap + (-3)] + 1, src.game.spaceships.InputShipState*)"
+                        "value": "cast([ap + (-3)] + 1, src.game.ships.InputShipState*)"
                     }
                 ],
                 "type": "reference"
@@ -8450,55 +8417,55 @@
                 "destination": "starkware.cairo.common.memcpy.memcpy",
                 "type": "alias"
             },
-            "src.board.gameboard.BOARD_SIZE": {
+            "src.block.gameboard.BOARD_SIZE": {
                 "destination": "src.game.constants.BOARD_SIZE",
                 "type": "alias"
             },
-            "src.board.gameboard.DictAccess": {
+            "src.block.gameboard.DictAccess": {
                 "destination": "starkware.cairo.common.dict_access.DictAccess",
                 "type": "alias"
             },
-            "src.board.gameboard.ENEMY_RANGE": {
+            "src.block.gameboard.ENEMY_RANGE": {
                 "destination": "src.game.constants.ENEMY_RANGE",
                 "type": "alias"
             },
-            "src.board.gameboard.Grid": {
-                "destination": "src.game.types.Grid",
+            "src.block.gameboard.Grid": {
+                "destination": "src.block.grid.Grid",
                 "type": "alias"
             },
-            "src.board.gameboard.HashBuiltin": {
+            "src.block.gameboard.HashBuiltin": {
                 "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
                 "type": "alias"
             },
-            "src.board.gameboard.PLANET_RANGE": {
+            "src.block.gameboard.PLANET_RANGE": {
                 "destination": "src.game.constants.PLANET_RANGE",
                 "type": "alias"
             },
-            "src.board.gameboard.RANGE_X": {
+            "src.block.gameboard.RANGE_X": {
                 "destination": "src.game.constants.RANGE_X",
                 "type": "alias"
             },
-            "src.board.gameboard.RANGE_Y": {
+            "src.block.gameboard.RANGE_Y": {
                 "destination": "src.game.constants.RANGE_Y",
                 "type": "alias"
             },
-            "src.board.gameboard.STAR_RANGE": {
+            "src.block.gameboard.STAR_RANGE": {
                 "destination": "src.game.constants.STAR_RANGE",
                 "type": "alias"
             },
-            "src.board.gameboard.SingleBlock": {
-                "full_name": "src.board.gameboard.SingleBlock",
+            "src.block.gameboard.SingleBlock": {
+                "full_name": "src.block.gameboard.SingleBlock",
                 "members": {
                     "id": {
                         "cairo_type": "felt",
                         "offset": 0
                     },
                     "index": {
-                        "cairo_type": "src.game.types.Grid",
+                        "cairo_type": "src.block.grid.Grid",
                         "offset": 3
                     },
                     "raw_index": {
-                        "cairo_type": "src.game.types.Grid",
+                        "cairo_type": "src.block.grid.Grid",
                         "offset": 5
                     },
                     "status": {
@@ -8513,43 +8480,43 @@
                 "size": 7,
                 "type": "struct"
             },
-            "src.board.gameboard.alloc": {
+            "src.block.gameboard.alloc": {
                 "destination": "starkware.cairo.common.alloc.alloc",
                 "type": "alias"
             },
-            "src.board.gameboard.assert_le": {
+            "src.block.gameboard.assert_le": {
                 "destination": "starkware.cairo.common.math.assert_le",
                 "type": "alias"
             },
-            "src.board.gameboard.assert_nn_le": {
+            "src.block.gameboard.assert_nn_le": {
                 "destination": "starkware.cairo.common.math.assert_nn_le",
                 "type": "alias"
             },
-            "src.board.gameboard.cords_to_index": {
+            "src.block.gameboard.cords_to_index": {
                 "destination": "src.utils.utils.cords_to_index",
                 "type": "alias"
             },
-            "src.board.gameboard.dict_read": {
+            "src.block.gameboard.dict_read": {
                 "destination": "starkware.cairo.common.dict.dict_read",
                 "type": "alias"
             },
-            "src.board.gameboard.dict_write": {
+            "src.block.gameboard.dict_write": {
                 "destination": "starkware.cairo.common.dict.dict_write",
                 "type": "alias"
             },
-            "src.board.gameboard.generate_type": {
+            "src.block.gameboard.generate_type": {
                 "decorators": [],
                 "pc": 603,
                 "type": "function"
             },
-            "src.board.gameboard.generate_type.Args": {
-                "full_name": "src.board.gameboard.generate_type.Args",
+            "src.block.gameboard.generate_type.Args": {
+                "full_name": "src.block.gameboard.generate_type.Args",
                 "members": {},
                 "size": 0,
                 "type": "struct"
             },
-            "src.board.gameboard.generate_type.ImplicitArgs": {
-                "full_name": "src.board.gameboard.generate_type.ImplicitArgs",
+            "src.block.gameboard.generate_type.ImplicitArgs": {
+                "full_name": "src.block.gameboard.generate_type.ImplicitArgs",
                 "members": {
                     "pedersen_ptr": {
                         "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
@@ -8567,17 +8534,17 @@
                 "size": 3,
                 "type": "struct"
             },
-            "src.board.gameboard.generate_type.Return": {
+            "src.block.gameboard.generate_type.Return": {
                 "cairo_type": "(block_type: felt)",
                 "type": "type_definition"
             },
-            "src.board.gameboard.generate_type.SIZEOF_LOCALS": {
+            "src.block.gameboard.generate_type.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.board.gameboard.generate_type.__temp39": {
+            "src.block.gameboard.generate_type.__temp39": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.__temp39",
+                "full_name": "src.block.gameboard.generate_type.__temp39",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8590,9 +8557,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.__temp40": {
+            "src.block.gameboard.generate_type.__temp40": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.__temp40",
+                "full_name": "src.block.gameboard.generate_type.__temp40",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8605,9 +8572,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.__temp41": {
+            "src.block.gameboard.generate_type.__temp41": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.__temp41",
+                "full_name": "src.block.gameboard.generate_type.__temp41",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8620,9 +8587,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.__temp42": {
+            "src.block.gameboard.generate_type.__temp42": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.__temp42",
+                "full_name": "src.block.gameboard.generate_type.__temp42",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8635,9 +8602,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.b": {
+            "src.block.gameboard.generate_type.b": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.b",
+                "full_name": "src.block.gameboard.generate_type.b",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8650,9 +8617,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.pedersen_ptr": {
+            "src.block.gameboard.generate_type.pedersen_ptr": {
                 "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
-                "full_name": "src.board.gameboard.generate_type.pedersen_ptr",
+                "full_name": "src.block.gameboard.generate_type.pedersen_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8673,9 +8640,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.r": {
+            "src.block.gameboard.generate_type.r": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.r",
+                "full_name": "src.block.gameboard.generate_type.r",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8688,9 +8655,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.range_check_ptr": {
+            "src.block.gameboard.generate_type.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.range_check_ptr",
+                "full_name": "src.block.gameboard.generate_type.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8751,9 +8718,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.res": {
+            "src.block.gameboard.generate_type.res": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.res",
+                "full_name": "src.block.gameboard.generate_type.res",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8766,9 +8733,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.syscall_ptr": {
+            "src.block.gameboard.generate_type.syscall_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.board.gameboard.generate_type.syscall_ptr",
+                "full_name": "src.block.gameboard.generate_type.syscall_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8789,9 +8756,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.x": {
+            "src.block.gameboard.generate_type.x": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.x",
+                "full_name": "src.block.gameboard.generate_type.x",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8804,9 +8771,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.y": {
+            "src.block.gameboard.generate_type.y": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.y",
+                "full_name": "src.block.gameboard.generate_type.y",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8819,9 +8786,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.generate_type.z": {
+            "src.block.gameboard.generate_type.z": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.generate_type.z",
+                "full_name": "src.block.gameboard.generate_type.z",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8834,33 +8801,33 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.get_block_timestamp": {
+            "src.block.gameboard.get_block_timestamp": {
                 "destination": "starkware.starknet.common.syscalls.get_block_timestamp",
                 "type": "alias"
             },
-            "src.board.gameboard.get_caller_address": {
+            "src.block.gameboard.get_caller_address": {
                 "destination": "starkware.starknet.common.syscalls.get_caller_address",
                 "type": "alias"
             },
-            "src.board.gameboard.get_contract_address": {
+            "src.block.gameboard.get_contract_address": {
                 "destination": "starkware.starknet.common.syscalls.get_contract_address",
                 "type": "alias"
             },
-            "src.board.gameboard.get_next_rnd": {
+            "src.block.gameboard.get_next_rnd": {
                 "destination": "src.utils.xoroshiro.get_next_rnd",
                 "type": "alias"
             },
-            "src.board.gameboard.index_to_cords": {
+            "src.block.gameboard.index_to_cords": {
                 "destination": "src.utils.utils.index_to_cords",
                 "type": "alias"
             },
-            "src.board.gameboard.init_board": {
+            "src.block.gameboard.init_board": {
                 "decorators": [],
                 "pc": 525,
                 "type": "function"
             },
-            "src.board.gameboard.init_board.Args": {
-                "full_name": "src.board.gameboard.init_board.Args",
+            "src.block.gameboard.init_board.Args": {
+                "full_name": "src.block.gameboard.init_board.Args",
                 "members": {
                     "board_size": {
                         "cairo_type": "felt",
@@ -8878,8 +8845,8 @@
                 "size": 3,
                 "type": "struct"
             },
-            "src.board.gameboard.init_board.ImplicitArgs": {
-                "full_name": "src.board.gameboard.init_board.ImplicitArgs",
+            "src.block.gameboard.init_board.ImplicitArgs": {
+                "full_name": "src.block.gameboard.init_board.ImplicitArgs",
                 "members": {
                     "pedersen_ptr": {
                         "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
@@ -8897,17 +8864,17 @@
                 "size": 3,
                 "type": "struct"
             },
-            "src.board.gameboard.init_board.Return": {
+            "src.block.gameboard.init_board.Return": {
                 "cairo_type": "(dict_new: starkware.cairo.common.dict_access.DictAccess*)",
                 "type": "type_definition"
             },
-            "src.board.gameboard.init_board.SIZEOF_LOCALS": {
+            "src.block.gameboard.init_board.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.board.gameboard.init_board.block_type": {
+            "src.block.gameboard.init_board.block_type": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.init_board.block_type",
+                "full_name": "src.block.gameboard.init_board.block_type",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8920,9 +8887,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.board_size": {
+            "src.block.gameboard.init_board.board_size": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.init_board.board_size",
+                "full_name": "src.block.gameboard.init_board.board_size",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8935,9 +8902,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.dict": {
+            "src.block.gameboard.init_board.dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.board.gameboard.init_board.dict",
+                "full_name": "src.block.gameboard.init_board.dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8958,9 +8925,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.dimension": {
+            "src.block.gameboard.init_board.dimension": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.init_board.dimension",
+                "full_name": "src.block.gameboard.init_board.dimension",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8973,9 +8940,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.new_block": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
-                "full_name": "src.board.gameboard.init_board.new_block",
+            "src.block.gameboard.init_board.new_block": {
+                "cairo_type": "src.block.gameboard.SingleBlock*",
+                "full_name": "src.block.gameboard.init_board.new_block",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -8983,14 +8950,14 @@
                             "offset": 63
                         },
                         "pc": 553,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.pedersen_ptr": {
+            "src.block.gameboard.init_board.pedersen_ptr": {
                 "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
-                "full_name": "src.board.gameboard.init_board.pedersen_ptr",
+                "full_name": "src.block.gameboard.init_board.pedersen_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9019,9 +8986,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.range_check_ptr": {
+            "src.block.gameboard.init_board.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.init_board.range_check_ptr",
+                "full_name": "src.block.gameboard.init_board.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9058,9 +9025,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.syscall_ptr": {
+            "src.block.gameboard.init_board.syscall_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.board.gameboard.init_board.syscall_ptr",
+                "full_name": "src.block.gameboard.init_board.syscall_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9089,9 +9056,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.x": {
+            "src.block.gameboard.init_board.x": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.init_board.x",
+                "full_name": "src.block.gameboard.init_board.x",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9104,9 +9071,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.init_board.y": {
+            "src.block.gameboard.init_board.y": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.init_board.y",
+                "full_name": "src.block.gameboard.init_board.y",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9119,21 +9086,21 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.is_in_range": {
+            "src.block.gameboard.is_in_range": {
                 "destination": "starkware.cairo.common.math_cmp.is_in_range",
                 "type": "alias"
             },
-            "src.board.gameboard.is_le": {
+            "src.block.gameboard.is_le": {
                 "destination": "starkware.cairo.common.math_cmp.is_le",
                 "type": "alias"
             },
-            "src.board.gameboard.iterate_board": {
+            "src.block.gameboard.iterate_board": {
                 "decorators": [],
                 "pc": 568,
                 "type": "function"
             },
-            "src.board.gameboard.iterate_board.Args": {
-                "full_name": "src.board.gameboard.iterate_board.Args",
+            "src.block.gameboard.iterate_board.Args": {
+                "full_name": "src.block.gameboard.iterate_board.Args",
                 "members": {
                     "board_dict": {
                         "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
@@ -9151,8 +9118,8 @@
                 "size": 3,
                 "type": "struct"
             },
-            "src.board.gameboard.iterate_board.ImplicitArgs": {
-                "full_name": "src.board.gameboard.iterate_board.ImplicitArgs",
+            "src.block.gameboard.iterate_board.ImplicitArgs": {
+                "full_name": "src.block.gameboard.iterate_board.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -9166,17 +9133,17 @@
                 "size": 2,
                 "type": "struct"
             },
-            "src.board.gameboard.iterate_board.Return": {
+            "src.block.gameboard.iterate_board.Return": {
                 "cairo_type": "(dict_new: starkware.cairo.common.dict_access.DictAccess*)",
                 "type": "type_definition"
             },
-            "src.board.gameboard.iterate_board.SIZEOF_LOCALS": {
+            "src.block.gameboard.iterate_board.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.board.gameboard.iterate_board.__temp37": {
+            "src.block.gameboard.iterate_board.__temp37": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.iterate_board.__temp37",
+                "full_name": "src.block.gameboard.iterate_board.__temp37",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9189,9 +9156,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.__temp38": {
+            "src.block.gameboard.iterate_board.__temp38": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.iterate_board.__temp38",
+                "full_name": "src.block.gameboard.iterate_board.__temp38",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9204,9 +9171,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.board_dict": {
+            "src.block.gameboard.iterate_board.board_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.board.gameboard.iterate_board.board_dict",
+                "full_name": "src.block.gameboard.iterate_board.board_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9227,9 +9194,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.board_size": {
+            "src.block.gameboard.iterate_board.board_size": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.iterate_board.board_size",
+                "full_name": "src.block.gameboard.iterate_board.board_size",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9242,9 +9209,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.dimension": {
+            "src.block.gameboard.iterate_board.dimension": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.iterate_board.dimension",
+                "full_name": "src.block.gameboard.iterate_board.dimension",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9257,9 +9224,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.grid": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
-                "full_name": "src.board.gameboard.iterate_board.grid",
+            "src.block.gameboard.iterate_board.grid": {
+                "cairo_type": "src.block.gameboard.SingleBlock*",
+                "full_name": "src.block.gameboard.iterate_board.grid",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9267,14 +9234,14 @@
                             "offset": 7
                         },
                         "pc": 578,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.ptr": {
+            "src.block.gameboard.iterate_board.ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.iterate_board.ptr",
+                "full_name": "src.block.gameboard.iterate_board.ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9287,9 +9254,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.range_check_ptr": {
+            "src.block.gameboard.iterate_board.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.board.gameboard.iterate_board.range_check_ptr",
+                "full_name": "src.block.gameboard.iterate_board.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9318,9 +9285,9 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.iterate_board.syscall_ptr": {
+            "src.block.gameboard.iterate_board.syscall_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.board.gameboard.iterate_board.syscall_ptr",
+                "full_name": "src.block.gameboard.iterate_board.syscall_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -9349,17 +9316,36 @@
                 ],
                 "type": "reference"
             },
-            "src.board.gameboard.ns_board": {
+            "src.block.gameboard.ns_board": {
                 "destination": "src.game.constants.ns_board",
                 "type": "alias"
             },
-            "src.board.gameboard.ns_dict": {
+            "src.block.gameboard.ns_dict": {
                 "destination": "src.game.constants.ns_dict",
                 "type": "alias"
             },
-            "src.board.gameboard.unsigned_div_rem": {
+            "src.block.gameboard.unsigned_div_rem": {
                 "destination": "starkware.cairo.common.math.unsigned_div_rem",
                 "type": "alias"
+            },
+            "src.block.grid.GRID_SIZE": {
+                "type": "const",
+                "value": 2
+            },
+            "src.block.grid.Grid": {
+                "full_name": "src.block.grid.Grid",
+                "members": {
+                    "x": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    },
+                    "y": {
+                        "cairo_type": "felt",
+                        "offset": 1
+                    }
+                },
+                "size": 2,
+                "type": "struct"
             },
             "src.game.constants.BOARD_DIMENSION": {
                 "type": "const",
@@ -9538,15 +9524,15 @@
                 "type": "alias"
             },
             "src.game.events.InputShipState": {
-                "destination": "src.game.spaceships.InputShipState",
+                "destination": "src.game.ships.InputShipState",
                 "type": "alias"
             },
             "src.game.events.ShipState": {
-                "destination": "src.game.spaceships.ShipState",
+                "destination": "src.game.ships.ShipState",
                 "type": "alias"
             },
             "src.game.events.SingleBlock": {
-                "destination": "src.board.gameboard.SingleBlock",
+                "destination": "src.block.gameboard.SingleBlock",
                 "type": "alias"
             },
             "src.game.events.boardComplete": {
@@ -9589,7 +9575,7 @@
                 "full_name": "src.game.events.boardComplete.emit.Args",
                 "members": {
                     "board": {
-                        "cairo_type": "src.board.gameboard.SingleBlock*",
+                        "cairo_type": "src.block.gameboard.SingleBlock*",
                         "offset": 1
                     },
                     "board_len": {
@@ -9761,7 +9747,7 @@
                 "type": "reference"
             },
             "src.game.events.boardComplete.emit.board": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "src.game.events.boardComplete.emit.board",
                 "references": [
                     {
@@ -9770,7 +9756,7 @@
                             "offset": 0
                         },
                         "pc": 1239,
-                        "value": "[cast(fp + (-3), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(fp + (-3), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -9884,7 +9870,7 @@
                 "full_name": "src.game.events.boardSummary.emit.Args",
                 "members": {
                     "board": {
-                        "cairo_type": "src.board.gameboard.SingleBlock*",
+                        "cairo_type": "src.block.gameboard.SingleBlock*",
                         "offset": 1
                     },
                     "board_len": {
@@ -10056,7 +10042,7 @@
                 "type": "reference"
             },
             "src.game.events.boardSummary.emit.board": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
+                "cairo_type": "src.block.gameboard.SingleBlock*",
                 "full_name": "src.game.events.boardSummary.emit.board",
                 "references": [
                     {
@@ -10065,7 +10051,7 @@
                             "offset": 0
                         },
                         "pc": 1276,
-                        "value": "[cast(fp + (-3), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(fp + (-3), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
@@ -10179,7 +10165,7 @@
                 "full_name": "src.game.events.gameComplete.emit.Args",
                 "members": {
                     "ships": {
-                        "cairo_type": "src.game.spaceships.ShipState*",
+                        "cairo_type": "src.game.ships.ShipState*",
                         "offset": 1
                     },
                     "ships_len": {
@@ -10374,7 +10360,7 @@
                 "type": "reference"
             },
             "src.game.events.gameComplete.emit.ships": {
-                "cairo_type": "src.game.spaceships.ShipState*",
+                "cairo_type": "src.game.ships.ShipState*",
                 "full_name": "src.game.events.gameComplete.emit.ships",
                 "references": [
                     {
@@ -10383,7 +10369,7 @@
                             "offset": 0
                         },
                         "pc": 1202,
-                        "value": "[cast(fp + (-3), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(fp + (-3), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -10431,45 +10417,6 @@
                 "type": "alias"
             },
             "src.game.events.gameComplete.memcpy": {
-                "destination": "starkware.cairo.common.memcpy.memcpy",
-                "type": "alias"
-            },
-            "src.game.events.simulationComplete": {
-                "type": "namespace"
-            },
-            "src.game.events.simulationComplete.Args": {
-                "full_name": "src.game.events.simulationComplete.Args",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "src.game.events.simulationComplete.ImplicitArgs": {
-                "full_name": "src.game.events.simulationComplete.ImplicitArgs",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "src.game.events.simulationComplete.Return": {
-                "cairo_type": "()",
-                "type": "type_definition"
-            },
-            "src.game.events.simulationComplete.SELECTOR": {
-                "type": "const",
-                "value": 491146141060175347261265179840099564777146189227718698627636920058232575549
-            },
-            "src.game.events.simulationComplete.SIZEOF_LOCALS": {
-                "type": "const",
-                "value": 0
-            },
-            "src.game.events.simulationComplete.alloc": {
-                "destination": "starkware.cairo.common.alloc.alloc",
-                "type": "alias"
-            },
-            "src.game.events.simulationComplete.emit_event": {
-                "destination": "starkware.starknet.common.syscalls.emit_event",
-                "type": "alias"
-            },
-            "src.game.events.simulationComplete.memcpy": {
                 "destination": "starkware.cairo.common.memcpy.memcpy",
                 "type": "alias"
             },
@@ -10525,7 +10472,7 @@
                         "offset": 4
                     },
                     "spaceships": {
-                        "cairo_type": "src.game.spaceships.InputShipState*",
+                        "cairo_type": "src.game.ships.InputShipState*",
                         "offset": 3
                     },
                     "spaceships_len": {
@@ -10835,7 +10782,7 @@
                 "type": "reference"
             },
             "src.game.events.simulationSubmit.emit.spaceships": {
-                "cairo_type": "src.game.spaceships.InputShipState*",
+                "cairo_type": "src.game.ships.InputShipState*",
                 "full_name": "src.game.events.simulationSubmit.emit.spaceships",
                 "references": [
                     {
@@ -10844,7 +10791,7 @@
                             "offset": 0
                         },
                         "pc": 1149,
-                        "value": "[cast(fp + (-4), src.game.spaceships.InputShipState**)]"
+                        "value": "[cast(fp + (-4), src.game.ships.InputShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -10895,45 +10842,6 @@
                 "destination": "starkware.cairo.common.memcpy.memcpy",
                 "type": "alias"
             },
-            "src.game.events.turnComplete": {
-                "type": "namespace"
-            },
-            "src.game.events.turnComplete.Args": {
-                "full_name": "src.game.events.turnComplete.Args",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "src.game.events.turnComplete.ImplicitArgs": {
-                "full_name": "src.game.events.turnComplete.ImplicitArgs",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "src.game.events.turnComplete.Return": {
-                "cairo_type": "()",
-                "type": "type_definition"
-            },
-            "src.game.events.turnComplete.SELECTOR": {
-                "type": "const",
-                "value": 1270551012338719895185318216189481417873544776172368892242217788603188574124
-            },
-            "src.game.events.turnComplete.SIZEOF_LOCALS": {
-                "type": "const",
-                "value": 0
-            },
-            "src.game.events.turnComplete.alloc": {
-                "destination": "starkware.cairo.common.alloc.alloc",
-                "type": "alias"
-            },
-            "src.game.events.turnComplete.emit_event": {
-                "destination": "starkware.starknet.common.syscalls.emit_event",
-                "type": "alias"
-            },
-            "src.game.events.turnComplete.memcpy": {
-                "destination": "starkware.cairo.common.memcpy.memcpy",
-                "type": "alias"
-            },
             "src.game.instructions.DictAccess": {
                 "destination": "starkware.cairo.common.dict_access.DictAccess",
                 "type": "alias"
@@ -10954,7 +10862,7 @@
                 "type": "struct"
             },
             "src.game.instructions.ShipState": {
-                "destination": "src.game.spaceships.ShipState",
+                "destination": "src.game.ships.ShipState",
                 "type": "alias"
             },
             "src.game.instructions.alloc": {
@@ -11304,7 +11212,7 @@
                 "type": "reference"
             },
             "src.game.instructions.get_frame_instruction_set.ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
+                "cairo_type": "src.game.ships.ShipState*",
                 "full_name": "src.game.instructions.get_frame_instruction_set.ship",
                 "references": [
                     {
@@ -11313,7 +11221,7 @@
                             "offset": 8
                         },
                         "pc": 1323,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
@@ -11349,16 +11257,16 @@
                 "destination": "starkware.cairo.common.math.unsigned_div_rem",
                 "type": "alias"
             },
-            "src.game.spaceships.DictAccess": {
+            "src.game.ships.DictAccess": {
                 "destination": "starkware.cairo.common.dict_access.DictAccess",
                 "type": "alias"
             },
-            "src.game.spaceships.Grid": {
-                "destination": "src.game.types.Grid",
+            "src.game.ships.Grid": {
+                "destination": "src.block.grid.Grid",
                 "type": "alias"
             },
-            "src.game.spaceships.InputShipState": {
-                "full_name": "src.game.spaceships.InputShipState",
+            "src.game.ships.InputShipState": {
+                "full_name": "src.game.ships.InputShipState",
                 "members": {
                     "description": {
                         "cairo_type": "felt",
@@ -11369,7 +11277,7 @@
                         "offset": 0
                     },
                     "index": {
-                        "cairo_type": "src.game.types.Grid",
+                        "cairo_type": "src.block.grid.Grid",
                         "offset": 3
                     },
                     "status": {
@@ -11384,44 +11292,44 @@
                 "size": 6,
                 "type": "struct"
             },
-            "src.game.spaceships.ShipDestroyed": {
+            "src.game.ships.ShipDestroyed": {
                 "type": "namespace"
             },
-            "src.game.spaceships.ShipDestroyed.Args": {
-                "full_name": "src.game.spaceships.ShipDestroyed.Args",
+            "src.game.ships.ShipDestroyed.Args": {
+                "full_name": "src.game.ships.ShipDestroyed.Args",
                 "members": {},
                 "size": 0,
                 "type": "struct"
             },
-            "src.game.spaceships.ShipDestroyed.ImplicitArgs": {
-                "full_name": "src.game.spaceships.ShipDestroyed.ImplicitArgs",
+            "src.game.ships.ShipDestroyed.ImplicitArgs": {
+                "full_name": "src.game.ships.ShipDestroyed.ImplicitArgs",
                 "members": {},
                 "size": 0,
                 "type": "struct"
             },
-            "src.game.spaceships.ShipDestroyed.Return": {
+            "src.game.ships.ShipDestroyed.Return": {
                 "cairo_type": "()",
                 "type": "type_definition"
             },
-            "src.game.spaceships.ShipDestroyed.SELECTOR": {
+            "src.game.ships.ShipDestroyed.SELECTOR": {
                 "type": "const",
                 "value": 1302540687869983026807789978029488717867085814036125896123820170747194590208
             },
-            "src.game.spaceships.ShipDestroyed.SIZEOF_LOCALS": {
+            "src.game.ships.ShipDestroyed.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.game.spaceships.ShipDestroyed.alloc": {
+            "src.game.ships.ShipDestroyed.alloc": {
                 "destination": "starkware.cairo.common.alloc.alloc",
                 "type": "alias"
             },
-            "src.game.spaceships.ShipDestroyed.emit": {
+            "src.game.ships.ShipDestroyed.emit": {
                 "decorators": [],
                 "pc": 682,
                 "type": "function"
             },
-            "src.game.spaceships.ShipDestroyed.emit.Args": {
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.Args",
+            "src.game.ships.ShipDestroyed.emit.Args": {
+                "full_name": "src.game.ships.ShipDestroyed.emit.Args",
                 "members": {
                     "ship_id": {
                         "cairo_type": "felt",
@@ -11443,8 +11351,8 @@
                 "size": 4,
                 "type": "struct"
             },
-            "src.game.spaceships.ShipDestroyed.emit.ImplicitArgs": {
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.ImplicitArgs",
+            "src.game.ships.ShipDestroyed.emit.ImplicitArgs": {
+                "full_name": "src.game.ships.ShipDestroyed.emit.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -11458,17 +11366,17 @@
                 "size": 2,
                 "type": "struct"
             },
-            "src.game.spaceships.ShipDestroyed.emit.Return": {
+            "src.game.ships.ShipDestroyed.emit.Return": {
                 "cairo_type": "()",
                 "type": "type_definition"
             },
-            "src.game.spaceships.ShipDestroyed.emit.SIZEOF_LOCALS": {
+            "src.game.ships.ShipDestroyed.emit.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 2
             },
-            "src.game.spaceships.ShipDestroyed.emit.__calldata_ptr": {
+            "src.game.ships.ShipDestroyed.emit.__calldata_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.__calldata_ptr",
+                "full_name": "src.game.ships.ShipDestroyed.emit.__calldata_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11513,9 +11421,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.__data_ptr": {
+            "src.game.ships.ShipDestroyed.emit.__data_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.__data_ptr",
+                "full_name": "src.game.ships.ShipDestroyed.emit.__data_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11536,9 +11444,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.__keys_ptr": {
+            "src.game.ships.ShipDestroyed.emit.__keys_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.__keys_ptr",
+                "full_name": "src.game.ships.ShipDestroyed.emit.__keys_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11559,9 +11467,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.__temp43": {
+            "src.game.ships.ShipDestroyed.emit.__temp43": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.__temp43",
+                "full_name": "src.game.ships.ShipDestroyed.emit.__temp43",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11574,9 +11482,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.__temp44": {
+            "src.game.ships.ShipDestroyed.emit.__temp44": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.__temp44",
+                "full_name": "src.game.ships.ShipDestroyed.emit.__temp44",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11589,9 +11497,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.range_check_ptr": {
+            "src.game.ships.ShipDestroyed.emit.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.range_check_ptr",
+                "full_name": "src.game.ships.ShipDestroyed.emit.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11604,9 +11512,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.ship_id": {
+            "src.game.ships.ShipDestroyed.emit.ship_id": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.ship_id",
+                "full_name": "src.game.ships.ShipDestroyed.emit.ship_id",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11619,9 +11527,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.ship_x": {
+            "src.game.ships.ShipDestroyed.emit.ship_x": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.ship_x",
+                "full_name": "src.game.ships.ShipDestroyed.emit.ship_x",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11634,9 +11542,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.ship_y": {
+            "src.game.ships.ShipDestroyed.emit.ship_y": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.ship_y",
+                "full_name": "src.game.ships.ShipDestroyed.emit.ship_y",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11649,9 +11557,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.syscall_ptr": {
+            "src.game.ships.ShipDestroyed.emit.syscall_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.syscall_ptr",
+                "full_name": "src.game.ships.ShipDestroyed.emit.syscall_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11672,9 +11580,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit.turn": {
+            "src.game.ships.ShipDestroyed.emit.turn": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.ShipDestroyed.emit.turn",
+                "full_name": "src.game.ships.ShipDestroyed.emit.turn",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11687,23 +11595,23 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.ShipDestroyed.emit_event": {
+            "src.game.ships.ShipDestroyed.emit_event": {
                 "destination": "starkware.starknet.common.syscalls.emit_event",
                 "type": "alias"
             },
-            "src.game.spaceships.ShipDestroyed.memcpy": {
+            "src.game.ships.ShipDestroyed.memcpy": {
                 "destination": "starkware.cairo.common.memcpy.memcpy",
                 "type": "alias"
             },
-            "src.game.spaceships.ShipState": {
-                "full_name": "src.game.spaceships.ShipState",
+            "src.game.ships.ShipState": {
+                "full_name": "src.game.ships.ShipState",
                 "members": {
                     "id": {
                         "cairo_type": "felt",
                         "offset": 0
                     },
                     "index": {
-                        "cairo_type": "src.game.types.Grid",
+                        "cairo_type": "src.block.grid.Grid",
                         "offset": 3
                     },
                     "pc": {
@@ -11722,48 +11630,48 @@
                 "size": 6,
                 "type": "struct"
             },
-            "src.game.spaceships.SingleBlock": {
-                "destination": "src.board.gameboard.SingleBlock",
+            "src.game.ships.SingleBlock": {
+                "destination": "src.block.gameboard.SingleBlock",
                 "type": "alias"
             },
-            "src.game.spaceships.StarCaptured": {
+            "src.game.ships.StarCaptured": {
                 "type": "namespace"
             },
-            "src.game.spaceships.StarCaptured.Args": {
-                "full_name": "src.game.spaceships.StarCaptured.Args",
+            "src.game.ships.StarCaptured.Args": {
+                "full_name": "src.game.ships.StarCaptured.Args",
                 "members": {},
                 "size": 0,
                 "type": "struct"
             },
-            "src.game.spaceships.StarCaptured.ImplicitArgs": {
-                "full_name": "src.game.spaceships.StarCaptured.ImplicitArgs",
+            "src.game.ships.StarCaptured.ImplicitArgs": {
+                "full_name": "src.game.ships.StarCaptured.ImplicitArgs",
                 "members": {},
                 "size": 0,
                 "type": "struct"
             },
-            "src.game.spaceships.StarCaptured.Return": {
+            "src.game.ships.StarCaptured.Return": {
                 "cairo_type": "()",
                 "type": "type_definition"
             },
-            "src.game.spaceships.StarCaptured.SELECTOR": {
+            "src.game.ships.StarCaptured.SELECTOR": {
                 "type": "const",
                 "value": 890349086230296158559807613805304618582168819129013100950970971078702039437
             },
-            "src.game.spaceships.StarCaptured.SIZEOF_LOCALS": {
+            "src.game.ships.StarCaptured.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.game.spaceships.StarCaptured.alloc": {
+            "src.game.ships.StarCaptured.alloc": {
                 "destination": "starkware.cairo.common.alloc.alloc",
                 "type": "alias"
             },
-            "src.game.spaceships.StarCaptured.emit": {
+            "src.game.ships.StarCaptured.emit": {
                 "decorators": [],
                 "pc": 709,
                 "type": "function"
             },
-            "src.game.spaceships.StarCaptured.emit.Args": {
-                "full_name": "src.game.spaceships.StarCaptured.emit.Args",
+            "src.game.ships.StarCaptured.emit.Args": {
+                "full_name": "src.game.ships.StarCaptured.emit.Args",
                 "members": {
                     "turn": {
                         "cairo_type": "felt",
@@ -11781,8 +11689,8 @@
                 "size": 3,
                 "type": "struct"
             },
-            "src.game.spaceships.StarCaptured.emit.ImplicitArgs": {
-                "full_name": "src.game.spaceships.StarCaptured.emit.ImplicitArgs",
+            "src.game.ships.StarCaptured.emit.ImplicitArgs": {
+                "full_name": "src.game.ships.StarCaptured.emit.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -11796,17 +11704,17 @@
                 "size": 2,
                 "type": "struct"
             },
-            "src.game.spaceships.StarCaptured.emit.Return": {
+            "src.game.ships.StarCaptured.emit.Return": {
                 "cairo_type": "()",
                 "type": "type_definition"
             },
-            "src.game.spaceships.StarCaptured.emit.SIZEOF_LOCALS": {
+            "src.game.ships.StarCaptured.emit.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 2
             },
-            "src.game.spaceships.StarCaptured.emit.__calldata_ptr": {
+            "src.game.ships.StarCaptured.emit.__calldata_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.StarCaptured.emit.__calldata_ptr",
+                "full_name": "src.game.ships.StarCaptured.emit.__calldata_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11843,9 +11751,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.__data_ptr": {
+            "src.game.ships.StarCaptured.emit.__data_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.StarCaptured.emit.__data_ptr",
+                "full_name": "src.game.ships.StarCaptured.emit.__data_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11866,9 +11774,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.__keys_ptr": {
+            "src.game.ships.StarCaptured.emit.__keys_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.StarCaptured.emit.__keys_ptr",
+                "full_name": "src.game.ships.StarCaptured.emit.__keys_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11889,9 +11797,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.__temp45": {
+            "src.game.ships.StarCaptured.emit.__temp45": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.StarCaptured.emit.__temp45",
+                "full_name": "src.game.ships.StarCaptured.emit.__temp45",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11904,9 +11812,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.__temp46": {
+            "src.game.ships.StarCaptured.emit.__temp46": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.StarCaptured.emit.__temp46",
+                "full_name": "src.game.ships.StarCaptured.emit.__temp46",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11919,9 +11827,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.range_check_ptr": {
+            "src.game.ships.StarCaptured.emit.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.StarCaptured.emit.range_check_ptr",
+                "full_name": "src.game.ships.StarCaptured.emit.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11934,9 +11842,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.syscall_ptr": {
+            "src.game.ships.StarCaptured.emit.syscall_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.StarCaptured.emit.syscall_ptr",
+                "full_name": "src.game.ships.StarCaptured.emit.syscall_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11957,9 +11865,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.turn": {
+            "src.game.ships.StarCaptured.emit.turn": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.StarCaptured.emit.turn",
+                "full_name": "src.game.ships.StarCaptured.emit.turn",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11972,9 +11880,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.x": {
+            "src.game.ships.StarCaptured.emit.x": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.StarCaptured.emit.x",
+                "full_name": "src.game.ships.StarCaptured.emit.x",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -11987,9 +11895,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit.y": {
+            "src.game.ships.StarCaptured.emit.y": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.StarCaptured.emit.y",
+                "full_name": "src.game.ships.StarCaptured.emit.y",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12002,32 +11910,32 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.StarCaptured.emit_event": {
+            "src.game.ships.StarCaptured.emit_event": {
                 "destination": "starkware.starknet.common.syscalls.emit_event",
                 "type": "alias"
             },
-            "src.game.spaceships.StarCaptured.memcpy": {
+            "src.game.ships.StarCaptured.memcpy": {
                 "destination": "starkware.cairo.common.memcpy.memcpy",
                 "type": "alias"
             },
-            "src.game.spaceships.alloc": {
+            "src.game.ships.alloc": {
                 "destination": "starkware.cairo.common.alloc.alloc",
                 "type": "alias"
             },
-            "src.game.spaceships.check_grid": {
+            "src.game.ships.check_grid": {
                 "decorators": [],
                 "pc": 1032,
                 "type": "function"
             },
-            "src.game.spaceships.check_grid.Args": {
-                "full_name": "src.game.spaceships.check_grid.Args",
+            "src.game.ships.check_grid.Args": {
+                "full_name": "src.game.ships.check_grid.Args",
                 "members": {
                     "board_dict": {
                         "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
                         "offset": 2
                     },
                     "ship": {
-                        "cairo_type": "src.game.spaceships.ShipState*",
+                        "cairo_type": "src.game.ships.ShipState*",
                         "offset": 0
                     },
                     "ships_dict": {
@@ -12038,8 +11946,8 @@
                 "size": 3,
                 "type": "struct"
             },
-            "src.game.spaceships.check_grid.ImplicitArgs": {
-                "full_name": "src.game.spaceships.check_grid.ImplicitArgs",
+            "src.game.ships.check_grid.ImplicitArgs": {
+                "full_name": "src.game.ships.check_grid.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -12049,17 +11957,17 @@
                 "size": 1,
                 "type": "struct"
             },
-            "src.game.spaceships.check_grid.Return": {
+            "src.game.ships.check_grid.Return": {
                 "cairo_type": "(ships_new: starkware.cairo.common.dict_access.DictAccess*, board_new: starkware.cairo.common.dict_access.DictAccess*, res: felt)",
                 "type": "type_definition"
             },
-            "src.game.spaceships.check_grid.SIZEOF_LOCALS": {
+            "src.game.ships.check_grid.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.game.spaceships.check_grid.__temp63": {
+            "src.game.ships.check_grid.__temp63": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.__temp63",
+                "full_name": "src.game.ships.check_grid.__temp63",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12072,9 +11980,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.__temp64": {
+            "src.game.ships.check_grid.__temp64": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.__temp64",
+                "full_name": "src.game.ships.check_grid.__temp64",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12087,9 +11995,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.__temp65": {
+            "src.game.ships.check_grid.__temp65": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.__temp65",
+                "full_name": "src.game.ships.check_grid.__temp65",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12102,9 +12010,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.__temp66": {
+            "src.game.ships.check_grid.__temp66": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.__temp66",
+                "full_name": "src.game.ships.check_grid.__temp66",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12117,9 +12025,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.__temp67": {
+            "src.game.ships.check_grid.__temp67": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.__temp67",
+                "full_name": "src.game.ships.check_grid.__temp67",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12132,9 +12040,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.__temp68": {
+            "src.game.ships.check_grid.__temp68": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.__temp68",
+                "full_name": "src.game.ships.check_grid.__temp68",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12147,9 +12055,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.board_dict": {
+            "src.game.ships.check_grid.board_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.check_grid.board_dict",
+                "full_name": "src.game.ships.check_grid.board_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12178,9 +12086,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.grid": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
-                "full_name": "src.game.spaceships.check_grid.grid",
+            "src.game.ships.check_grid.grid": {
+                "cairo_type": "src.block.gameboard.SingleBlock*",
+                "full_name": "src.game.ships.check_grid.grid",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12188,14 +12096,14 @@
                             "offset": 17
                         },
                         "pc": 1043,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.i": {
+            "src.game.ships.check_grid.i": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.i",
+                "full_name": "src.game.ships.check_grid.i",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12208,9 +12116,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.new_block": {
-                "cairo_type": "src.board.gameboard.SingleBlock*",
-                "full_name": "src.game.spaceships.check_grid.new_block",
+            "src.game.ships.check_grid.new_block": {
+                "cairo_type": "src.block.gameboard.SingleBlock*",
+                "full_name": "src.game.ships.check_grid.new_block",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12218,14 +12126,14 @@
                             "offset": 36
                         },
                         "pc": 1093,
-                        "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                        "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.new_ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.check_grid.new_ship",
+            "src.game.ships.check_grid.new_ship": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.check_grid.new_ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12233,14 +12141,14 @@
                             "offset": 33
                         },
                         "pc": 1064,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.ptr": {
+            "src.game.ships.check_grid.ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.ptr",
+                "full_name": "src.game.ships.check_grid.ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12253,9 +12161,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.range_check_ptr": {
+            "src.game.ships.check_grid.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.check_grid.range_check_ptr",
+                "full_name": "src.game.ships.check_grid.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12276,9 +12184,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.check_grid.ship",
+            "src.game.ships.check_grid.ship": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.check_grid.ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12286,14 +12194,14 @@
                             "offset": 0
                         },
                         "pc": 1032,
-                        "value": "[cast(fp + (-5), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(fp + (-5), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.check_grid.ships_dict": {
+            "src.game.ships.check_grid.ships_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.check_grid.ships_dict",
+                "full_name": "src.game.ships.check_grid.ships_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12314,25 +12222,25 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.cords_to_index": {
+            "src.game.ships.cords_to_index": {
                 "destination": "src.utils.utils.cords_to_index",
                 "type": "alias"
             },
-            "src.game.spaceships.dict_read": {
+            "src.game.ships.dict_read": {
                 "destination": "starkware.cairo.common.dict.dict_read",
                 "type": "alias"
             },
-            "src.game.spaceships.dict_write": {
+            "src.game.ships.dict_write": {
                 "destination": "starkware.cairo.common.dict.dict_write",
                 "type": "alias"
             },
-            "src.game.spaceships.init_ships": {
+            "src.game.ships.init_ships": {
                 "decorators": [],
                 "pc": 735,
                 "type": "function"
             },
-            "src.game.spaceships.init_ships.Args": {
-                "full_name": "src.game.spaceships.init_ships.Args",
+            "src.game.ships.init_ships.Args": {
+                "full_name": "src.game.ships.init_ships.Args",
                 "members": {
                     "dict": {
                         "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
@@ -12343,7 +12251,7 @@
                         "offset": 3
                     },
                     "ships": {
-                        "cairo_type": "src.game.spaceships.InputShipState*",
+                        "cairo_type": "src.game.ships.InputShipState*",
                         "offset": 1
                     },
                     "ships_count": {
@@ -12354,8 +12262,8 @@
                 "size": 4,
                 "type": "struct"
             },
-            "src.game.spaceships.init_ships.ImplicitArgs": {
-                "full_name": "src.game.spaceships.init_ships.ImplicitArgs",
+            "src.game.ships.init_ships.ImplicitArgs": {
+                "full_name": "src.game.ships.init_ships.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -12365,17 +12273,17 @@
                 "size": 1,
                 "type": "struct"
             },
-            "src.game.spaceships.init_ships.Return": {
+            "src.game.ships.init_ships.Return": {
                 "cairo_type": "(dict_new: starkware.cairo.common.dict_access.DictAccess*)",
                 "type": "type_definition"
             },
-            "src.game.spaceships.init_ships.SIZEOF_LOCALS": {
+            "src.game.ships.init_ships.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.game.spaceships.init_ships.__temp47": {
+            "src.game.ships.init_ships.__temp47": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.__temp47",
+                "full_name": "src.game.ships.init_ships.__temp47",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12388,9 +12296,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.__temp48": {
+            "src.game.ships.init_ships.__temp48": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.__temp48",
+                "full_name": "src.game.ships.init_ships.__temp48",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12403,9 +12311,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.__temp49": {
+            "src.game.ships.init_ships.__temp49": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.__temp49",
+                "full_name": "src.game.ships.init_ships.__temp49",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12418,9 +12326,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.__temp50": {
+            "src.game.ships.init_ships.__temp50": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.__temp50",
+                "full_name": "src.game.ships.init_ships.__temp50",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12433,9 +12341,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.dict": {
+            "src.game.ships.init_ships.dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.init_ships.dict",
+                "full_name": "src.game.ships.init_ships.dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12464,9 +12372,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.dimension": {
+            "src.game.ships.init_ships.dimension": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.dimension",
+                "full_name": "src.game.ships.init_ships.dimension",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12479,9 +12387,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.new_ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.init_ships.new_ship",
+            "src.game.ships.init_ships.new_ship": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.init_ships.new_ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12489,14 +12397,14 @@
                             "offset": 29
                         },
                         "pc": 771,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.ptr": {
+            "src.game.ships.init_ships.ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.ptr",
+                "full_name": "src.game.ships.init_ships.ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12509,9 +12417,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.range_check_ptr": {
+            "src.game.ships.init_ships.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.range_check_ptr",
+                "full_name": "src.game.ships.init_ships.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12540,9 +12448,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.ship": {
-                "cairo_type": "src.game.spaceships.InputShipState",
-                "full_name": "src.game.spaceships.init_ships.ship",
+            "src.game.ships.init_ships.ship": {
+                "cairo_type": "src.game.ships.InputShipState",
+                "full_name": "src.game.ships.init_ships.ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12550,14 +12458,14 @@
                             "offset": 6
                         },
                         "pc": 746,
-                        "value": "[cast(ap + (-6), src.game.spaceships.InputShipState*)]"
+                        "value": "[cast(ap + (-6), src.game.ships.InputShipState*)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.ships": {
-                "cairo_type": "src.game.spaceships.InputShipState*",
-                "full_name": "src.game.spaceships.init_ships.ships",
+            "src.game.ships.init_ships.ships": {
+                "cairo_type": "src.game.ships.InputShipState*",
+                "full_name": "src.game.ships.init_ships.ships",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12565,14 +12473,14 @@
                             "offset": 0
                         },
                         "pc": 735,
-                        "value": "[cast(fp + (-5), src.game.spaceships.InputShipState**)]"
+                        "value": "[cast(fp + (-5), src.game.ships.InputShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.init_ships.ships_count": {
+            "src.game.ships.init_ships.ships_count": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.init_ships.ships_count",
+                "full_name": "src.game.ships.init_ships.ships_count",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12585,17 +12493,17 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.is_le": {
+            "src.game.ships.is_le": {
                 "destination": "starkware.cairo.common.math_cmp.is_le",
                 "type": "alias"
             },
-            "src.game.spaceships.iterate_ships": {
+            "src.game.ships.iterate_ships": {
                 "decorators": [],
                 "pc": 787,
                 "type": "function"
             },
-            "src.game.spaceships.iterate_ships.Args": {
-                "full_name": "src.game.spaceships.iterate_ships.Args",
+            "src.game.ships.iterate_ships.Args": {
+                "full_name": "src.game.ships.iterate_ships.Args",
                 "members": {
                     "board_dict": {
                         "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
@@ -12629,8 +12537,8 @@
                 "size": 7,
                 "type": "struct"
             },
-            "src.game.spaceships.iterate_ships.ImplicitArgs": {
-                "full_name": "src.game.spaceships.iterate_ships.ImplicitArgs",
+            "src.game.ships.iterate_ships.ImplicitArgs": {
+                "full_name": "src.game.ships.iterate_ships.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -12644,17 +12552,17 @@
                 "size": 2,
                 "type": "struct"
             },
-            "src.game.spaceships.iterate_ships.Return": {
+            "src.game.ships.iterate_ships.Return": {
                 "cairo_type": "(ships_new: starkware.cairo.common.dict_access.DictAccess*, board_updated: starkware.cairo.common.dict_access.DictAccess*)",
                 "type": "type_definition"
             },
-            "src.game.spaceships.iterate_ships.SIZEOF_LOCALS": {
+            "src.game.ships.iterate_ships.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 8
             },
-            "src.game.spaceships.iterate_ships.__temp51": {
+            "src.game.ships.iterate_ships.__temp51": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp51",
+                "full_name": "src.game.ships.iterate_ships.__temp51",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12667,9 +12575,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp52": {
+            "src.game.ships.iterate_ships.__temp52": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp52",
+                "full_name": "src.game.ships.iterate_ships.__temp52",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12682,9 +12590,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp53": {
+            "src.game.ships.iterate_ships.__temp53": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp53",
+                "full_name": "src.game.ships.iterate_ships.__temp53",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12697,9 +12605,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp54": {
+            "src.game.ships.iterate_ships.__temp54": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp54",
+                "full_name": "src.game.ships.iterate_ships.__temp54",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12712,9 +12620,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp55": {
+            "src.game.ships.iterate_ships.__temp55": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp55",
+                "full_name": "src.game.ships.iterate_ships.__temp55",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12727,9 +12635,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp56": {
+            "src.game.ships.iterate_ships.__temp56": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp56",
+                "full_name": "src.game.ships.iterate_ships.__temp56",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12742,9 +12650,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp57": {
+            "src.game.ships.iterate_ships.__temp57": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp57",
+                "full_name": "src.game.ships.iterate_ships.__temp57",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12757,9 +12665,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp58": {
+            "src.game.ships.iterate_ships.__temp58": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp58",
+                "full_name": "src.game.ships.iterate_ships.__temp58",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12772,9 +12680,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp59": {
+            "src.game.ships.iterate_ships.__temp59": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp59",
+                "full_name": "src.game.ships.iterate_ships.__temp59",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12787,9 +12695,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp60": {
+            "src.game.ships.iterate_ships.__temp60": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp60",
+                "full_name": "src.game.ships.iterate_ships.__temp60",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12802,9 +12710,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp61": {
+            "src.game.ships.iterate_ships.__temp61": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp61",
+                "full_name": "src.game.ships.iterate_ships.__temp61",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12817,9 +12725,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.__temp62": {
+            "src.game.ships.iterate_ships.__temp62": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.__temp62",
+                "full_name": "src.game.ships.iterate_ships.__temp62",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12832,9 +12740,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.board_dict": {
+            "src.game.ships.iterate_ships.board_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.iterate_ships.board_dict",
+                "full_name": "src.game.ships.iterate_ships.board_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12871,9 +12779,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.board_dimension": {
+            "src.game.ships.iterate_ships.board_dimension": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.board_dimension",
+                "full_name": "src.game.ships.iterate_ships.board_dimension",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12886,9 +12794,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.can_move_down": {
+            "src.game.ships.iterate_ships.can_move_down": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.can_move_down",
+                "full_name": "src.game.ships.iterate_ships.can_move_down",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12901,9 +12809,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.can_move_left": {
+            "src.game.ships.iterate_ships.can_move_left": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.can_move_left",
+                "full_name": "src.game.ships.iterate_ships.can_move_left",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12916,9 +12824,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.can_move_right": {
+            "src.game.ships.iterate_ships.can_move_right": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.can_move_right",
+                "full_name": "src.game.ships.iterate_ships.can_move_right",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12931,9 +12839,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.can_move_up": {
+            "src.game.ships.iterate_ships.can_move_up": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.can_move_up",
+                "full_name": "src.game.ships.iterate_ships.can_move_up",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12946,9 +12854,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.cycle": {
+            "src.game.ships.iterate_ships.cycle": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.cycle",
+                "full_name": "src.game.ships.iterate_ships.cycle",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12961,9 +12869,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.i": {
+            "src.game.ships.iterate_ships.i": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.i",
+                "full_name": "src.game.ships.iterate_ships.i",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12976,9 +12884,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.instruction": {
+            "src.game.ships.iterate_ships.instruction": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.instruction",
+                "full_name": "src.game.ships.iterate_ships.instruction",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -12999,9 +12907,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.instructions": {
+            "src.game.ships.iterate_ships.instructions": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.iterate_ships.instructions",
+                "full_name": "src.game.ships.iterate_ships.instructions",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13014,9 +12922,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.instructions_len": {
+            "src.game.ships.iterate_ships.instructions_len": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.instructions_len",
+                "full_name": "src.game.ships.iterate_ships.instructions_len",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13029,9 +12937,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.ptr": {
+            "src.game.ships.iterate_ships.ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.ptr",
+                "full_name": "src.game.ships.iterate_ships.ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13044,9 +12952,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.range_check_ptr": {
+            "src.game.ships.iterate_ships.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.range_check_ptr",
+                "full_name": "src.game.ships.iterate_ships.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13395,9 +13303,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.res": {
+            "src.game.ships.iterate_ships.res": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.iterate_ships.res",
+                "full_name": "src.game.ships.iterate_ships.res",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13410,9 +13318,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.iterate_ships.ship",
+            "src.game.ships.iterate_ships.ship": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.iterate_ships.ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13420,7 +13328,7 @@
                             "offset": 18
                         },
                         "pc": 804,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     },
                     {
                         "ap_tracking_data": {
@@ -13428,14 +13336,14 @@
                             "offset": 18
                         },
                         "pc": 805,
-                        "value": "[cast(fp + 1, src.game.spaceships.ShipState**)]"
+                        "value": "[cast(fp + 1, src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.ships_dict": {
+            "src.game.ships.iterate_ships.ships_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.iterate_ships.ships_dict",
+                "full_name": "src.game.ships.iterate_ships.ships_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13488,9 +13396,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.ships_new": {
+            "src.game.ships.iterate_ships.ships_new": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.iterate_ships.ships_new",
+                "full_name": "src.game.ships.iterate_ships.ships_new",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13527,9 +13435,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.iterate_ships.syscall_ptr": {
+            "src.game.ships.iterate_ships.syscall_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "src.game.spaceships.iterate_ships.syscall_ptr",
+                "full_name": "src.game.ships.iterate_ships.syscall_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13702,32 +13610,32 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.memcpy": {
+            "src.game.ships.memcpy": {
                 "destination": "starkware.cairo.common.memcpy.memcpy",
                 "type": "alias"
             },
-            "src.game.spaceships.ns_dict": {
+            "src.game.ships.ns_dict": {
                 "destination": "src.game.constants.ns_dict",
                 "type": "alias"
             },
-            "src.game.spaceships.ns_instructions": {
+            "src.game.ships.ns_instructions": {
                 "destination": "src.game.constants.ns_instructions",
                 "type": "alias"
             },
-            "src.game.spaceships.ns_ships": {
+            "src.game.ships.ns_ships": {
                 "destination": "src.game.constants.ns_ships",
                 "type": "alias"
             },
-            "src.game.spaceships.update_ship_status": {
+            "src.game.ships.update_ship_status": {
                 "decorators": [],
                 "pc": 1130,
                 "type": "function"
             },
-            "src.game.spaceships.update_ship_status.Args": {
-                "full_name": "src.game.spaceships.update_ship_status.Args",
+            "src.game.ships.update_ship_status.Args": {
+                "full_name": "src.game.ships.update_ship_status.Args",
                 "members": {
                     "ship": {
-                        "cairo_type": "src.game.spaceships.ShipState*",
+                        "cairo_type": "src.game.ships.ShipState*",
                         "offset": 0
                     },
                     "ships_dict": {
@@ -13738,8 +13646,8 @@
                 "size": 2,
                 "type": "struct"
             },
-            "src.game.spaceships.update_ship_status.ImplicitArgs": {
-                "full_name": "src.game.spaceships.update_ship_status.ImplicitArgs",
+            "src.game.ships.update_ship_status.ImplicitArgs": {
+                "full_name": "src.game.ships.update_ship_status.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -13749,17 +13657,17 @@
                 "size": 1,
                 "type": "struct"
             },
-            "src.game.spaceships.update_ship_status.Return": {
+            "src.game.ships.update_ship_status.Return": {
                 "cairo_type": "(ships_new: starkware.cairo.common.dict_access.DictAccess*)",
                 "type": "type_definition"
             },
-            "src.game.spaceships.update_ship_status.SIZEOF_LOCALS": {
+            "src.game.ships.update_ship_status.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.game.spaceships.update_ship_status.range_check_ptr": {
+            "src.game.ships.update_ship_status.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.update_ship_status.range_check_ptr",
+                "full_name": "src.game.ships.update_ship_status.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13772,9 +13680,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ship_status.ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.update_ship_status.ship",
+            "src.game.ships.update_ship_status.ship": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.update_ship_status.ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13782,14 +13690,14 @@
                             "offset": 0
                         },
                         "pc": 1130,
-                        "value": "[cast(fp + (-4), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(fp + (-4), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ship_status.ship_new": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.update_ship_status.ship_new",
+            "src.game.ships.update_ship_status.ship_new": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.update_ship_status.ship_new",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13797,14 +13705,14 @@
                             "offset": 12
                         },
                         "pc": 1141,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ship_status.ships_dict": {
+            "src.game.ships.update_ship_status.ships_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.update_ship_status.ships_dict",
+                "full_name": "src.game.ships.update_ship_status.ships_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13825,16 +13733,16 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved": {
+            "src.game.ships.update_ships_moved": {
                 "decorators": [],
                 "pc": 1110,
                 "type": "function"
             },
-            "src.game.spaceships.update_ships_moved.Args": {
-                "full_name": "src.game.spaceships.update_ships_moved.Args",
+            "src.game.ships.update_ships_moved.Args": {
+                "full_name": "src.game.ships.update_ships_moved.Args",
                 "members": {
                     "ship": {
-                        "cairo_type": "src.game.spaceships.ShipState*",
+                        "cairo_type": "src.game.ships.ShipState*",
                         "offset": 0
                     },
                     "ships_dict": {
@@ -13853,8 +13761,8 @@
                 "size": 4,
                 "type": "struct"
             },
-            "src.game.spaceships.update_ships_moved.ImplicitArgs": {
-                "full_name": "src.game.spaceships.update_ships_moved.ImplicitArgs",
+            "src.game.ships.update_ships_moved.ImplicitArgs": {
+                "full_name": "src.game.ships.update_ships_moved.ImplicitArgs",
                 "members": {
                     "range_check_ptr": {
                         "cairo_type": "felt",
@@ -13864,17 +13772,17 @@
                 "size": 1,
                 "type": "struct"
             },
-            "src.game.spaceships.update_ships_moved.Return": {
+            "src.game.ships.update_ships_moved.Return": {
                 "cairo_type": "(ships_new: starkware.cairo.common.dict_access.DictAccess*)",
                 "type": "type_definition"
             },
-            "src.game.spaceships.update_ships_moved.SIZEOF_LOCALS": {
+            "src.game.ships.update_ships_moved.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "src.game.spaceships.update_ships_moved.__temp69": {
+            "src.game.ships.update_ships_moved.__temp69": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.update_ships_moved.__temp69",
+                "full_name": "src.game.ships.update_ships_moved.__temp69",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13887,9 +13795,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.__temp70": {
+            "src.game.ships.update_ships_moved.__temp70": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.update_ships_moved.__temp70",
+                "full_name": "src.game.ships.update_ships_moved.__temp70",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13902,9 +13810,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.range_check_ptr": {
+            "src.game.ships.update_ships_moved.range_check_ptr": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.update_ships_moved.range_check_ptr",
+                "full_name": "src.game.ships.update_ships_moved.range_check_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13917,9 +13825,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.ship": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.update_ships_moved.ship",
+            "src.game.ships.update_ships_moved.ship": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.update_ships_moved.ship",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13927,14 +13835,14 @@
                             "offset": 0
                         },
                         "pc": 1110,
-                        "value": "[cast(fp + (-6), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(fp + (-6), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.ship_new": {
-                "cairo_type": "src.game.spaceships.ShipState*",
-                "full_name": "src.game.spaceships.update_ships_moved.ship_new",
+            "src.game.ships.update_ships_moved.ship_new": {
+                "cairo_type": "src.game.ships.ShipState*",
+                "full_name": "src.game.ships.update_ships_moved.ship_new",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13942,14 +13850,14 @@
                             "offset": 14
                         },
                         "pc": 1122,
-                        "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                        "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.ships_dict": {
+            "src.game.ships.update_ships_moved.ships_dict": {
                 "cairo_type": "starkware.cairo.common.dict_access.DictAccess*",
-                "full_name": "src.game.spaceships.update_ships_moved.ships_dict",
+                "full_name": "src.game.ships.update_ships_moved.ships_dict",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13970,9 +13878,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.x_inc": {
+            "src.game.ships.update_ships_moved.x_inc": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.update_ships_moved.x_inc",
+                "full_name": "src.game.ships.update_ships_moved.x_inc",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13985,9 +13893,9 @@
                 ],
                 "type": "reference"
             },
-            "src.game.spaceships.update_ships_moved.y_inc": {
+            "src.game.ships.update_ships_moved.y_inc": {
                 "cairo_type": "felt",
-                "full_name": "src.game.spaceships.update_ships_moved.y_inc",
+                "full_name": "src.game.ships.update_ships_moved.y_inc",
                 "references": [
                     {
                         "ap_tracking_data": {
@@ -13999,72 +13907,6 @@
                     }
                 ],
                 "type": "reference"
-            },
-            "src.game.types.BitwiseBuiltin": {
-                "destination": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
-                "type": "alias"
-            },
-            "src.game.types.Grid": {
-                "full_name": "src.game.types.Grid",
-                "members": {
-                    "x": {
-                        "cairo_type": "felt",
-                        "offset": 0
-                    },
-                    "y": {
-                        "cairo_type": "felt",
-                        "offset": 1
-                    }
-                },
-                "size": 2,
-                "type": "struct"
-            },
-            "src.game.types.HashBuiltin": {
-                "destination": "starkware.cairo.common.cairo_builtins.HashBuiltin",
-                "type": "alias"
-            },
-            "src.game.types.Instructions": {
-                "full_name": "src.game.types.Instructions",
-                "members": {
-                    "instructionSet": {
-                        "cairo_type": "felt*",
-                        "offset": 1
-                    },
-                    "instructionSet_lens": {
-                        "cairo_type": "felt",
-                        "offset": 0
-                    }
-                },
-                "size": 2,
-                "type": "struct"
-            },
-            "src.game.types.alloc": {
-                "destination": "starkware.cairo.common.alloc.alloc",
-                "type": "alias"
-            },
-            "src.game.types.assert_le": {
-                "destination": "starkware.cairo.common.math.assert_le",
-                "type": "alias"
-            },
-            "src.game.types.assert_nn_le": {
-                "destination": "starkware.cairo.common.math.assert_nn_le",
-                "type": "alias"
-            },
-            "src.game.types.get_block_timestamp": {
-                "destination": "starkware.starknet.common.syscalls.get_block_timestamp",
-                "type": "alias"
-            },
-            "src.game.types.get_caller_address": {
-                "destination": "starkware.starknet.common.syscalls.get_caller_address",
-                "type": "alias"
-            },
-            "src.game.types.get_contract_address": {
-                "destination": "starkware.starknet.common.syscalls.get_contract_address",
-                "type": "alias"
-            },
-            "src.game.types.unsigned_div_rem": {
-                "destination": "starkware.cairo.common.math.unsigned_div_rem",
-                "type": "alias"
             },
             "src.utils.utils.BitwiseBuiltin": {
                 "destination": "starkware.cairo.common.cairo_builtins.BitwiseBuiltin",
@@ -22647,7 +22489,7 @@
                         "offset": 63
                     },
                     "pc": 553,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -22743,7 +22585,7 @@
                         "offset": 7
                     },
                     "pc": 578,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -23247,7 +23089,7 @@
                         "offset": 0
                     },
                     "pc": 735,
-                    "value": "[cast(fp + (-5), src.game.spaceships.InputShipState**)]"
+                    "value": "[cast(fp + (-5), src.game.ships.InputShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -23279,7 +23121,7 @@
                         "offset": 6
                     },
                     "pc": 746,
-                    "value": "[cast(ap + (-6), src.game.spaceships.InputShipState*)]"
+                    "value": "[cast(ap + (-6), src.game.ships.InputShipState*)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -23343,7 +23185,7 @@
                         "offset": 29
                     },
                     "pc": 771,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -23487,7 +23329,7 @@
                         "offset": 18
                     },
                     "pc": 804,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -23495,7 +23337,7 @@
                         "offset": 18
                     },
                     "pc": 805,
-                    "value": "[cast(fp + 1, src.game.spaceships.ShipState**)]"
+                    "value": "[cast(fp + 1, src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -23951,7 +23793,7 @@
                         "offset": 0
                     },
                     "pc": 1032,
-                    "value": "[cast(fp + (-5), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(fp + (-5), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24015,7 +23857,7 @@
                         "offset": 17
                     },
                     "pc": 1043,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24055,7 +23897,7 @@
                         "offset": 33
                     },
                     "pc": 1064,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24087,7 +23929,7 @@
                         "offset": 36
                     },
                     "pc": 1093,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24103,7 +23945,7 @@
                         "offset": 0
                     },
                     "pc": 1110,
-                    "value": "[cast(fp + (-6), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(fp + (-6), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24159,7 +24001,7 @@
                         "offset": 14
                     },
                     "pc": 1122,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24175,7 +24017,7 @@
                         "offset": 0
                     },
                     "pc": 1130,
-                    "value": "[cast(fp + (-4), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(fp + (-4), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24199,7 +24041,7 @@
                         "offset": 12
                     },
                     "pc": 1141,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24239,7 +24081,7 @@
                         "offset": 0
                     },
                     "pc": 1149,
-                    "value": "[cast(fp + (-4), src.game.spaceships.InputShipState**)]"
+                    "value": "[cast(fp + (-4), src.game.ships.InputShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24439,7 +24281,7 @@
                         "offset": 0
                     },
                     "pc": 1202,
-                    "value": "[cast(fp + (-3), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(fp + (-3), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24575,7 +24417,7 @@
                         "offset": 0
                     },
                     "pc": 1239,
-                    "value": "[cast(fp + (-3), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(fp + (-3), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24711,7 +24553,7 @@
                         "offset": 0
                     },
                     "pc": 1276,
-                    "value": "[cast(fp + (-3), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(fp + (-3), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -24943,7 +24785,7 @@
                         "offset": 8
                     },
                     "pc": 1323,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -25527,7 +25369,7 @@
                         "offset": 3
                     },
                     "pc": 1437,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -25559,7 +25401,7 @@
                         "offset": 0
                     },
                     "pc": 1445,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -25679,7 +25521,7 @@
                         "offset": 0
                     },
                     "pc": 1459,
-                    "value": "[cast(fp + (-3), src.game.spaceships.InputShipState**)]"
+                    "value": "[cast(fp + (-3), src.game.ships.InputShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26095,7 +25937,7 @@
                         "offset": 12
                     },
                     "pc": 1548,
-                    "value": "cast([ap + (-3)] + 1, src.game.spaceships.InputShipState*)"
+                    "value": "cast([ap + (-3)] + 1, src.game.ships.InputShipState*)"
                 },
                 {
                     "ap_tracking_data": {
@@ -26311,7 +26153,7 @@
                         "offset": 5
                     },
                     "pc": 1585,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26319,7 +26161,7 @@
                         "offset": 8
                     },
                     "pc": 1587,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26327,7 +26169,7 @@
                         "offset": 8
                     },
                     "pc": 1588,
-                    "value": "[cast(fp, src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(fp, src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26367,7 +26209,7 @@
                         "offset": 0
                     },
                     "pc": 1598,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26415,7 +26257,7 @@
                         "offset": 0
                     },
                     "pc": 1606,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26727,7 +26569,7 @@
                         "offset": 0
                     },
                     "pc": 1692,
-                    "value": "[cast(fp + (-4), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(fp + (-4), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -26775,7 +26617,7 @@
                         "offset": 7
                     },
                     "pc": 1706,
-                    "value": "[cast(ap + (-1), src.game.spaceships.ShipState**)]"
+                    "value": "[cast(ap + (-1), src.game.ships.ShipState**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -27039,7 +26881,7 @@
                         "offset": 0
                     },
                     "pc": 1771,
-                    "value": "[cast(fp + (-4), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(fp + (-4), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {
@@ -27087,7 +26929,7 @@
                         "offset": 7
                     },
                     "pc": 1784,
-                    "value": "[cast(ap + (-1), src.board.gameboard.SingleBlock**)]"
+                    "value": "[cast(ap + (-1), src.block.gameboard.SingleBlock**)]"
                 },
                 {
                     "ap_tracking_data": {

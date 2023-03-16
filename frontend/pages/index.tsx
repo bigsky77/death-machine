@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Layout from '../src/components/Layout'
 import { BLANK_SOLUTION, DIM, N_CYCLES } from "../src/constants/constants";
 import { programsToInstructionSets, packProgram } from "../src/utils/programPacker";
@@ -12,7 +12,7 @@ import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
 
 export default function Home() {
   const [shipInitPositions, setShipInitPositions] = useState<Grid[]>(BLANK_SOLUTION.ships.map((ship) => ship.index));
-  const [shipSelected, updateShipSelected] = useState(BLANK_SOLUTION.ships.map((ship) => ship.selected));
+  const [shipSelected, updateShipSelected] = useState<[]>(BLANK_SOLUTION.ships.map((ship) => ship.selected));
 
   const [ATOMS, updateAtoms] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.index));
   const [atomType, updateAtomType] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.typ));
@@ -32,33 +32,24 @@ export default function Home() {
   const runnable = true; //placeholder
 
   const { data } = useAllEvents();
-  console.log("all events", data)
+  console.log("Contract Data", data)
 
-  const updateShipLocation = (id, newLocation) => {
-      const updatedShips = spaceships.map((spaceship) => {
-          if(spaceship.id === id) {
-              return { ...spaceship, location: newLocation};
-            }
-            return spaceship;
-        });
-      updateShips(updatedShips);
-    }
-
-  const selectSpaceship= (id) => {
-      const selectedSpaceShip = spaceships.map((spaceship) => {
-          if(spaceship.id === id) {
-              return { ...spaceship, selected: true};
+  const selectShip = (id) => {
+      const selectedShip = shipSelected.map((ship) => {
+          if(ship.selected === true) {
+              return { ...ship, selected: false};
             } else {
-                return { ...spaceship, selected: false};
+                return { ...ship, selected: true};
               }
-            return spaceship;
+            return ship;
         });
-      updateShipSelected(selectedSpaceShip);
+      console.log("selectedShip", selectedShip);
+      updateShipSelected(selectedShip);
     }
 
   const shipInitStates: ShipState[] = shipInitPositions.map((pos, ship_i) => {
           return {
-              status: "ACTIVE",
+              status: ShipStatus.ACTIVE,
               index: pos,
               id: `ship${ship_i}`,
               typ: ShipType.SINGLETON,
@@ -66,6 +57,10 @@ export default function Home() {
               pc_next: 0,
           };
       });
+
+  useEffect(() => {
+    generateBoard();
+  }, [shipInitPositions, ATOMS, atomType]);
 
   const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
           return {
@@ -210,7 +205,7 @@ export default function Home() {
         callData={calls}
         pc={pc}
         shipSelected={shipSelected}
-        updateShipSelected={updateShipSelected}
+        selectShip={selectShip}
         onProgramsChange={setPrograms}
         programs={programs}
         midScreenControlProps={{

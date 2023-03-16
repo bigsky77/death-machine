@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////
-//                      DEATH-MACHINE
+//                        RUN-SIMULATION 
 //////////////////////////////////////////////////////////////
 
 %lang starknet
@@ -45,41 +45,6 @@ from src.game.ships import (
 
 from src.game.instructions import InstructionSet, get_frame_instruction_set
 from src.utils.utils import cords_to_index 
-
-//////////////////////////////////////////////////////////////
-//                   CONSTRUCTOR INTERFACE
-//////////////////////////////////////////////////////////////
-
-@storage_var
-func GAME_KEY() -> (i: felt){
-
-  }
-
-@constructor
-func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(address: felt) {
-  
-    XOROSHIRO_ADDR.write(address);
-
-    GAME_KEY.write(1);
-    generate_board();
-
-    return();
-  }
-
-func generate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}() {
-    alloc_locals; 
-
-    let (board_dict_init: DictAccess*) = default_dict_new(default_value=0);
-    let (board_dict_init: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, board_dict_init);
-    
-    let (block_arr_init: SingleBlock*) = alloc();
-    let (block_len_init, block_state_new) = board_summary(225, block_arr_init, board_dict_init);
-    boardSummary.emit(block_len_init, block_state_new);
-    
-    let (i) = GAME_KEY.read();
-    reset(i);
-    return();
-  }
 
 //////////////////////////////////////////////////////////////
 //                        SIMULATE

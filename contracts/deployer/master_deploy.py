@@ -18,27 +18,27 @@ key = os.getenv('KEY')
 local_network_client = GatewayClient("http://localhost:5050")
 testnet_client = GatewayClient(TESTNET)
 
+key_pair = KeyPair.from_private_key(key=0x05b0bebc50f55961731ff367ac498a9f4d97c59cd2a8c49255541d8a3408c5ff)
+signer = StarkCurveSigner(0x037120cfd86ce59565ff1c2e26f3383e0871bf95fe3fe6e905204d1e1a2238b8, key_pair, StarknetChainId.TESTNET)
+account = Account(client=testnet_client, address=0x037120cfd86ce59565ff1c2e26f3383e0871bf95fe3fe6e905204d1e1a2238b8, signer=signer)
+
 async def start():
     from random import randint
 
-    key_pair = KeyPair.from_private_key(key=0x05b0bebc50f55961731ff367ac498a9f4d97c59cd2a8c49255541d8a3408c5ff)
-    signer = StarkCurveSigner(0x037120cfd86ce59565ff1c2e26f3383e0871bf95fe3fe6e905204d1e1a2238b8, key_pair, StarknetChainId.TESTNET)
-    account = Account(client=testnet_client, address=0x037120cfd86ce59565ff1c2e26f3383e0871bf95fe3fe6e905204d1e1a2238b8, signer=signer)
+  #  # xoroshiro contract
+  #  with open('./build/xoroshiro.json') as xo_contract_file:
+  #      xo_compiled_contract = xo_contract_file.read()
 
-    # xoroshiro contract
-    with open('./build/xoroshiro.json') as xo_contract_file:
-        xo_compiled_contract = xo_contract_file.read()
+  #  xo_declare_result = await Contract.declare(
+  #      account=account, compiled_contract=xo_compiled_contract, max_fee=int(1e16)
+  #  )
+  #  # Wait for the transaction
+  #  await xo_declare_result.wait_for_acceptance()
 
-    xo_declare_result = await Contract.declare(
-        account=account, compiled_contract=xo_compiled_contract, max_fee=int(1e16)
-    )
-    # Wait for the transaction
-    await xo_declare_result.wait_for_acceptance()
+  #  xo_deploy_call = await xo_declare_result.deploy(constructor_args={"seed": 1}, max_fee=int(1e18));
+  #  xo_contract = xo_deploy_call.deployed_contract
 
-    xo_deploy_call = await xo_declare_result.deploy(constructor_args={"seed": 1}, max_fee=int(1e18));
-    xo_contract = xo_deploy_call.deployed_contract
-
-    # death-machine contract
+  #  # death-machine contract
 
     with open('./build/death_machine.json') as dm_contract_file:
         dm_compiled_contract = dm_contract_file.read()
@@ -49,18 +49,17 @@ async def start():
     # Wait for the transaction
     await dm_declare_result.wait_for_acceptance()
 
-    dm_deploy_call = await dm_declare_result.deploy(constructor_args={"address": xo_contract.address }, max_fee=int(1e18));
+    dm_deploy_call = await dm_declare_result.deploy(constructor_args={"address": 0x001197d928f78a87b3fb7cc82a1f342ab59d3d7fbd196c3f5c004e544b25c4c4 }, max_fee=int(1e18));
     dm_contract = dm_deploy_call.deployed_contract
-    
+
     dm_contract_address = str(dm_contract.address)
-    
+
     print("Contract Deployed", dm_contract.address)
     #write address to file
     file1 = open('../frontend/abi/deploy_address.ts', 'w')
     print('export const contract_address=' + '"' + dm_contract_address + '"', file=file1);
     file1.close();
 
-    
 if __name__ == "__main__":
     asyncio.run(start())
 

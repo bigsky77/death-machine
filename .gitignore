@@ -1,3 +1,4 @@
 venv/
 __pycache__/
 master_deploy.py
+node_modules/

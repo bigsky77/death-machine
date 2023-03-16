@@ -195,27 +195,6 @@
     {
         "data": [
             {
-                "name": "spaceships_len",
-                "type": "felt"
-            },
-            {
-                "name": "spaceships",
-                "type": "ShipState*"
-            }
-        ],
-        "keys": [],
-        "name": "turnComplete",
-        "type": "event"
-    },
-    {
-        "data": [],
-        "keys": [],
-        "name": "simulationComplete",
-        "type": "event"
-    },
-    {
-        "data": [
-            {
                 "name": "ships_len",
                 "type": "felt"
             },

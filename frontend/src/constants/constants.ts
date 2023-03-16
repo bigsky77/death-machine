@@ -28,11 +28,11 @@ export const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const atomType = ["STAR","STAR", "STAR", "PLANET", "PLANET", "BLANK", "BLANK", "BLANK", "ENEMY"];
+const atomType = ["STAR","STAR", "STAR", "STAR","PLANET", "PLANET", "BLANK", "BLANK", "BLANK", "BLANK","ENEMY"];
 
 const initialArray = Array(225).fill("").map((item, index) => ({
   id: `star${index + 1}`,
-  typ: atomType[Math.floor(Math.random() * 9)],
+  typ: atomType[Math.floor(Math.random() * 11)],
   status: "ACTIVE",
   index: { x: Math.floor(index / 15), y: index % 15 },
 }));

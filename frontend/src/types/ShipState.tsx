@@ -1,8 +1,8 @@
 import Grid from './Grid'
 
 export enum ShipStatus {
-    ALIVE = 'alive',
-    DEAD = 'dead',
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
 }
 
 export enum ShipType {
