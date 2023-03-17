@@ -108,6 +108,13 @@ namespace Block{
     return(dict_new);
     }
     
+    func finalize{
+      syscall_ptr: felt*, 
+      pedersen_ptr: HashBuiltin*, 
+      range_check_ptr}() {
+
+    return();
+    }
 
   }
 

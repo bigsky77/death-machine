@@ -65,10 +65,8 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
         assert is_valid_ship_len = 1;
     }
   
-  let (caller) = get_caller_address();
-  
-  simulationSubmit.emit(instructions_len, instructions, ships_len, ships, caller);
-  
+  // add check that moves are valid and block is pending
+
   // initialize board
   let (board_dict: DictAccess*) = default_dict_new(default_value=0);
   let (board_dict: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, board_dict);
@@ -124,9 +122,6 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check
       let (block_len, block_state) = board_summary(225, block_arr, board_dict);
       boardComplete.emit(block_len, block_state);
 
-      let (i_new) = GAME_KEY.read();
-      GAME_KEY.write(i_new + 1);
-      
       return ();
     }
 

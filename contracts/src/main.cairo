@@ -77,22 +77,11 @@ func reveal_moves{
   with_attr error_message("Block Not Pending") {
         assert current_block.status = 2;
     }
+  
+  // ensure legal moves
   reveal_moves(number, player_moves);
-  let (n_revealed) = moves_revealed.read();
-  moves_revealed.write(n_revealed);
-  
-  let (n_commited) = moves_commited.read();
-  if(n_revealed == n_commited){
-    // need a function to deserialize player moves and run the through
-    // run simulation , store score, and incriment block    
-    }
-  
-  let (block_timestamp) = get_block_timestamp();
-  let time_diff = block_timestamp = current_block.block_timestamp;
-  let (res) = is_le(time_diff, BLOCK_TIME);
-  if(res == 1){
-    // run simulation , store score, and incriment block    
-    }
+
+  simulation();
 
   return();
 }
