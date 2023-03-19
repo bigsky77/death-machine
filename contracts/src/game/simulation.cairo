@@ -203,7 +203,7 @@ func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, peders
   alloc_locals;
   
   let (board_new) = iterate_board(BOARD_DIMENSION, board_size, board_dict, current_block.block_seed);
-  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_new, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
   }

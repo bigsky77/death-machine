@@ -25,14 +25,14 @@ async def test(starknet):
     
     with open('./build/death_machine_abi.json', 'r') as f:
         contract_abi = json.load(f)
-    # Deploy contract
-    xoroshiro = await starknet.deploy("./src/utils/xoroshiro128_starstar.cairo", constructor_calldata=[1]);
-    contract = await starknet.deploy(source="./src/death_machine.cairo", constructor_calldata=[xoroshiro.contract_address])
+ 
+    contract = await starknet.deploy(source="./src/main.cairo", constructor_calldata=[1])
     LOGGER.info(f"> Deployed death_machine.cairo.")
     print(f"> Deployed death_machine.cairo.")
-    await contract.simulation(
+    await contract.submit_simulation(
         [7, 7, 7],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        100,
         [(0, 0, 1, (3, 3), 0), (1, 0, 1, (3, 4), 0), (2, 0, 1, (5, 5), 0)],
     ).call()
     

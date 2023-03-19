@@ -67,8 +67,8 @@ func reveal_ships{
         caller_address_hash_storage.write(caller_address, ShipHash(Uint256(0, 0), Uint256(0, 0), Uint256(0, 0)));
         return(res=0);
       }  
-    tempvar loc_x = ships[ships_len].index.x;
-    tempvar loc_y = ships[ships_len].index.y;
+    tempvar loc_x = ships[ships_len - 1].index.x;
+    tempvar loc_y = ships[ships_len - 1].index.y;
     reveal(number, loc_x, loc_y);
   
     return reveal_ships(number, ships_len - 1, ships);

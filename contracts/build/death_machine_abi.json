@@ -74,10 +74,15 @@
                 "name": "pc",
                 "offset": 5,
                 "type": "felt"
+            },
+            {
+                "name": "score",
+                "offset": 6,
+                "type": "felt"
             }
         ],
         "name": "ShipState",
-        "size": 6,
+        "size": 7,
         "type": "struct"
     },
     {
@@ -115,12 +120,22 @@
     {
         "inputs": [
             {
-                "name": "seed",
+                "name": "loc_x",
+                "type": "felt"
+            },
+            {
+                "name": "loc_y",
                 "type": "felt"
             }
         ],
-        "name": "reset",
-        "outputs": [],
+        "name": "cords_to_index",
+        "outputs": [
+            {
+                "name": "index",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -240,13 +255,26 @@
     {
         "inputs": [
             {
-                "name": "address",
+                "name": "number",
+                "type": "felt"
+            },
+            {
+                "name": "ships_len",
+                "type": "felt"
+            },
+            {
+                "name": "ships",
+                "type": "InputShipState*"
+            }
+        ],
+        "name": "reveal_ships",
+        "outputs": [
+            {
+                "name": "res",
                 "type": "felt"
             }
         ],
-        "name": "constructor",
-        "outputs": [],
-        "type": "constructor"
+        "type": "function"
     },
     {
         "inputs": [
@@ -267,6 +295,10 @@
                 "type": "felt*"
             },
             {
+                "name": "number",
+                "type": "felt"
+            },
+            {
                 "name": "ships_len",
                 "type": "felt"
             },
@@ -275,7 +307,7 @@
                 "type": "InputShipState*"
             }
         ],
-        "name": "simulation",
+        "name": "submit_simulation",
         "outputs": [],
         "type": "function"
     }
