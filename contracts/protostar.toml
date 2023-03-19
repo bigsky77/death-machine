@@ -3,5 +3,4 @@ protostar-version = "0.9.1"
 lib-path = "lib"
 
 [contracts]
-death_machine = ["src/death_machine.cairo"]
-xoroshiro = ["src/utils/xoroshiro128_starstar.cairo"]
+main = ["src/main.cairo"]

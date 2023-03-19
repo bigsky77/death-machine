@@ -14,16 +14,27 @@ struct State {
 func state() -> (s: State) {
 }
 
-func next{
+func generate_seed{
     syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr
-}(seed: felt) -> (rnd: felt) {
+}(seed: felt) -> (s: State) {
     alloc_locals;
     let (s0) = splitmix64(seed);
     let (s1) = splitmix64(s0);
     let s = State(s0=s0, s1=s1);
 
+    return (s=s);
+}
+
+@external
+func next{
+    syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr
+}(num: felt, s: State) -> (rnd: felt) {
+    alloc_locals;
+
+    //let (s) = state.read();
+
     // result = rotl(s0 * 5, 7) * 9;
-    let (rotated) = rotl(s.s0 * 5, 7);
+    let (rotated) = rotl(s.s0 + num * 5, 7);
     let (result) = and64(rotated * 9);
 
     // s1 ^= s0;
@@ -39,7 +50,7 @@ func next{
     let (s0) = and64(s0_xor);
     let (s1) = rotl(s1_xor_64, 37);
 
-    let new_s: State = State(s0=s0, s1=s1);
+    //let new_s: State = State(s0=s0, s1=s1);
     //state.write(new_s);
 
     return (result,);

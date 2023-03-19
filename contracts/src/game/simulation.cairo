@@ -13,9 +13,8 @@ from starkware.cairo.common.default_dict import default_dict_new, default_dict_f
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.utils.xoroshiro import XOROSHIRO_ADDR, reset 
-
-from src.block.gameboard import init_board, iterate_board, SingleBlock
+from src.block.gameboard import init_board, SingleBlock
+from src.block.block import Block, Current_Block, Block_Storage
 
 from src.game.constants import (
   STAR_RANGE, 
@@ -44,6 +43,7 @@ from src.game.ships import (
   )
 
 from src.game.instructions import InstructionSet, get_frame_instruction_set
+from src.game.commit import reveal_ships 
 from src.utils.utils import cords_to_index 
 
 //////////////////////////////////////////////////////////////
@@ -51,7 +51,32 @@ from src.utils.utils import cords_to_index
 //////////////////////////////////////////////////////////////
 
 @external
-func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+func submit_simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr: BitwiseBuiltin*,range_check_ptr}(
+  instructions_sets_len: felt,
+  instructions_sets: felt*,
+  instructions_len: felt, 
+  instructions: felt*, 
+  number: felt,
+  ships_len: felt, 
+  ships: InputShipState*) {  
+  alloc_locals;
+
+  let is_valid_ship_len = is_le(ships_len, 3);
+  with_attr error_message("ship length limited to 3") {
+    assert is_valid_ship_len = 1;
+  }
+  // check valid ship positions
+  let (res) = reveal_ships(number, ships_len, ships);
+  with_attr error_message("invalid submission") {
+    assert res = 0;
+  }
+
+  simulation(instructions_sets_len, instructions_sets, instructions_len, instructions, ships_len, ships); 
+  Block.update_status();
+  return();
+}
+
+func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr: BitwiseBuiltin*, range_check_ptr}(
   instructions_sets_len: felt,
   instructions_sets: felt*,
   instructions_len: felt, 
@@ -60,16 +85,10 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
   ships: InputShipState*) {  
   alloc_locals;
   
-  let is_valid_ship_len = is_le(ships_len, 3);
-    with_attr error_message("ship length limited to 3") {
-        assert is_valid_ship_len = 1;
-    }
-  
-  // add check that moves are valid and block is pending
-
-  // initialize board
+  let (block_number) = Current_Block.read();
+  let (current_block) = Block_Storage.read(block_number);
   let (board_dict: DictAccess*) = default_dict_new(default_value=0);
-  let (board_dict: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, board_dict);
+  let (board_dict: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, current_block.block_seed, board_dict);
 
   // initialize ships
   let (ship_dict: DictAccess*) = default_dict_new(default_value=0);
@@ -96,7 +115,7 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
 //                  SIMULATE LOOP
 //////////////////////////////////////////////////////////////
 
-func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr: BitwiseBuiltin*, range_check_ptr}(
   n_cycles: felt,
   cycle: felt,
   BOARD_DIMENSION: felt,
@@ -165,7 +184,7 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check
     return();
   }
 
-func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
+func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
     BOARD_DIMENSION: felt,
     cycle: felt,
     instructions_len: felt,
@@ -177,8 +196,7 @@ func simulate_one_frame{syscall_ptr: felt*, range_check_ptr}(
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
   
-  let (board_new) = iterate_board(BOARD_DIMENSION, BOARD_SIZE, board_dict);
-  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_new, 0, instructions_len, instructions);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
   }
