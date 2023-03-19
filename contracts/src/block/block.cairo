@@ -29,10 +29,11 @@ from src.game.constants import (
 struct BlockData {
     block_number: felt,
     block_seed: State, 
-    status: felt, // 0=complete, 1=active, 2=pending
+    block_status: felt, // 0=complete, 1=active, 2=pending
     block_reward: felt,
     block_difficulty: felt,
     block_timestamp: felt,
+    block_prover: felt,
   }
 
 @storage_var
@@ -65,13 +66,15 @@ namespace Block {
           status, 
           block_reward, 
           block_difficulty, 
-          block_timestamp);
+          block_timestamp,
+          0);
         
         Block_Storage.write(block_number, new_block);
 
     return();
     }
   
+    @external
     func update_status{
       syscall_ptr: felt*, 
       pedersen_ptr: HashBuiltin*, 
@@ -83,7 +86,7 @@ namespace Block {
       let (current_block) = Block_Storage.read(block_number);
       
       with_attr error_message("Block Finalized") {
-        assert current_block.status = 0;
+        assert current_block.block_status = 0;
       }
 
       let diff = current_block.block_timestamp - block_timestamp;
@@ -94,11 +97,11 @@ namespace Block {
       }
       
       tempvar new_status;
-      if(current_block.status == 1){
+      if(current_block.block_status == 1){
         assert new_status = 2;
         }
 
-      if(current_block.status == 2){
+      if(current_block.block_status == 2){
         assert new_status = 0;
         tempvar new_block: BlockData = BlockData(
           current_block.block_number, 
@@ -106,7 +109,8 @@ namespace Block {
           new_status, 
           current_block.block_reward, 
           current_block.block_difficulty, 
-          current_block.block_timestamp);
+          current_block.block_timestamp,
+          0);
         
       Block_Storage.write(block_number, new_block);
       init(block_number + 1);
@@ -142,6 +146,32 @@ namespace Block {
     return(dict_new);
     }
     
+    func record_score{
+      syscall_ptr: felt*, 
+      pedersen_ptr: HashBuiltin*, 
+      range_check_ptr}(score: felt){ 
+      alloc_locals; 
+      let (current_block) = Current_Block.read();
+      let (block) = Block_Storage.read(current_block);
+      
+      let is_high_score = is_le(block.block_reward, score);
+      if(is_high_score == 1){
+          let (player_address) = get_caller_address();
+          tempvar new_block: BlockData = BlockData(
+            block.block_number, 
+            block.block_seed,
+            block.block_status, 
+            score, 
+            block.block_difficulty, 
+            block.block_timestamp,
+            player_address);
+        
+        Block_Storage.write(block.block_number, new_block);
+        return();
+        }
+
+      return();
+      }
   }
 
 

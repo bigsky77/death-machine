@@ -49,6 +49,48 @@ func init_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: 
     return init_board(dimension, board_size - 1, block_seed, dict);
 }
 
+func iterate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    dimension: felt,
+    board_size: felt, 
+    board_dict: DictAccess*, 
+    block_seed: State,
+) -> (dict_new: DictAccess*) {
+    alloc_locals;
+
+    if(board_size == 0){
+       return(dict_new=board_dict);
+    }
+    
+    let (r) = next(board_size, block_seed);
+    let (_, res) = unsigned_div_rem(r, 4);
+
+    let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
+    tempvar grid = cast(ptr, SingleBlock*);
+    
+    if (grid.type != 2){
+      return iterate_board(dimension, board_size - 1, board_dict, block_seed);
+      }
+   
+    if(res == 0){
+        let (board_updated) = update_enemy_moved(grid, board_dict, 0, 1);
+        return iterate_board(dimension, board_size - 1, board_updated, block_seed);
+      }
+    if(res == 1){
+        let (board_updated) = update_enemy_moved(grid, board_dict, 0, -1);
+        return iterate_board(dimension, board_size - 1, board_updated, block_seed);
+      }
+    if(res == 2){
+        let (board_updated) = update_enemy_moved(grid, board_dict, 1, 0);
+        return iterate_board(dimension, board_size - 1, board_updated, block_seed);
+      }
+    if(res == 3){
+        let (board_updated) = update_enemy_moved(grid, board_dict, -1, 0);
+        return iterate_board(dimension, board_size - 1, board_updated, block_seed);
+      }
+
+    return iterate_board(dimension, board_size - 1, board_dict, block_seed);
+}
+
 //////////////////////////////////////////////////////////////
 //                    TYPE AND MOVE GENERATOR 
 //////////////////////////////////////////////////////////////
@@ -86,4 +128,10 @@ func generate_type{
     return(block_type=0);
   }
 
-
+func update_enemy_moved{range_check_ptr}(
+    enemy: SingleBlock*, board_dict: DictAccess*, x_inc: felt, y_inc: felt
+) -> (board_new: DictAccess*) {
+    tempvar enemy_new: SingleBlock* = new SingleBlock(enemy.id, enemy.type, enemy.status, Grid(enemy.raw_index.x + x_inc, enemy.raw_index.y + y_inc), enemy.raw_index);
+    dict_write{dict_ptr=board_dict}(key=enemy.id, new_value=cast(enemy_new, felt));
+    return (board_new=board_dict);
+}

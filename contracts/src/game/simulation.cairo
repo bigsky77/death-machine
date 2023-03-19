@@ -13,8 +13,8 @@ from starkware.cairo.common.default_dict import default_dict_new, default_dict_f
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.block.gameboard import init_board, SingleBlock
-from src.block.block import Block, Current_Block, Block_Storage
+from src.block.gameboard import init_board, SingleBlock, iterate_board
+from src.block.block import Block, Current_Block, Block_Storage, BlockData
 
 from src.game.constants import (
   STAR_RANGE, 
@@ -105,7 +105,8 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr: Bit
     ships_len, 
     ship_dict,
     board_dict,
-    BOARD_SIZE
+    BOARD_SIZE,
+    current_block,
     );
 
   return();
@@ -127,6 +128,7 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
   ships_dict: DictAccess*,
   board_dict: DictAccess*,
   board_size: felt,
+  current_block: BlockData,
   ) {
     alloc_locals;
     
@@ -135,7 +137,8 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
 
     if(cycle  == n_cycles){
       // emit ship state
-      let (lens, state) = end_game_summary(ships_len, ships_arr, ships_dict);
+      let (lens, state, score) = end_game_summary(ships_len, ships_arr, ships_dict, 0);
+      Block.record_score(score);
       gameComplete.emit(lens, state);
       
       let (block_len, block_state) = board_summary(225, block_arr, board_dict);
@@ -165,7 +168,8 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
         ships_len,
         ships, 
         board_dict,
-        board_size 
+        board_size,
+        current_block
         );
     
      simulation_loop(
@@ -179,7 +183,8 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
         ships_len,
         ships_new,
         board_new,
-        board_size
+        board_size,
+        current_block
         );
     return();
   }
@@ -193,9 +198,11 @@ func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, peders
     ships_dict: DictAccess*,
     board_dict: DictAccess*,
     board_size: felt,
+    current_block: BlockData,
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
   
+  let (board_new) = iterate_board(BOARD_DIMENSION, board_size, board_dict, current_block.block_seed);
   let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
@@ -206,19 +213,21 @@ func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, peders
 //////////////////////////////////////////////////////////////
 
 // get a summary of the game
-func end_game_summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ships: ShipState*, ships_dict: DictAccess*) -> (ships_len: felt, ships: ShipState*){
+func end_game_summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ships: ShipState*, ships_dict: DictAccess*, score: felt) -> (ships_len: felt, ships: ShipState*, score: felt){
   alloc_locals;
   
   if(ships_len == 0){
-      return(ships_len, ships);
+      return(ships_len, ships, score);
     }
 
   let (ptr) = dict_read{dict_ptr=ships_dict}(key=ships_len - 1);
   tempvar ship = cast(ptr, ShipState*);
-  assert ships[ships_len - 1] = ShipState(ship.id, ship.type, ship.status, ship.index, ship.pc);
+  assert ships[ships_len - 1] = ShipState(ship.id, ship.type, ship.status, ship.index, ship.pc, ship.score);
+  
+  let score = ships[ships_len - 1].score;
 
-  end_game_summary(ships_len - 1, ships, ships_dict);
-  return(ships_len, ships);
+  end_game_summary(ships_len - 1, ships, ships_dict, score);
+  return(ships_len, ships, score);
   }
 
 // get a summary of the game
