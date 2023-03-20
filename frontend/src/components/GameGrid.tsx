@@ -40,7 +40,7 @@ export default function GameGrid({ animationFrame, frames, shipInitPositions, sh
     }
 
     if (isEnemyAdjacent(index, frames, animationFrame)) {
-      return "red";
+      return "";
     } else {
       return "";
     }

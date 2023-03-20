@@ -49,7 +49,7 @@ const SingleInstruction = ({
                     type="text"
                     onBlur={onBlur}
                     onKeyUp={onKeyUp}
-                    sx={{ opacity: "0.001", pointerEvents: "none" }}
+                    sx={{ opacity: "0.00", pointerEvents: "none" }}
                 />
             </InstructionToken>
         </>

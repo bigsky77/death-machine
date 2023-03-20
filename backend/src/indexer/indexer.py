@@ -16,8 +16,7 @@ from starknet_py.contract import identifier_manager_from_abi
 from starknet_py.utils.data_transformer import FunctionCallSerializer
 
 from indexer.constants import address, event_key
-from indexer.types import Grid, SingleBlock, boardSummary
-from indexer.abis import boardSummary_abi, singleblock_abi, grid_abi
+from indexer.abis import boardSet_abi, singleBlock_abi, grid_abi
 
 # Print apibara logs
 root_logger = logging.getLogger("apibara")
@@ -27,9 +26,9 @@ root_logger.addHandler(logging.StreamHandler())
 indexer_id = "DeathMachine"
 
 boardSet_decoder = FunctionCallSerializer(
-    abi=boardSummary_abi,
+    abi=boardSet_abi,
     identifier_manager=identifier_manager_from_abi([
-        boardSummary_abi, singleblock_abi, grid_abi
+        boardSet_abi, singleBlock_abi, grid_abi
     ]),
 )
 
@@ -51,7 +50,7 @@ class DeathMachineIndexer(StarkNetIndexer):
         )
         return IndexerConfiguration(
             filter=filter,
-            starting_cursor=starknet_cursor(700_000),
+            starting_cursor=starknet_cursor(782_000),
             finality=DataFinality.DATA_STATUS_PENDING,
         )
 
@@ -64,12 +63,12 @@ class DeathMachineIndexer(StarkNetIndexer):
             decode_boardSet_event(event.event.data)
             for event in data.events
         ]
-        print(f"Board", boardSets[0])
+        print(f"Board", boardSets[0].board[0])
 
         boardSet_docs = [
                 {
                 #"star_array_len": encode_int_as_bytes(bo.star_array_len),
-                "board_array": boardSets[0],
+                "board_array": boardSets[0].board,
                 #"enemy_array_len": encode_int_as_bytes(bo.enemy_array_len),
                 }
             for bo in boardSets

@@ -216,6 +216,10 @@
             {
                 "name": "ships",
                 "type": "ShipState*"
+            },
+            {
+                "name": "score",
+                "type": "felt"
             }
         ],
         "keys": [],
@@ -234,7 +238,7 @@
             }
         ],
         "keys": [],
-        "name": "boardComplete",
+        "name": "boardSet",
         "type": "event"
     },
     {
@@ -255,26 +259,13 @@
     {
         "inputs": [
             {
-                "name": "number",
-                "type": "felt"
-            },
-            {
-                "name": "ships_len",
-                "type": "felt"
-            },
-            {
-                "name": "ships",
-                "type": "InputShipState*"
-            }
-        ],
-        "name": "reveal_ships",
-        "outputs": [
-            {
-                "name": "res",
+                "name": "seed",
                 "type": "felt"
             }
         ],
-        "type": "function"
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
     },
     {
         "inputs": [
@@ -293,10 +284,6 @@
             {
                 "name": "instructions",
                 "type": "felt*"
-            },
-            {
-                "name": "number",
-                "type": "felt"
             },
             {
                 "name": "ships_len",

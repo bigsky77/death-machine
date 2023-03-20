@@ -9,8 +9,28 @@ import simulator from "../src/components/simulator";
 import { BoardConfig } from "../src/types/BordConfig";
 import ShipState, {ShipStatus, ShipType} from '../src/types/ShipState';
 import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
+import loadBoard from "../src/utils/loadBoard";
 
 export default function Home() {
+  
+  const { data } = useAllEvents();
+  
+  const atomTypes = ["BLANK","STAR","ENEMY","PLANET"];
+  useEffect(() => {
+    if (data) {
+      const board = data.DeathMachine[0].board_array;
+      const newInitialArray = Array(225).fill("").map((item, index) => ({
+        id: `star${index + 1}`,
+        typ: atomTypes[board[index].type],
+        status: "ACTIVE",
+        index: board[index].index,
+      }));
+      updateAtoms(newInitialArray.map((atom) => (atom.index)));
+      updateAtomType(newInitialArray.map((atom) => (atom.typ)));
+      console.log("initial array", newInitialArray)
+    }
+  }, [data]);
+
   const [shipInitPositions, setShipInitPositions] = useState<Grid[]>(BLANK_SOLUTION.ships.map((ship) => ship.index));
   const [shipSelected, updateShipSelected] = useState<[]>(BLANK_SOLUTION.ships.map((ship) => ship.selected));
 
@@ -30,10 +50,7 @@ export default function Home() {
 
   const ANIM_FRAME_LATENCY_DAW = 300;
   const runnable = true; //placeholder
-
-  const { data } = useAllEvents();
-  console.log("Contract Data", data)
-
+  
   const selectShip = (id) => {
       const selectedShip = shipSelected.map((ship) => {
           if(ship.selected === true) {
@@ -58,11 +75,7 @@ export default function Home() {
           };
       });
 
-  useEffect(() => {
-    generateBoard();
-  }, [shipInitPositions, ATOMS, atomType]);
-
-  const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
+    const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
           return {
               status: "ACTIVE",
               index: atom,
@@ -71,8 +84,12 @@ export default function Home() {
               possessed_by: null,
           };
       });
+  
+  useEffect(() => {
+    generateBoard();
+  }, [shipInitPositions, ATOMS]);
 
-  function generateBoard(){
+  async function generateBoard(){
     let instructionSets = programsToInstructionSets(programs);
     const boardConfig: BoardConfig = {
           dimension: DIM,
@@ -191,7 +208,7 @@ export default function Home() {
 
     const tx = {
             contractAddress: DEATHMACHINE_ADDR,
-            entrypoint: "simulation",
+            entrypoint: "submit_simulation",
             calldata: args,
         };
         return [tx];

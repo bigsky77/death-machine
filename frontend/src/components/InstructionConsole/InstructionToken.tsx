@@ -33,7 +33,7 @@ const InstructionToken = ({
                     ? "secondary.main"
                     : active
                     ? "primary.light"
-                    : "transparent",
+                    : "#FEB239",
                 color: selected
                     ? "secondary.contrastText"
                     : "primary.contrastText",

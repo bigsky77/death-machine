@@ -34,7 +34,8 @@ func next{
     //let (s) = state.read();
 
     // result = rotl(s0 * 5, 7) * 9;
-    let (rotated) = rotl(s.s0 + num * 5, 7);
+    let (s2) = splitmix64(num);
+    let (rotated) = rotl(s.s0 * s2 * num, 7);
     let (result) = and64(rotated * 9);
 
     // s1 ^= s0;

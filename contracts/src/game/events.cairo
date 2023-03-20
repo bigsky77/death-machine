@@ -14,12 +14,12 @@ func simulationSubmit(instructions_len: felt, instructions: felt*, spaceships_le
   }
 
 @event
-func gameComplete(ships_len: felt, ships: ShipState*){
+func gameComplete(ships_len: felt, ships: ShipState*, score: felt){
 
   }
 
 @event
-func boardComplete(board_len: felt, board: SingleBlock*){
+func boardSet(board_len: felt, board: SingleBlock*){
 
   }
 

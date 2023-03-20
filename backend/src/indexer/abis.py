@@ -8,7 +8,7 @@ uint256_abi = {
     ],
 }
 
-boardSummary_abi = {
+boardSet_abi = {
     "name": "boardSummary",
     "type": "event",
     "keys": [],
@@ -18,7 +18,7 @@ boardSummary_abi = {
     ],
 }
 
-singleblock_abi = {
+singleBlock_abi = {
     "name": "SingleBlock",
     "type": "struct",
     "size": 7,

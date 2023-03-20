@@ -25,21 +25,6 @@ account = Account(client=testnet_client, address=0x037120cfd86ce59565ff1c2e26f33
 async def start():
     from random import randint
 
-  #  # xoroshiro contract
-  #  with open('./build/xoroshiro.json') as xo_contract_file:
-  #      xo_compiled_contract = xo_contract_file.read()
-
-  #  xo_declare_result = await Contract.declare(
-  #      account=account, compiled_contract=xo_compiled_contract, max_fee=int(1e16)
-  #  )
-  #  # Wait for the transaction
-  #  await xo_declare_result.wait_for_acceptance()
-
-  #  xo_deploy_call = await xo_declare_result.deploy(constructor_args={"seed": 1}, max_fee=int(1e18));
-  #  xo_contract = xo_deploy_call.deployed_contract
-
-  #  # death-machine contract
-
     with open('./build/death_machine.json') as dm_contract_file:
         dm_compiled_contract = dm_contract_file.read()
 
@@ -49,7 +34,7 @@ async def start():
     # Wait for the transaction
     await dm_declare_result.wait_for_acceptance()
 
-    dm_deploy_call = await dm_declare_result.deploy(constructor_args={"address": 0x001197d928f78a87b3fb7cc82a1f342ab59d3d7fbd196c3f5c004e544b25c4c4 }, max_fee=int(1e18));
+    dm_deploy_call = await dm_declare_result.deploy(constructor_args={"seed": 1}, max_fee=int(1e18));
     dm_contract = dm_deploy_call.deployed_contract
 
     dm_contract_address = str(dm_contract.address)

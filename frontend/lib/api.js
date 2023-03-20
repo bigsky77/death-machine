@@ -9,3 +9,5 @@ export function useAllEvents () {
 export function useStardiscRegistryByAccount (account) {
     return useSWR(`/api/stardisc_registry/${account}`, fetcher)
 }
+
+

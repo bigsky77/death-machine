@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   mongo:
     image: mongo:latest
@@ -11,42 +12,5 @@ services:
     volumes:
     - mongo-data:/data/db
 
-  devnet:
-    image: shardlabs/starknet-devnet:next-arm-seed0
-    command:
-    - "--host=0.0.0.0"
-    - "--port=5050"
-    - "--disable-rpc-request-validation"
-    ports:
-    - 5050:5050
-      #    networks:
-      #- devnet
-  
-  apibara:
-    image: apibara/starknet:d36179acdb61e469f3fabe1055575ebcd34ee12e-arm64v8  
-    ports:
-    - 7171:7171
-    # apibara requires devnet to be available, which is not always the case
-    # when the containers first launch
-    # so restart it until it's working
-    #depends_on:
-    #- devnet
-    restart: always
-    command:
-    - "/usr/local/bin/apibara-starknet"
-    - "start"
-    - "--data=/data"
-    - "--rpc=http://devnet:5050/rpc"
-    environment:
-    - OTEL_SDK_DISABLED=true # disable tracing/metrics
-    volumes:
-    - apibara-data:/data
-      #networks:
-      #   - devnet
-
-networks:
-  devnet:
-
 volumes:
-  apibara-data:
   mongo-data:

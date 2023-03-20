@@ -1,5 +1,6 @@
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import loadBoard from "../src/utils/loadBoard";
 
 export const BLANK_COLOR = '#f2f1ed' 
 
@@ -45,5 +46,5 @@ export const BLANK_SOLUTION: Solution = {
         {id: 'ship2', type: 1, status: 1, index: { x:3, y:5 }, description: 3, pc_next: 0, selected: false},
     ],
     programs: ['x,x,x,x,x,x,x', 'x,x,x,x,x,x,x', 'x,x,x,x,x,x,x'],
-    atoms: initialArray,
+    atoms: [],
 }

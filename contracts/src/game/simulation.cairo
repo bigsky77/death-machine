@@ -13,7 +13,7 @@ from starkware.cairo.common.default_dict import default_dict_new, default_dict_f
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.block.gameboard import init_board, SingleBlock, iterate_board
+from src.block.gameboard import init_board, SingleBlock 
 from src.block.block import Block, Current_Block, Block_Storage, BlockData
 
 from src.game.constants import (
@@ -30,8 +30,6 @@ from src.game.constants import (
 from src.game.events import (
   simulationSubmit, 
   gameComplete,
-  boardComplete,
-  boardSummary,
 )
 
 from src.game.ships import ( 
@@ -43,8 +41,21 @@ from src.game.ships import (
   )
 
 from src.game.instructions import InstructionSet, get_frame_instruction_set
-from src.game.commit import reveal_ships 
 from src.utils.utils import cords_to_index 
+
+//////////////////////////////////////////////////////////////
+//                       CONSTRUCTOR 
+//////////////////////////////////////////////////////////////
+
+@constructor
+func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(seed: felt) {
+    alloc_locals;
+
+    Block.init(seed);
+    Block.get_current_board(); 
+    
+    return();
+  }
 
 //////////////////////////////////////////////////////////////
 //                        SIMULATE
@@ -56,7 +67,6 @@ func submit_simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_p
   instructions_sets: felt*,
   instructions_len: felt, 
   instructions: felt*, 
-  number: felt,
   ships_len: felt, 
   ships: InputShipState*) {  
   alloc_locals;
@@ -65,14 +75,8 @@ func submit_simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_p
   with_attr error_message("ship length limited to 3") {
     assert is_valid_ship_len = 1;
   }
-  // check valid ship positions
-  let (res) = reveal_ships(number, ships_len, ships);
-  with_attr error_message("invalid submission") {
-    assert res = 0;
-  }
 
   simulation(instructions_sets_len, instructions_sets, instructions_len, instructions, ships_len, ships); 
-  Block.update_status();
   return();
 }
 
@@ -139,11 +143,8 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
       // emit ship state
       let (lens, state, score) = end_game_summary(ships_len, ships_arr, ships_dict, 0);
       Block.record_score(score);
-      gameComplete.emit(lens, state);
-      
-      let (block_len, block_state) = board_summary(225, block_arr, board_dict);
-      boardComplete.emit(block_len, block_state);
-
+      gameComplete.emit(lens, state, score);
+      Block.update_status();
       return ();
     }
 
@@ -202,8 +203,7 @@ func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, peders
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
   
-  let (board_new) = iterate_board(BOARD_DIMENSION, board_size, board_dict, current_block.block_seed);
-  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_new, 0, instructions_len, instructions);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
   }
@@ -228,22 +228,6 @@ func end_game_summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ship
 
   end_game_summary(ships_len - 1, ships, ships_dict, score);
   return(ships_len, ships, score);
-  }
-
-// get a summary of the game
-func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt, board_arr: SingleBlock*, board_dict: DictAccess*) -> (board_size: felt, board: SingleBlock*){
-  alloc_locals;
-  
-  if(board_size == 0){
-      return(board_size, board_arr);
-    }
-  
-  let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
-  tempvar board = cast(ptr, SingleBlock*);
-  assert board_arr[board_size - 1] = SingleBlock(board.id, board.type, board.status, board.index, board.raw_index);
-
-  board_summary(board_size - 1, board_arr, board_dict);
-  return(board_size, board_arr);
   }
 
 

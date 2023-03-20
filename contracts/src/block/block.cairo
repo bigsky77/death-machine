@@ -17,7 +17,10 @@ from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.alloc import alloc
 from starkware.cairo.common.bool import TRUE, FALSE
 from starkware.cairo.common.uint256 import Uint256, uint256_eq
+from starkware.cairo.common.dict import dict_write, dict_read
 
+from src.game.events import boardSummary 
+from src.block.gameboard import SingleBlock 
 from src.block.gameboard import init_board
 from src.utils.xoroshiro128_starstar import next, generate_seed, State
 from src.game.constants import (
@@ -70,7 +73,8 @@ namespace Block {
           0);
         
         Block_Storage.write(block_number, new_block);
-
+        Current_Block.write(block_number);
+        get_current_board();
     return();
     }
   
@@ -81,32 +85,13 @@ namespace Block {
       bitwise_ptr: BitwiseBuiltin*, 
       range_check_ptr}() -> (){
       alloc_locals;
-      let (block_timestamp) = get_block_timestamp();
       let (block_number) = Current_Block.read();
       let (current_block) = Block_Storage.read(block_number);
       
-      with_attr error_message("Block Finalized") {
-        assert current_block.block_status = 0;
-      }
-
-      let diff = current_block.block_timestamp - block_timestamp;
-      // Returns 1 if a <= b (or more precisely 0 <= b - a < RANGE_CHECK_BOUND).
-      let res = is_le(BLOCK_TIME, diff);      
-      with_attr error_message("Not enough time has passed") {
-        assert res = 1;
-      }
-      
-      tempvar new_status;
-      if(current_block.block_status == 1){
-        assert new_status = 2;
-        }
-
-      if(current_block.block_status == 2){
-        assert new_status = 0;
-        tempvar new_block: BlockData = BlockData(
+      tempvar new_block: BlockData = BlockData(
           current_block.block_number, 
           current_block.block_seed,
-          new_status, 
+          0, 
           current_block.block_reward, 
           current_block.block_difficulty, 
           current_block.block_timestamp,
@@ -114,9 +99,6 @@ namespace Block {
         
       Block_Storage.write(block_number, new_block);
       init(block_number + 1);
-      return();
-      }
-
     return();
     }
     
@@ -136,14 +118,15 @@ namespace Block {
     func init_current_board{
       syscall_ptr: felt*, 
       pedersen_ptr: HashBuiltin*, 
-      range_check_ptr}(block_timestamp: felt, block_number: felt) -> (dict_new: DictAccess*){ 
+      bitwise_ptr: BitwiseBuiltin*, 
+      range_check_ptr}(block_number: felt) -> (dict_new: DictAccess*){ 
       alloc_locals; 
       
       let (current_block) = Block_Storage.read(block_number);
       let (board_dict: DictAccess*) = default_dict_new(default_value=0);
-      let (dict_new) = init_board(BOARD_DIMENSION, current_block.seed, BOARD_SIZE, board_dict);       
+      let (dict_new) = init_board(BOARD_DIMENSION, BOARD_SIZE, current_block.block_seed, board_dict);       
 
-    return(dict_new);
+    return(dict_new=dict_new);
     }
     
     func record_score{
@@ -172,7 +155,37 @@ namespace Block {
 
       return();
       }
-  }
+    
+    func get_current_board{
+      syscall_ptr: felt*, 
+      pedersen_ptr: HashBuiltin*, 
+      bitwise_ptr: BitwiseBuiltin*, 
+      range_check_ptr}(){ 
+    alloc_locals;
+    let (block_arr: SingleBlock*) = alloc();
+    let (seed) = Current_Block.read(); 
+    let (board_dict) = Block.init_current_board(seed);
+    let (block_len, block_state) = board_summary(225, block_arr, board_dict);
 
+    boardSummary.emit(block_len, block_state);
+    return();
+    }
+ }
 
+func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt, 
+      board_arr: SingleBlock*, 
+      board_dict: DictAccess*) -> (board_size: felt, board: SingleBlock*){
+      alloc_locals;
+    
+      if(board_size == 0){
+          return(board_size, board_arr);
+        }
+      
+      let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
+      tempvar board = cast(ptr, SingleBlock*);
+      assert board_arr[board_size - 1] = SingleBlock(board.id, board.type, board.status, board.index, board.raw_index);
+
+      board_summary(board_size - 1, board_arr, board_dict);
+    return(board_size, board_arr);
+    }
 

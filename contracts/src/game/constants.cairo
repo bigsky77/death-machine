@@ -7,7 +7,7 @@ const N_TURNS = 49;
 const PC = 7;
 const BOARD_SIZE = 225;
 const BOARD_DIMENSION = 15;
-const BLOCK_TIME = 5000; 
+const BLOCK_TIME = 0; // 0 for testing 
 
 namespace ns_instructions {
     const W = 0;  // up
