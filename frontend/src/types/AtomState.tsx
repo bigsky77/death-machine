@@ -16,4 +16,5 @@ export default interface AtomState {
     typ: AtomType
     status: AtomStatus
     index: Grid
+    raw_index: Grid
 }

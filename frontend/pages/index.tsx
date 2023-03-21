@@ -12,28 +12,9 @@ import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
 import loadBoard from "../src/utils/loadBoard";
 
 export default function Home() {
-  
-  const { data } = useAllEvents();
-  
-  const atomTypes = ["BLANK","STAR","ENEMY","PLANET"];
-  useEffect(() => {
-    if (data) {
-      const board = data.DeathMachine[0].board_array;
-      const newInitialArray = Array(225).fill("").map((item, index) => ({
-        id: `star${index + 1}`,
-        typ: atomTypes[board[index].type],
-        status: "ACTIVE",
-        index: board[index].index,
-      }));
-      updateAtoms(newInitialArray.map((atom) => (atom.index)));
-      updateAtomType(newInitialArray.map((atom) => (atom.typ)));
-      console.log("initial array", newInitialArray)
-    }
-  }, [data]);
-
   const [shipInitPositions, setShipInitPositions] = useState<Grid[]>(BLANK_SOLUTION.ships.map((ship) => ship.index));
   const [shipSelected, updateShipSelected] = useState<[]>(BLANK_SOLUTION.ships.map((ship) => ship.selected));
-
+  console.log("shipInitPositions", shipInitPositions);
   const [ATOMS, updateAtoms] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.index));
   const [atomType, updateAtomType] = useState<Grid[]>(BLANK_SOLUTION.atoms.map((atom) => atom.typ));
 
@@ -50,7 +31,26 @@ export default function Home() {
 
   const ANIM_FRAME_LATENCY_DAW = 300;
   const runnable = true; //placeholder
-  
+
+  const { data } = useAllEvents();
+  const atomTypes = ["BLANK","ENEMY","STAR","PLANET"];
+
+  useEffect(() => {
+    if (data) {
+      const board = data.DeathMachine[0].board_array;
+      const newInitialArray = Array(225).fill("").map((item, index) => ({
+        id: `star${index + 1}`,
+        typ: atomTypes[board[index].type],
+        status: "ACTIVE",
+        index: board[index].index,
+        raw_index: board[index].raw_index,
+      }));
+      updateAtoms(newInitialArray.map((atom) => (atom.index)));
+      updateAtomType(newInitialArray.map((atom) => (atom.typ)));
+      console.log("initial array", newInitialArray)
+    }
+  }, [data]);
+ 
   const selectShip = (id) => {
       const selectedShip = shipSelected.map((ship) => {
           if(ship.selected === true) {
@@ -81,7 +81,7 @@ export default function Home() {
               index: atom,
               id: `atom${i}`,
               typ: atomType[i],
-              possessed_by: null,
+              raw_index: atom,
           };
       });
   

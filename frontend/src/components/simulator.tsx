@@ -97,36 +97,27 @@ function _simulate_one_cycle (
     frame_curr: Frame, // {ships, atoms, grid_populated_bools}
     boardConfig: BoardConfig
 ): Frame {
-    //
     // Unpack frame
-    //
     const ships_curr = frame_curr.ships // array of {'id':'ship..', 'index':{x:..,y:..}, 'status':'..', 'typ':'..'}
     const atoms_curr = frame_curr.atoms // array of {'id':'atom..', 'index':{x:..,y:..}, 'status':'..', 'typ':'..'}
     const operator_states_curr = frame_curr.operatorStates
     const grid_populated_bools = frame_curr.grid_populated_bools // mapping 'x..y..' => true/false
 
-    //
-    // Prepare mutable variable for this cycle pass
-    //
     var ships_new: Shipstate[] = []
     var atoms_new: AtomState[] = JSON.parse(JSON.stringify(atoms_curr)) // object cloning
     var grid_populated_bools_new: { [key: string] : boolean } = JSON.parse(JSON.stringify(grid_populated_bools)) // object cloning
     var notes = ''
 
-    // Iterate through ships
+    // // Iterate through ships
     //
-    // for (const ship of ships_curr) {
     ships_curr.map((ship: Shipstate, ship_i: number) => {
 
-        // backward compatibility: convert instruction to lowercase letter; convert '_' to '.'
         let instruction: string = instruction_per_ship[ship_i].toLowerCase()
         if (instruction == '_') instruction = '.'
 
         var ship_new = {id:ship.id, typ:ship.typ, index:ship.index, status:ship.status, description:ship.description, pc_next:ship.pc_next}
 
-        // console.log (`ship${ship.i} running ${instruction}`)
 
-        // add note
         notes += `intended ${instruction}/`
 
         if (instruction == 'd'){ // x-positive
@@ -247,6 +238,16 @@ function _simulate_one_cycle (
         // add note
         notes += JSON.stringify(ship) + ' => ' + JSON.stringify(ship_new) + ';'
     })
+
+    // Iterate through enemies
+    atoms_new.forEach(function (atom: AtomState, i: number, theArray: AtomState[]) {
+        if (atom.typ == "ENEMY" && atom.status == "ACTIVE") {
+            var atom_new = theArray[i]
+            atom_new.index = moveEnemies(atom_new, boardConfig)
+            theArray[i] = atom_new
+        }
+    });
+
    const frame_new: Frame = {
         ships: ships_new,
         atoms: atoms_new,
@@ -255,3 +256,22 @@ function _simulate_one_cycle (
     }
     return frame_new
 }
+    // Iterate through enemies
+function moveEnemies(atom, boardConfig) {
+       let rand = Math.floor(Math.random() * 4) - 1;
+       var atom_new = {id:atom.id, typ:atom.typ, status:atom.status, index:atom.index, raw_index:atom.raw_index}
+
+       if (atom.index.x < boardConfig.dimension-1 && rand == 0) {
+           atom_new.index = {x:atom.raw_index.x+1, y:atom.raw_index.y}
+       }
+       if (atom.index.x > 0 && rand == 1) {
+           atom_new.index = {x:atom.raw_index.x-1, y:atom.raw_index.y}
+       }
+       if (atom.index.y < boardConfig.dimension-1 && rand == 2) {
+           atom_new.index = {x:atom.raw_index.x, y:atom.raw_index.y+1}
+       }
+       if (atom.index.y > 0 && rand == 3) {
+           atom_new.index = {x:atom.raw_index.x, y:atom.raw_index.y-1}
+       }
+       return atom_new.index
+  }

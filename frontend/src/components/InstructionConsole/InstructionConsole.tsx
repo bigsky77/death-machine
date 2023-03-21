@@ -83,7 +83,7 @@ export default function MainController({
                 p: "1rem",
                 mt: "1rem",
                 border: '2px solid #303030',
-                borderRadius: 1,
+                borderRadius: 0,
                 boxShadow: '4px 4px 0px #000000',
             }}
             gap={1}
@@ -170,7 +170,8 @@ export default function MainController({
                        sx={{p: "2rem"}} />
           <Box mt={2} mb={4} sx={{border: '1px solid black',
                                   height: "40px", borderRadius: '1px',
-                                  bgcolor: '#FC72FF',
+                                  bgcolor: '#FFFFFFFF',
+                                  boxShadow: '2',
                                   ":hover": {border: '2px solid #FC72FF', boxShadow: '4px 4px 0px #000000'} }}>
           <p style={{color: 'black', fontSize: '2.0rem', textAlign: "center", pt: '10px'}}>🛸 Generate ZK Proof!</p>
         </Box>

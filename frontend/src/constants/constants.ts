@@ -36,6 +36,7 @@ const initialArray = Array(225).fill("").map((item, index) => ({
   typ: atomType[Math.floor(Math.random() * 11)],
   status: "ACTIVE",
   index: { x: Math.floor(index / 15), y: index % 15 },
+  raw_index: "",
 }));
 
 

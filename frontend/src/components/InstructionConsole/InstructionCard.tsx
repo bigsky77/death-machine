@@ -116,9 +116,9 @@ export default function InstructionCard(
       <>
       <Box display="flex" onClick={() => selectShip(shipIndex)} sx={{borderRadius: "1",
                                                        backgroundColor: shipSelected ? '#FFFFFFFF' : "",
-                                                       boxShadow: shipSelected ? "4" : "",
+                                                       boxShadow: shipSelected ? "2" : "",
                                                        border: shipSelected ? "1px solid #FC72FF" : "1px solid black",
-                                                       height: "40px", pt: "5px", 
+                                                       height: "40px", pt: "5px",
                                                        ":hover": {border: '2px solid #FC72FF', boxShadow: '4px 4px 0px #000000'} }}>
       <Image src={Starship} height={30} sx={{height: "10px", width: "20px", color: "black"}}/>
       

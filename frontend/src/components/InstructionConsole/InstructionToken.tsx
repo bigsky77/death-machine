@@ -32,11 +32,11 @@ const InstructionToken = ({
                 bgcolor: selected
                     ? "secondary.main"
                     : active
-                    ? "primary.light"
-                    : "#FEB239",
+                    ? "#FFFFFFFF"
+                    : "#FFFFFFFF",
                 color: selected
                     ? "secondary.contrastText"
-                    : "primary.contrastText",
+                    : "black",
                 ":hover": {
                     bgcolor: selected ? "secondary.main" : "secondary.light",
                     color: "secondary.contrastText",
