@@ -13,7 +13,7 @@ from starkware.cairo.common.default_dict import default_dict_new, default_dict_f
 from starkware.cairo.common.dict_access import DictAccess
 from starkware.cairo.common.dict import dict_write, dict_read
 
-from src.block.gameboard import init_board, SingleBlock 
+from src.block.gameboard import init_board, SingleBlock, iterate_board 
 from src.block.block import Block, Current_Block, Block_Storage, BlockData
 
 from src.game.constants import (
@@ -50,10 +50,7 @@ from src.utils.utils import cords_to_index
 @constructor
 func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(seed: felt) {
     alloc_locals;
-
     Block.init(seed);
-    Block.get_current_board(); 
-    
     return();
   }
 
@@ -203,7 +200,8 @@ func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, peders
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
   
-  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_dict, 0, instructions_len, instructions);
+  let (board_updated) = iterate_board(BOARD_DIMENSION, board_size, current_block.block_seed, board_dict);
+  let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_updated, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
   }

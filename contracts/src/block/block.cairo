@@ -156,7 +156,7 @@ namespace Block {
       return();
       }
     
-    func get_current_board{
+  func get_current_board{
       syscall_ptr: felt*, 
       pedersen_ptr: HashBuiltin*, 
       bitwise_ptr: BitwiseBuiltin*, 
