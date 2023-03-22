@@ -88,8 +88,7 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr: Bit
   
   let (block_number) = Current_Block.read();
   let (current_block) = Block_Storage.read(block_number);
-  let (board_dict: DictAccess*) = default_dict_new(default_value=0);
-  let (board_dict: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, current_block.block_seed, board_dict);
+  let (board_dict: DictAccess*) = Block.init_current_board(block_number); 
 
   // initialize ships
   let (ship_dict: DictAccess*) = default_dict_new(default_value=0);
@@ -138,10 +137,12 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
 
     if(cycle  == n_cycles){
       // emit ship state
+      let (player_address) = get_caller_address();
       let (lens, state, score) = end_game_summary(ships_len, ships_arr, ships_dict, 0);
-      Block.record_score(score);
-      gameComplete.emit(lens, state, score);
-      Block.update_status();
+
+      gameComplete.emit(lens, state, score, player_address);
+      Block.update_block(score, player_address);
+
       return ();
     }
 
@@ -200,7 +201,7 @@ func simulate_one_frame{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, peders
 ) -> (ship_new: DictAccess*, board_new: DictAccess*){
   alloc_locals;
   
-  let (board_updated) = iterate_board(BOARD_DIMENSION, board_size, current_block.block_seed, board_dict);
+  let (board_updated) = iterate_board(BOARD_DIMENSION, board_size, current_block.seed, board_dict);
   let (ship_new, board_new) = iterate_ships(BOARD_DIMENSION, cycle, ships_dict, board_updated, 0, instructions_len, instructions);
 
   return(ship_new=ship_new, board_new=board_new);
@@ -222,7 +223,10 @@ func end_game_summary{syscall_ptr: felt*, range_check_ptr}(ships_len: felt, ship
   tempvar ship = cast(ptr, ShipState*);
   assert ships[ships_len - 1] = ShipState(ship.id, ship.type, ship.status, ship.index, ship.pc, ship.score);
   
-  let score = ships[ships_len - 1].score;
+  if(ships[ships_len - 1].status == 1){
+    let new_score = ships[ships_len - 1].score + score;
+    return end_game_summary(ships_len - 1, ships, ships_dict, new_score);
+    }
 
   end_game_summary(ships_len - 1, ships, ships_dict, score);
   return(ships_len, ships, score);

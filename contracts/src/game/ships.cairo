@@ -39,11 +39,6 @@ func ShipDestroyed(ship_id: felt, ship_x: felt, ship_y: felt, turn: felt){
 
   }
 
-@event
-func StarCaptured(x: felt, y: felt, turn: felt){
-
-  }
-
 func init_ships{range_check_ptr}(
     ships_count: felt, 
     ships: InputShipState*, 
@@ -105,7 +100,6 @@ func iterate_ships{syscall_ptr: felt*, range_check_ptr}(
     }
   
   if(res == 2){
-      StarCaptured.emit(ship.index.x, ship.index.y, cycle); 
       return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i, instructions_len, instructions);
     }
 

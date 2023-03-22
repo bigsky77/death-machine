@@ -14,7 +14,7 @@ func simulationSubmit(instructions_len: felt, instructions: felt*, spaceships_le
   }
 
 @event
-func gameComplete(ships_len: felt, ships: ShipState*, score: felt){
+func gameComplete(ships_len: felt, ships: ShipState*, score: felt, player_address: felt){
 
   }
 
@@ -27,4 +27,5 @@ func boardSet(board_len: felt, board: SingleBlock*){
 func boardSummary(board_len: felt, board: SingleBlock*){
 
   }
+
 
