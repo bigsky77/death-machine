@@ -51,8 +51,8 @@ export default function SubmitButton({
     borderRadius: "0",
     marginLeft: "0.2rem",
     marginRight: "0.2rem",
-    height: "2rem",
-    width: "2rem",
+    height: "1.5rem",
+    width: "1.5rem",
     backgroundColor: BLANK_COLOR,
     "&:hover": {
       border: "2px solid #FC72FF",

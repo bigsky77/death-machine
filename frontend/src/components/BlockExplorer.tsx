@@ -84,7 +84,7 @@ return (
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            width: 970,
+            width: 980,
             overflowX: "auto",
             ml: 5.5,
             mr: 5.5,
@@ -114,7 +114,7 @@ return (
                   height: 30,
                   backgroundColor: BLANK_COLOR,
                   borderRadius: 0,
-                  border: "1px solid #FC72FF",
+                  border: "1.5px solid #FC72FF",
                   color: "black",
                   fontWeight: "bold",
                   mr: 0.5,
@@ -148,7 +148,6 @@ return (
                 justifyContent: "center",
                 alignItems: "center",
                 cursor: "pointer",
-                boxShadow: "2px 2px 0px #000000",
                 "&:hover": {
                   backgroundColor: "#EEEEEE",
                 }
@@ -173,7 +172,6 @@ return (
                 justifyContent: "center",
                 alignItems: "center",
                 cursor: "pointer",
-                boxShadow: "2px 2px 0px #000000",
                 "&:hover": {
                   backgroundColor: "#EEEEEE",
                 },
