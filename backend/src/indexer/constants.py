@@ -1,7 +1,13 @@
 from apibara.starknet import felt
 
-deathmachine_testnet = "0x07c521d2f0e60e792c15d41a874f10b4fdcb871299b8d24c8084ec0d9fa8a491"
+deathmachine_testnet = "0x041f474fe664b1c5dba625c36a9fddd8bb820a0ac6e6532d9903323460f3c865"
 boardSummary_testnet = "0x22b803be989158361f3042f192dd0cab0bb034cce1c5e1757483eacf64020c9"
+blockInitialized_testnet = "0x111e72ae160696d860893667de5e69662bcb6a41aa10aae07449286aa687caf"
+gameComplete_testnet = "0x2015e3eeb9074244d820728819f0a620601010bfb2851749544dcfb0ae0d57e"
+blockComplete_testnet = "0x1b1f8bf66d052bec00dd2054a2e322fc57147abaa06313250b11208d9de7446"
 
 address = felt.from_hex(deathmachine_testnet)
-event_key = felt.from_hex(boardSummary_testnet)
+boardSet_key = felt.from_hex(boardSummary_testnet)
+blockInitialized_key = felt.from_hex(blockInitialized_testnet)
+blockComplete_key = felt.from_hex(blockComplete_testnet)
+gameComplete_key = felt.from_hex(gameComplete_testnet)
