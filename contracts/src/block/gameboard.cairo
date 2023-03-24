@@ -14,7 +14,7 @@ from starkware.cairo.common.dict import dict_write, dict_read
 
 from src.utils.xoroshiro128_starstar import next, State
 from src.block.grid import Grid 
-from src.game.constants import RANGE_X, RANGE_Y, STAR_RANGE, ENEMY_RANGE, PLANET_RANGE, ns_board, ns_dict, BOARD_SIZE, BOARD_DIMENSION   
+from src.game.constants import ns_board, ns_dict, BOARD_SIZE, BOARD_DIMENSION   
 from src.utils.utils import index_to_cords, cords_to_index
 
 //////////////////////////////////////////////////////////////
@@ -77,7 +77,7 @@ func iterate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_pt
           board_dimension, 
           board_size - 1,
           block_seed,
-          board_dict,
+          board_new,
         );
       }
     
@@ -88,7 +88,7 @@ func iterate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_pt
           board_dimension, 
           board_size - 1,
           block_seed,
-          board_dict,
+          board_new,
         );
       }
     
@@ -99,7 +99,7 @@ func iterate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_pt
           board_dimension, 
           board_size - 1,
           block_seed,
-          board_dict,
+          board_new,
         );
       }
 
@@ -110,10 +110,11 @@ func iterate_board{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_pt
           board_dimension, 
           board_size - 1,
           block_seed,
-          board_dict,
+          board_new,
         );
       }
-    return(board_new=board_dict);
+
+    return (board_new=board_dict);
   }
 
 

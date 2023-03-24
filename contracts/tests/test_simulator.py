@@ -28,7 +28,7 @@ async def test(starknet):
     #    with open('./build/death_machine_abi.json', 'r') as f:
     #    contract_abi = json.load(f)
  
-    contract = await starknet.deploy(source="./src/game/simulation.cairo", constructor_calldata=[1])
+    contract = await starknet.deploy(source="./src/simulation.cairo", constructor_calldata=[1])
     LOGGER.info(f"> Deployed simulation.cairo.")
     print(f"> Deployed simulation.cairo.")
     

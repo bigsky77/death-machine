@@ -17,7 +17,6 @@ from src.block.gameboard import init_board, SingleBlock, iterate_board
 from src.block.block import Block, Current_Block, Block_Storage, BlockData
 
 from src.game.constants import (
-  STAR_RANGE, 
   ns_instructions, 
   ns_dict,
   ns_ships,
@@ -50,7 +49,7 @@ from src.utils.utils import cords_to_index
 @constructor
 func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(seed: felt) {
     alloc_locals;
-    Block.init(seed);
+    Block.init(seed, 0);
     return();
   }
 
@@ -88,7 +87,9 @@ func simulation{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr: Bit
   
   let (block_number) = Current_Block.read();
   let (current_block) = Block_Storage.read(block_number);
-  let (board_dict: DictAccess*) = Block.init_current_board(block_number); 
+
+  let (board_dict: DictAccess*) = default_dict_new(default_value=0);
+  let (board_dict: DictAccess*) = init_board(BOARD_DIMENSION, BOARD_SIZE, current_block.seed, board_dict);       
 
   // initialize ships
   let (ship_dict: DictAccess*) = default_dict_new(default_value=0);

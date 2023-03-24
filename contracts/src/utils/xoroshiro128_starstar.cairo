@@ -25,7 +25,6 @@ func generate_seed{
     return (s=s);
 }
 
-@external
 func next{
     syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr
 }(num: felt, s: State) -> (rnd: felt) {
@@ -35,7 +34,7 @@ func next{
 
     // result = rotl(s0 * 5, 7) * 9;
     let (s2) = splitmix64(num);
-    let (rotated) = rotl(s.s0 * s2 * num, 7);
+    let (rotated) = rotl(s.s0 * s2, 7);
     let (result) = and64(rotated * 9);
 
     // s1 ^= s0;

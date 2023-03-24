@@ -92,17 +92,13 @@ func iterate_ships{syscall_ptr: felt*, range_check_ptr}(
       return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i + 1, instructions_len, instructions);
     }
 
-  let (ships_dict, board_dict, res) = check_grid(ship, ships_dict, board_dict);
+  let (ships_dict, board_dict, res) = check_grid(225, ship, ships_dict, board_dict);
   
   if(res == 1){
       ShipDestroyed.emit(ship.id, ship.index.x, ship.index.y, cycle); 
       return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i + 1, instructions_len, instructions);
     }
   
-  if(res == 2){
-      return iterate_ships(board_dimension, cycle, ships_dict, board_dict, i, instructions_len, instructions);
-    }
-
   let can_move_right = is_le(ship.index.x, board_dimension - 2);
   if (instruction == ns_instructions.D and can_move_right == 1) {
         let (ships_new) = update_ships_moved(ship, ships_dict, 1, 0);
@@ -159,23 +155,22 @@ func iterate_ships{syscall_ptr: felt*, range_check_ptr}(
   }
 
 func check_grid{range_check_ptr}(
+    board_size: felt,
     ship: ShipState*, 
     ships_dict: DictAccess*, 
     board_dict: DictAccess*) -> (
     ships_new: DictAccess*, board_new: DictAccess*, res: felt){
     alloc_locals;
-
-    let (i) = cords_to_index(ship.index.x, ship.index.y); 
-    let (ptr) = dict_read{dict_ptr=board_dict}(key=i);
-    tempvar grid = cast(ptr, SingleBlock*);  
- 
-    with_attr error_message("locations must match") {
-        assert grid.index.x = ship.index.x; 
-        assert grid.index.y = ship.index.y; 
+    
+    if(board_size == 0){
+        return(ships_dict, board_dict, 0);
       }
 
-    // if grid is enemy type
-  if(grid.type == 1){
+    let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
+    tempvar grid = cast(ptr, SingleBlock*);  
+ 
+        // if grid is enemy type
+    if(grid.type == 1 and grid.index.x == ship.index.x and grid.index.y == ship.index.y){
       tempvar new_ship: ShipState* = new ShipState(ship.id, 0, 0, ship.index, ship.pc, ship.score);
       dict_write{dict_ptr=ships_dict}(key=ship.id, new_value=cast(new_ship, felt));
       return(ships_new=ships_dict, board_new=board_dict, res=1);
@@ -190,7 +185,7 @@ func check_grid{range_check_ptr}(
       return(ships_new=ships_dict, board_new=board_dict, res=2);
       }
 
-     return(ships_new=ships_dict, board_new=board_dict, res=0);
+     return check_grid(board_size - 1, ship, ships_dict, board_dict);
     }
 
 //////////////////////////////////////////////////////////////

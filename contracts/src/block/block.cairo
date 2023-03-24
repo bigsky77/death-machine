@@ -67,25 +67,48 @@ namespace Block {
       syscall_ptr: felt*, 
       bitwise_ptr: BitwiseBuiltin*, 
       pedersen_ptr: HashBuiltin*, 
-      range_check_ptr}(block_number: felt) -> (){
+      range_check_ptr}(block_number: felt, score: felt) -> (){
         alloc_locals;
 
         let (block_timestamp) = get_block_timestamp();
         let (block_seed) = generate_seed(block_timestamp);
         let status = 1;
-        let block_reward = 65; // percentage of reward squares out of 100
-        let block_difficulty = 5; // percentage of enemey squares out of 100
 
+        let is_first_blocks = is_le(block_number, 5);
+        if(is_first_blocks == 1){
+          let block_reward = 65; // percentage of reward squares out of 100
+          let block_difficulty = 5; // percentage of enemey squares out of 100
+
+          tempvar new_block: BlockData = BlockData(
+            block_number, 
+            block_seed,
+            status, 
+            block_reward, 
+            block_difficulty, 
+            block_timestamp,
+            0,
+            0);
+          
+        Block_Storage.write(block_number, new_block);
+        Current_Block.write(block_number);
+
+        get_current_board();
+        blockInitialized.emit(new_block);
+
+        return();
+        }
+      
+        let (block_difficulty, block_reward) = update_block_difficulty(score); 
         tempvar new_block: BlockData = BlockData(
-          block_number, 
-          block_seed,
-          status, 
-          block_reward, 
-          block_difficulty, 
-          block_timestamp,
-          0,
-          0);
-        
+            block_number, 
+            block_seed,
+            status, 
+            block_reward, 
+            block_difficulty, 
+            block_timestamp,
+            0,
+            0);
+          
         Block_Storage.write(block_number, new_block);
         Current_Block.write(block_number);
         get_current_board();
@@ -122,7 +145,7 @@ namespace Block {
           score);   
 
           Block_Storage.write(block_number, updated_block);
-          init(block_number + 1);
+          init(block_number + 1, score);
           blockComplete.emit(updated_block);
         return();
       }
@@ -146,7 +169,7 @@ namespace Block {
        tempvar updated_block = BlockData(
           block.number, 
           block.seed, 
-          block.status, 
+          0, 
           block.reward, 
           block.difficulty, 
           block.timestamp, 
@@ -154,38 +177,11 @@ namespace Block {
           block.score);   
 
           Block_Storage.write(block_number, updated_block);
-          init(block_number + 1);
+          init(block_number + 1, score);
           blockComplete.emit(updated_block);
           return();
       }
     return();
-    }
-    
-    func is_pending{
-      syscall_ptr: felt*, 
-      pedersen_ptr: HashBuiltin*, 
-      range_check_ptr}() -> (){
-  
-      let (current_block) = Current_Block.read();
-      let (block) = Block_Storage.read(current_block);
-      with_attr error_message("Block not Pending") {
-        assert block.status = 2;
-      }
-    return();
-    }
-    
-    func init_current_board{
-      syscall_ptr: felt*, 
-      pedersen_ptr: HashBuiltin*, 
-      bitwise_ptr: BitwiseBuiltin*, 
-      range_check_ptr}(block_number: felt) -> (dict_new: DictAccess*){ 
-      alloc_locals; 
-      
-      let (current_block) = Block_Storage.read(block_number);
-      let (board_dict: DictAccess*) = default_dict_new(default_value=0);
-      let (dict_new) = init_board(BOARD_DIMENSION, BOARD_SIZE, current_block.seed, board_dict);       
-
-    return(dict_new=dict_new);
     }
     
   func get_current_board{
@@ -196,9 +192,12 @@ namespace Block {
     alloc_locals;
     let (block_arr: SingleBlock*) = alloc();
     let (current_block) = Current_Block.read(); 
-    let (board_dict) = Block.init_current_board(current_block);
-    let (block_len, block_state) = board_summary(225, block_arr, board_dict);
+    let (block) = Block_Storage.read(current_block);
 
+    let (board_dict: DictAccess*) = default_dict_new(default_value=0);
+    let (dict_new) = init_board(BOARD_DIMENSION, BOARD_SIZE, block.seed, board_dict);       
+    
+    let (block_len, block_state) = board_summary(225, block_arr, dict_new);
     boardSummary.emit(block_len, block_state);
     return();
     }
@@ -210,6 +209,7 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt,
       alloc_locals;
     
       if(board_size == 0){
+          default_dict_finalize(dict_accesses_start=board_dict, dict_accesses_end=board_dict, default_value=0);
           return(board_size, board_arr);
         }
       
@@ -221,24 +221,45 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt,
     return(board_size, board_arr);
     }
 
-func adjust_difficulty{syscall_ptr: felt*, range_check_ptr}(i: felt, score: felt) -> (new_reward: felt, new_difficulty: felt){
-  alloc_locals;
+func update_block_difficulty{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*,  range_check_ptr}(score: felt) -> (new_difficulty: felt, new_reward: felt){
+    alloc_locals;
+    let (current_block_num) = Current_Block.read();
+    let (block) = Block_Storage.read(current_block_num);
+    
+    let K = block.difficulty * block.reward;
+
+    let min_score = 0;
+    let max_score = 100;
+
+    let reward_min = 10;
+    let reward_max = 40;
+    let difficulty_min = 5;
+    let difficulty_max = 20;
+    
+    let (avg_score) = calculate_average_score(5, score);
+    let x = avg_score - min_score;
+    let y = max_score - min_score;
+    let (normalized_average, _) = unsigned_div_rem(x, y); 
+    
+    let new_difficulty = difficulty_min + normalized_average * (difficulty_max - difficulty_min);
+    let (new_reward, _ ) = unsigned_div_rem(K, new_difficulty);
+
+    return(new_difficulty, new_reward);
+  }
+
+func calculate_average_score{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(i: felt, score: felt) -> (avg: felt){
+    alloc_locals;
+
+    if(i == 0){
+      let (res, _) = unsigned_div_rem(score, 5);
+      return(avg=res);
+      }
+
+    let (current_block_num) = Current_Block.read();
+    let (block) = Block_Storage.read(current_block_num - i);
+    let new_score = block.score + score;
   
-  let (current_block) = Current_Block.read();
-  let (block) = Block_Storage.read(current_block - i);
-
-  if(i == 0){
-      let (avg, _) = unsigned_div_rem(score, 5); // divide by the number of blocks
-      let score_diff = is_le(avg, TARGET_SCORE);
-        if(score_diff == 0){
-          let new_reward = current_block.reward + 5; 
-          let new_difficulty = current_block.difficulty - 5;
-          return(new_reward, new_difficulty);
-          }
-    }
-
-  let (block) = Block_Storage.read(current_block - i);
-  let new_score = block.score + score;
-
-  return adjust_difficulty(i - 1, new_score);
+    return calculate_average_score(i - 1, new_score);  
   } 
+
+

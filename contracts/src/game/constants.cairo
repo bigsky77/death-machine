@@ -1,8 +1,3 @@
-const RANGE_X = 16;
-const RANGE_Y = 16;
-const STAR_RANGE = 40;
-const ENEMY_RANGE= 20;
-const PLANET_RANGE= 15;
 const N_TURNS = 49;
 const PC = 7;
 const BOARD_SIZE = 225;
