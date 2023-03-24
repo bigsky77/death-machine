@@ -11,7 +11,7 @@ import SubmitButton from './SubmitButton'
 
 import deathmachine from '../../styles/assets/death-machine.png'
 
-export default function MainController({generateGameBoard, handleClickSubmit, txnPending}: props) {
+export default function MainController({generateGameBoard, handleClickSubmit, txnPending, address}: props) {
   
   return(        
     <>
@@ -35,7 +35,7 @@ export default function MainController({generateGameBoard, handleClickSubmit, tx
           <Image src={deathmachine} height={50} sx={{height: "10px", width: "10px", color: "black"}} />
           <SettingsModal />
           <NewBoardButton generateGameBoard={generateGameBoard}/>
-          <SubmitButton handleClickSubmit={handleClickSubmit} txnPending={txnPending}/>
+      <SubmitButton handleClickSubmit={handleClickSubmit} txnPending={txnPending} address={address}/>
       </Box>
     </>
   );

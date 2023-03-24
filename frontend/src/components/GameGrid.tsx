@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 
-export default function GameGrid({ animationFrame, frames, shipInitPositions, shipSelected, updateSpaceships }) {
+export default function GameGrid({ animationFrame, frames, shipInitPositions, shipSelected }) {
   const ROW_CONST = 225;
   const [boxes, setBoxes] = useState(Array(ROW_CONST).fill("🌠"));
 
@@ -85,10 +85,10 @@ export default function GameGrid({ animationFrame, frames, shipInitPositions, sh
 
 function Square({value, color}) {
     return(
-      <Box sx={{height: 31, width: 31, border: color, bgcolor: "", ":hover": {
+      <Box sx={{height: 31, width: 31, border: color ? color : "1px solid #FEB239", bgcolor: "", ":hover": {
                     bgcolor: '#FC72FF',
                     color: '#C72FF',
-                    border: "1px solid #ffffff00"},
+                    border: "1px solid #ffffff"},
                     fontSize: '26px',
                     textAlign: "center",
         }}>{value}</Box>

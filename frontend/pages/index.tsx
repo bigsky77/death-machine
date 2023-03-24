@@ -12,6 +12,7 @@ import AtomState, {AtomStatus, AtomType} from '../src/types/AtomState';
 import loadBoard from "../src/utils/loadBoard";
 
 export default function Home() {
+
   const [shipInitPositions, setShipInitPositions] = useState<Grid[]>(BLANK_SOLUTION.ships.map((ship) => ship.index));
   const [shipSelected, updateShipSelected] = useState<[]>(BLANK_SOLUTION.ships.map((ship) => ship.selected));
   console.log("shipInitPositions", shipInitPositions);
@@ -33,11 +34,12 @@ export default function Home() {
   const runnable = true; //placeholder
 
   const { data } = useAllEvents();
+  console.log("data", data);
   const atomTypes = ["BLANK","ENEMY","STAR","PLANET"];
 
   useEffect(() => {
     if (data) {
-      const board = data.DeathMachine[0].board_array;
+      const board = data.DeathMachine[0].data;
       const newInitialArray = Array(225).fill("").map((item, index) => ({
         id: `star${index + 1}`,
         typ: atomTypes[board[index].type],
@@ -212,7 +214,7 @@ export default function Home() {
             calldata: args,
         };
         return [tx];
-    }, [programs]);
+    }, [programs, shipInitPositions]);
 
     return (
     <>
