@@ -137,7 +137,7 @@ func generate_type{
       return(block_type=0);
       }
 
-    let y = is_le(res, 70);
+    let y = is_le(res, 85);
     if(y == 1){  
       return(block_type=2);
       }
