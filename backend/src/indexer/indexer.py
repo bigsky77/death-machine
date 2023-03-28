@@ -102,19 +102,19 @@ class DeathMachineIndexer(StarkNetIndexer):
         block_time = data.header.timestamp.ToDatetime()
         print(f"Processing block {data.header.block_number} at {block_time}")
 
-        blockComplete = [
-            decode_blockComplete_event(event.event.data)
-            for event in data.events
-            if event.event.keys == [blockComplete_key]
-        ] 
-        print(f"Block Complete", blockComplete)
+       # blockComplete = [
+       #     decode_blockComplete_event(event.event.data)
+       #     for event in data.events
+       #     if event.event.keys == [blockComplete_key]
+       # ] 
+       # print(f"Block Complete", blockComplete)
         
-        blockInitialized = [
-            decode_blockInitialized_event(event.event.data)
-            for event in data.events
-            if event.event.keys == [blockInitialized_key]
-        ] 
-        print(f"Block Init", blockInitialized)
+       # blockInitialized = [
+       #     decode_blockInitialized_event(event.event.data)
+       #     for event in data.events
+       #     if event.event.keys == [blockInitialized_key]
+       # ] 
+       # print(f"Block Init", blockInitialized)
         
         boardSets = [
              decode_boardSet_event(event.event.data)
@@ -123,25 +123,25 @@ class DeathMachineIndexer(StarkNetIndexer):
         ]
         print(f"Board", boardSets)
         
-        gameComplete = [
-             decode_gameComplete_event(event.event.data)
-             for event in data.events
-             if event.event.keys == [gameComplete_key]
-        ]
-        print(f"Game Complete", gameComplete)
-        
-        non_empty_gameComplete = [gameComp for gameComp in gameComplete if gameComp]
-        gameComplete_docs = [{"data": gameComplete[0].ships} for gameComp in non_empty_gameComplete]
-        if gameComplete_docs:
-            await info.storage.insert_many("gameComplete_docs", gameComplete_docs)
+       # gameComplete = [
+       #      decode_gameComplete_event(event.event.data)
+       #      for event in data.events
+       #      if event.event.keys == [gameComplete_key]
+       # ]
+       # print(f"Game Complete", gameComplete)
+       # 
+       # non_empty_gameComplete = [gameComp for gameComp in gameComplete if gameComp]
+       # gameComplete_docs = [{"data": gameComplete[0].ships} for gameComp in non_empty_gameComplete]
+       # if gameComplete_docs:
+       #     await info.storage.insert_many("gameComplete_docs", gameComplete_docs)
 
-        non_empty_blockComplete = [blockComp for blockComp in blockComplete if blockComp]
-        blockComplete_docs = [{"data": blockComplete[0].completed_block} for blockComp in non_empty_blockComplete]
-        if blockComplete_docs:
-            await info.storage.insert_many("blockComplete_docs", blockComplete_docs)
+       # non_empty_blockComplete = [blockComp for blockComp in blockComplete if blockComp]
+       # blockComplete_docs = [{"data": blockComplete[0].completed_block} for blockComp in non_empty_blockComplete]
+       # if blockComplete_docs:
+       #     await info.storage.insert_many("blockComplete_docs", blockComplete_docs)
         
-        non_empty_blockInit = [blockInit for blockInit in blockInitialized if blockInit]
-        blockInitialized_docs = [{"data": blockInitialized[0].new_block} for blockInit in non_empty_blockInit]
+        #non_empty_blockInit = [blockInit for blockInit in blockInitialized if blockInit]
+        #blockInitialized_docs = [{"data": blockInitialized[0].new_block} for blockInit in non_empty_blockInit]
         #if blockInitialized_docs:
          #   await info.storage.insert_many("blockInitialized_docs", blockInitialized_docs)
 
