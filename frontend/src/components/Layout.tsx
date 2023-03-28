@@ -116,15 +116,41 @@ export default function Layout({animationFrame,
         <WelcomeApp generateBoard={generateBoard} isMobile={isMobile} />
       ) : (
         <>
-          <Grid container spacing={1} sx={{ height: 800, width: 1400, p: 14, pl: 20, border: '1px grey' }} justifyContent="center" alignItems="center" display="flex" flexDirection="column" columnSpacing={0} gap={1}>
-            <BlockExplorer />
-                <MainController generateGameBoard={generateGameBoard} handleClickSubmit={handleClickSubmit} txnPending={txnPending} address={address} />
-                  <MidScreenControl runnable={midScreenControlProps.runnable} animationFrame={midScreenControlProps.animationFrame} n_cycles={midScreenControlProps.n_cycles} animationState={midScreenControlProps.animationState} handleClick={midScreenControlHandleClick} handleSlideChange={midScreenControlHandleSlideChange} />
-                  <InstructionConsole pc={pc} shipSelected={shipSelected} selectShip={selectShip} onShipInitPositionsChange={onShipInitPositionsChange} shipInitPositions={shipInitPositions} onProgramsChange={onProgramsChange} programs={programs} />
-                <Grid sx={{ width: 530, height: 500, pt: 0.8, border: '1px grey' }}>
-              <GameGrid animationFrame={animationFrame} frames={frames} shipSelected={shipSelected} shipInitPositions={shipInitPositions} />
-            </Grid>
+
+    <Grid container spacing={25} sx={{ height: 900, width: 1200, border: '2px  grey' }}
+        justifyContent="center"
+        alignItems="center"
+        display="flex"
+        flexDirection="column"
+        columnSpacing={2}
+        gap={1}>
+
+      <Grid item sx={{ width: '10%' }} xs={12} md={12}>
+        <BlockExplorer />
+      </Grid>
+
+      <Grid item container direction="column" spacing={1} xs={6} md={6} pb={6.0}>
+        <Grid item>
+          <MainController generateGameBoard={generateGameBoard} handleClickSubmit={handleClickSubmit} txnPending={txnPending} address={address} />
+        </Grid>
+
+        <Grid item>
+          <MidScreenControl runnable={midScreenControlProps.runnable} animationFrame={midScreenControlProps.animationFrame} n_cycles={midScreenControlProps.n_cycles} animationState={midScreenControlProps.animationState} handleClick={midScreenControlHandleClick} handleSlideChange={midScreenControlHandleSlideChange} />
+        </Grid>
+
+        <Grid item>
+          <InstructionConsole pc={pc} shipSelected={shipSelected} selectShip={selectShip} onShipInitPositionsChange={onShipInitPositionsChange} shipInitPositions={shipInitPositions} onProgramsChange={onProgramsChange} programs={programs} />
+        </Grid>
+      </Grid>
+
+      <Grid item xs={6} md={6} spacing={0} pb={16}>
+        <Grid container direction="column" spacing={1} sx={{ width: 500, height: 400}}>
+          <Grid item sx={{ flexGrow: 1 }}>
+            <GameGrid animationFrame={animationFrame} frames={frames} shipSelected={shipSelected} shipInitPositions={shipInitPositions} />
           </Grid>
+      </Grid>
+     </Grid>
+    </Grid>
         </>
       )}
     </Box>

@@ -1,3 +1,5 @@
+
+import { Box } from "@mui/material";
 import {
     InstructionKey,
     INSTRUCTION_ICON_MAP,
@@ -44,9 +46,9 @@ const IconizedInstructionPanel = ({
                             borderRadius: "2",
                             backgroundColor: colors[key],
                             transitionDuration: "50ms",
-                            cursor: "pointer",
+                            //cursor: "pointer",
                         }}
-                        onClick={() => onPress(key)}
+
                     >
                         <i
                             className="material-icons"

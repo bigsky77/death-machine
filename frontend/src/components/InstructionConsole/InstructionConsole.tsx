@@ -94,7 +94,6 @@ export default function MainController({
                       textAlign: "left",
                       verticalAlign: "middle",
                       margin: "0 0.5rem 0 0",
-                      // width: "100px" /* Make room for dynamic text */,
                       height: "20px",
                       width: "100%",
                       lineHeight: "20px",

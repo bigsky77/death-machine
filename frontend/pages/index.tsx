@@ -54,17 +54,18 @@ export default function Home() {
   }, [data]);
  
   const selectShip = (id) => {
-      const selectedShip = shipSelected.map((ship) => {
-          if(ship.selected === true) {
-              return { ...ship, selected: false};
-            } else {
-                return { ...ship, selected: true};
-              }
-            return ship;
-        });
-      console.log("selectedShip", selectedShip);
-      updateShipSelected(selectedShip);
-    }
+  updateShipSelected(prevState => {
+    const newShipSelected = prevState.map((ship, index) => {
+      if (index === id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    console.log("newShipSelected", newShipSelected);
+    return newShipSelected;
+  });
+  };
 
   const shipInitStates: ShipState[] = shipInitPositions.map((pos, ship_i) => {
           return {

@@ -66,20 +66,19 @@ return (
       <Box
         gap={0.01}
         sx={{
-          width: 1025,
+          width: 1035,
           height: 40,
           justifyContent: "center",
-          mb: 2,
-          position: "absolute",
-          top: "110px",
-          left: "50.1%",
-          transform: "translateX(-50%)",
-          display: "fixed",
+          mb: 0,
+          //top: "10px",
+          //left: "50.1%",
+          transform: "translateX(12%)",
+          display: "flex",
           flexDirection: "row",
           alignItems: "center",
           backgroundColor: BLANK_COLOR,
-          p: "0.1rem",
-          mt: "1rem",
+          //p: "0.1rem",
+          //mt: "1rem",
           border: "2px solid #303030",
           borderRadius: 0,
           boxShadow: '4px 4px 0px #000000',
@@ -93,8 +92,8 @@ return (
             alignItems: "center",
             width: 980,
             overflowX: "auto",
-            ml: 5.5,
-            mr: 5.5,
+            ml: 3.5,
+            mr: 3.5,
             scrollbarWidth: "none", // hide scrollbar on Firefox
             msOverflowStyle: "none", // hide scrollbar on IE, Edge
             "&::-webkit-scrollbar": {
