@@ -1,7 +1,9 @@
  ##       
  ##       DEATH-MACHINE 💀⚙️
 
-This is the monorepo for DEATH-MACHINE a smart-contract game on Starknet.  
+This is the monorepo for DEATH-MACHINE a smart-contract game on Starknet.  Death-Machine is fully playable on Starknet-Testnet with a late April release planned for Mainnet.  We are still have a TON to build so expect plenty of rough edges!  If you find any issues please submit a bug-report.    
+
+The game can be found at https://death-machine.vercel.app/    
 
 ### System Overiew 
 
@@ -33,12 +35,12 @@ The main folders in the directory are laid out below.  Cairo smart-contracts are
 ├──  deployer
 ├──  src
 │  ├──  board
-│  ├──  death_machine.cairo
+│  ├──  simulator.cairo
 │  ├──  game
 │  └──  utils
 ├──  tests
 ```
-  * [ ] 
+
 #### Backend
 
 Starknet event indexer using Apibara.

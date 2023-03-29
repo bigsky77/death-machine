@@ -1,15 +1,12 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
 import { Box, Tooltip } from "@mui/material";
 import { BLANK_COLOR } from "../constants/constants";
-import { useBlockEvents, useGameCompleteEvents } from "../../lib/api"
 
 interface BlockExplorerProps {
   blocks: number[];
 }
 
 export default function BlockExplorer() {
-  const { block_events } = useBlockEvents();
-  console.log("block data", block_events);
 
   const [visibleIndex, setVisibleIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);

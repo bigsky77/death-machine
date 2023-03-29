@@ -33,9 +33,10 @@ export default function Home() {
   const ANIM_FRAME_LATENCY_DAW = 300;
   const runnable = true; //placeholder
 
-  const { data } = useAllEvents();
+  const { data, error } = useAllEvents();
   console.log("data", data);
-  const atomTypes = ["BLANK","ENEMY","STAR","PLANET"];
+
+  const atomTypes = ["BLANK","ENEMY","STAR","BLANK"];
 
   useEffect(() => {
     if (data) {
@@ -51,6 +52,7 @@ export default function Home() {
       updateAtomType(newInitialArray.map((atom) => (atom.typ)));
       console.log("initial array", newInitialArray)
     }
+
   }, [data]);
  
   const selectShip = (id) => {
@@ -88,10 +90,6 @@ export default function Home() {
           };
       });
   
-  useEffect(() => {
-    generateBoard();
-  }, [shipInitPositions, ATOMS]);
-
   async function generateBoard(){
     let instructionSets = programsToInstructionSets(programs);
     const boardConfig: BoardConfig = {

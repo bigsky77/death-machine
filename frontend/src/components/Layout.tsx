@@ -125,6 +125,7 @@ export default function Layout({animationFrame,
         columnSpacing={2}
         gap={1}>
 
+      <WelcomeApp generateBoard={generateBoard} isMobile={isMobile} />
       <Grid item sx={{ width: '10%' }} xs={12} md={12}>
         <BlockExplorer />
       </Grid>

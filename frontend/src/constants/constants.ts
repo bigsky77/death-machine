@@ -4,7 +4,7 @@ import loadBoard from "../src/utils/loadBoard";
 
 export const BLANK_COLOR = '#f2f1ed' 
 
-export const DB_NAME = 'DEATHMACHINE'
+export const DB_NAME = 'DeathMachine'
 export const N_CYCLES = 49
 export const INSTRUCTION_KEYS = ['w','a','s','d'];
 export const DIM = 15
