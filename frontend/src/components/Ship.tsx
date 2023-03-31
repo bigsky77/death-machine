@@ -8,7 +8,7 @@ export default function Ship ({ shipState, frames, animationFrame, shipInitPosit
 
     if (!shipState) return <></>
 
-    const lastShipGridRef = useRef<Grid>({x:0,y:0});
+    const lastShipGridRef = useRef<Grid>({x:7,y:7});
 
     const gap_offset = 2.0;
     const left_offset = -50;

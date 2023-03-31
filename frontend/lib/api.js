@@ -31,9 +31,23 @@ export function useStardiscRegistryByAccount (account) {
 }
 
 export function useBlockEvents () {
-    return useSWR('/api/blockEvents', fetcher)
+  const { data, error } = useSWR('/api/blockEvents', fetcher);
+
+  return {
+    data,
+    notFound: data && data.notFound,
+    isLoading: !error && !data,
+    isError: error,
+  };
 }
 
 export function useGameCompleteEvents () {
-    return useSWR('/api/gameEvents', fetcher)
+  const { data, error } = useSWR('/api/gameEvents', fetcher);
+
+  return {
+    data,
+    notFound: data && data.notFound,
+    isLoading: !error && !data,
+    isError: error,
+  };
 }

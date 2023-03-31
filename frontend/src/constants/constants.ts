@@ -42,9 +42,9 @@ const initialArray = Array(225).fill("").map((item, index) => ({
 
 export const BLANK_SOLUTION: Solution = {
     ships: [
-        {id: 'ship0', type: 1, status: 1, index: { x:0, y:0 }, description: 0, pc_next: 0, selected: false},
-        {id: 'ship1', type: 1, status: 1, index: { x:1, y:0 }, description: 1, pc_next: 0, selected: false},
-        {id: 'ship2', type: 1, status: 1, index: { x:3, y:5 }, description: 2, pc_next: 0, selected: false},
+        {id: 'ship0', type: 1, status: 1, index: { x:6, y:7 }, description: 0, pc_next: 0, selected: false},
+        {id: 'ship1', type: 1, status: 1, index: { x:7, y:7 }, description: 1, pc_next: 0, selected: false},
+        {id: 'ship2', type: 1, status: 1, index: { x:8, y:7 }, description: 2, pc_next: 0, selected: false},
     ],
     programs: ['x,x,x,x,x,x,x', 'x,x,x,x,x,x,x', 'x,x,x,x,x,x,x'],
     atoms: [],

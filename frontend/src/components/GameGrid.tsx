@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 import Ship from './Ship'
-import Enemy from './Enemy'
+import Atom from './Atom'
 
-export default function GameGrid({ animationFrame, frames, shipInitPositions, shipSelected }) {
+export default function GameGrid({ animationFrame, frames, shipInitPositions, shipSelected, ATOMS }) {
   const ROW_CONST = 225;
   const [boxes, setBoxes] = useState(Array(ROW_CONST).fill("🌠"));
 
@@ -60,9 +60,9 @@ export default function GameGrid({ animationFrame, frames, shipInitPositions, sh
           } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "ENEMY")) {
             return "";
           } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "STAR" && atom.status === "ACTIVE")) {
-            return "🌠";
+            return "";
           } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.typ === "PLANET" && atom.status === "ACTIVE")) {
-            return "🪐";
+            return "";
           } else if (frames[animationFrame].atoms.find(atom => atom.index.x === x && atom.index.y === y && atom.status === "INACTIVE")) {
             return "-";
           } else {
@@ -72,7 +72,7 @@ export default function GameGrid({ animationFrame, frames, shipInitPositions, sh
       };
       setBoard();
     }
-  }, [animationFrame, shipInitPositions]);
+  }, [animationFrame, shipInitPositions, ATOMS]);
 
 return (
   <Box sx={{ width: '100%', height: '100%', transform: "translateX(-10%)"}} >
@@ -82,12 +82,11 @@ return (
           .filter(ship => ship.status === "ACTIVE")
           .map(ship => <Ship key={ship.id} shipState={ship} animationFrame={animationFrame} frames={frames} shipSelected={shipSelected[ship.description]} shipInitPositions={shipInitPositions}/>)
       ) : null}
-      {frames && animationFrame && frames[animationFrame].atoms.some(atom => atom.typ === "ENEMY") ? (
+      {frames && animationFrame && frames[animationFrame].atoms.some(atom => atom.status === "ACTIVE") ? (
         frames[animationFrame].atoms
-          .filter(atom => atom.typ === "ENEMY")
-          .map(atom => <Enemy key={atom.id} enemyState={atom} animationFrame={animationFrame} frames={frames}/>)
+          .filter(atom => atom.status === "ACTIVE")
+          .map(atom => <Atom key={atom.id} atomState={atom} animationFrame={animationFrame} frames={frames}/>)
       ) : null}
-
       {boxes.map((value, index) => (
         <Square key={index} value={value} color={checkAdjacent(index)} />
       ))}

@@ -1,12 +1,7 @@
 //* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Db, MongoClient } from "mongodb";
 
-//const MONGO_CONNECTION_STRING = process.env.MONGODB_URI
-//const MONGO_CONNECTION_STRING ="mongodb+srv://simon:deathmachine@deathmachine.s7yz0.mongodb.net/?retryWrites=true&w=majority";
-
-const MONGO_CONNECTION_STRING ="mongodb+srv://vercel-admin-user:RkNxHuYi7ohpusIx@deathmachine.s7yz0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-const uri = MONGO_CONNECTION_STRING;// process.env.NEXT_ATLAS_URI;
+const uri = process.env.MONGODB_URI;
 
 let client: MongoClient | undefined = undefined;
 let db: Db | undefined = undefined;

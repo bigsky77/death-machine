@@ -1,6 +1,6 @@
 from apibara.starknet import felt
 
-deathmachine_testnet = "0x030bcdbb2672a0dfff0b5016b8086499ed5ea7f6d64fe1bcb129e7481bd9d3e6"
+deathmachine_testnet = "0x04b24094fe5862ef3cd6b69028f4cedde958d50341a0c37e39aebc6a6bf380f3"
 boardSummary_testnet = "0x22b803be989158361f3042f192dd0cab0bb034cce1c5e1757483eacf64020c9"
 blockInitialized_testnet = "0x111e72ae160696d860893667de5e69662bcb6a41aa10aae07449286aa687caf"
 gameComplete_testnet = "0x2015e3eeb9074244d820728819f0a620601010bfb2851749544dcfb0ae0d57e"

@@ -80,7 +80,7 @@ export default function Home() {
           };
       });
 
-    const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
+  const atomInitStates: AtomState[] = ATOMS.map(function (atom, i) {
           return {
               status: "ACTIVE",
               index: atom,
@@ -89,7 +89,11 @@ export default function Home() {
               raw_index: atom,
           };
       });
-  
+
+  useEffect(() => {
+    generateBoard();
+  }, [shipInitPositions]);
+
   async function generateBoard(){
     let instructionSets = programsToInstructionSets(programs);
     const boardConfig: BoardConfig = {
@@ -105,6 +109,7 @@ export default function Home() {
       ) as Frame[];
 
       setFrames(simulatedFrames);
+      console.log("simulatedFrames", simulatedFrames);
       setAnimationFrame(1);
   }
 
@@ -179,7 +184,7 @@ export default function Home() {
             // Stop
             clearInterval(loop); // kill the timer
             setAnimationState("Stop");
-            setAnimationFrame((_) => 0);
+            setAnimationFrame((_) => 1);
         }
     }
 
@@ -220,6 +225,7 @@ export default function Home() {
       <Layout
         animationFrame={animationFrame}
         frames={frames}
+        ATOMS={ATOMS}
         callData={calls}
         pc={pc}
         shipSelected={shipSelected}

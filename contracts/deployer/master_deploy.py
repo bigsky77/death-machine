@@ -11,14 +11,14 @@ from starknet_py.net.udc_deployer.deployer import Deployer
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(.env.local)
 
 # Local network
 key = os.getenv('KEY')
 local_network_client = GatewayClient("http://localhost:5050")
 testnet_client = GatewayClient(TESTNET)
 
-key_pair = KeyPair.from_private_key(key=0x05b0bebc50f55961731ff367ac498a9f4d97c59cd2a8c49255541d8a3408c5ff)
+key_pair = KeyPair.from_private_key(key=key)
 signer = StarkCurveSigner(0x037120cfd86ce59565ff1c2e26f3383e0871bf95fe3fe6e905204d1e1a2238b8, key_pair, StarknetChainId.TESTNET)
 account = Account(client=testnet_client, address=0x037120cfd86ce59565ff1c2e26f3383e0871bf95fe3fe6e905204d1e1a2238b8, signer=signer)
 

@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.9",
+    "@mui/x-data-grid": "^6.0.3",
     "@next/font": "13.1.4",
     "@starknet-react/core": "^0.14.8",
     "@types/node": "18.11.18",

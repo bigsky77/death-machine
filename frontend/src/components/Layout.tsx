@@ -21,6 +21,7 @@ import BlockExplorer  from "./BlockExplorer";
 
 export default function Layout({animationFrame,
                                 frames,
+                                ATOMS,
                                 pc,
                                 shipSelected,
                                 selectShip,
@@ -147,7 +148,7 @@ export default function Layout({animationFrame,
       <Grid item xs={6} md={6} spacing={0} pb={16}>
         <Grid container direction="column" spacing={1} sx={{ width: 500, height: 400}}>
           <Grid item sx={{ flexGrow: 1 }}>
-            <GameGrid animationFrame={animationFrame} frames={frames} shipSelected={shipSelected} shipInitPositions={shipInitPositions} />
+            <GameGrid ATOMS={ATOMS} animationFrame={animationFrame} frames={frames} shipSelected={shipSelected} shipInitPositions={shipInitPositions} />
           </Grid>
       </Grid>
      </Grid>

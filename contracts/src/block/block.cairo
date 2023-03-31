@@ -74,31 +74,9 @@ namespace Block {
         let (block_seed) = generate_seed(block_timestamp);
         let status = 1;
 
-        let is_first_blocks = is_le(block_number, 5);
-        if(is_first_blocks == 1){
-          let block_reward = 65; // percentage of reward squares out of 100
-          let block_difficulty = 5; // percentage of enemey squares out of 100
+        let block_reward = 65; // percentage of reward squares out of 100
+        let block_difficulty = 5; // percentage of enemey squares out of 100
 
-          tempvar new_block: BlockData = BlockData(
-            block_number, 
-            block_seed,
-            status, 
-            block_reward, 
-            block_difficulty, 
-            block_timestamp,
-            0,
-            0);
-          
-        Block_Storage.write(block_number, new_block);
-        Current_Block.write(block_number);
-
-        get_current_board();
-        blockInitialized.emit(new_block);
-
-        return();
-        }
-      
-        let (block_difficulty, block_reward) = update_block_difficulty(score); 
         tempvar new_block: BlockData = BlockData(
             block_number, 
             block_seed,
@@ -111,8 +89,10 @@ namespace Block {
           
         Block_Storage.write(block_number, new_block);
         Current_Block.write(block_number);
+
         get_current_board();
         blockInitialized.emit(new_block);
+
     return();
     }
   
@@ -220,46 +200,5 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt,
       board_summary(board_size - 1, board_arr, board_dict);
     return(board_size, board_arr);
     }
-
-func update_block_difficulty{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*,  range_check_ptr}(score: felt) -> (new_difficulty: felt, new_reward: felt){
-    alloc_locals;
-    let (current_block_num) = Current_Block.read();
-    let (block) = Block_Storage.read(current_block_num);
-    
-    let K = block.difficulty * block.reward;
-
-    let min_score = 0;
-    let max_score = 100;
-
-    let reward_min = 10;
-    let reward_max = 40;
-    let difficulty_min = 5;
-    let difficulty_max = 20;
-    
-    let (avg_score) = calculate_average_score(5, score);
-    let x = avg_score - min_score;
-    let y = max_score - min_score;
-    let (normalized_average, _) = unsigned_div_rem(x, y); 
-    
-    let new_difficulty = difficulty_min + normalized_average * (difficulty_max - difficulty_min);
-    let (new_reward, _ ) = unsigned_div_rem(K, new_difficulty);
-
-    return(new_difficulty, new_reward);
-  }
-
-func calculate_average_score{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(i: felt, score: felt) -> (avg: felt){
-    alloc_locals;
-
-    if(i == 0){
-      let (res, _) = unsigned_div_rem(score, 5);
-      return(avg=res);
-      }
-
-    let (current_block_num) = Current_Block.read();
-    let (block) = Block_Storage.read(current_block_num - i);
-    let new_score = block.score + score;
-  
-    return calculate_average_score(i - 1, new_score);  
-  } 
 
 

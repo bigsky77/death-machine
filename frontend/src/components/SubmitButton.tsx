@@ -14,6 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import LinearProgress from '@mui/material/LinearProgress';
+import { useGameCompleteEvents } from '../../lib/api';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -40,7 +41,6 @@ export default function SubmitButton({
 
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
-  
 
   useEffect(() => {
     if (txnPending) {

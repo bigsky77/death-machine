@@ -83,7 +83,7 @@ class DeathMachineIndexer(StarkNetIndexer):
         filter.add_event(
             EventFilter().with_from_address(address)
                 .with_keys([blockComplete_key])
-        ) 
+        )
         filter.add_event(
             EventFilter().with_from_address(address)
                 .with_keys([boardSet_key])
@@ -91,10 +91,10 @@ class DeathMachineIndexer(StarkNetIndexer):
         filter.add_event(
             EventFilter().with_from_address(address)
                 .with_keys([gameComplete_key])
-        )             
+        )
         return IndexerConfiguration(
             filter=filter,
-            starting_cursor=starknet_cursor(782_000),
+            starting_cursor=starknet_cursor(786_000),
             finality=DataFinality.DATA_STATUS_PENDING,
         )
 
@@ -102,19 +102,19 @@ class DeathMachineIndexer(StarkNetIndexer):
         block_time = data.header.timestamp.ToDatetime()
         print(f"Processing block {data.header.block_number} at {block_time}")
 
-       # blockComplete = [
-       #     decode_blockComplete_event(event.event.data)
-       #     for event in data.events
-       #     if event.event.keys == [blockComplete_key]
-       # ] 
-       # print(f"Block Complete", blockComplete)
-        
-       # blockInitialized = [
-       #     decode_blockInitialized_event(event.event.data)
-       #     for event in data.events
-       #     if event.event.keys == [blockInitialized_key]
-       # ] 
-       # print(f"Block Init", blockInitialized)
+        blockComplete = [
+            decode_blockComplete_event(event.event.data)
+            for event in data.events
+            if event.event.keys == [blockComplete_key]
+        ]
+        print(f"Block Complete", blockComplete)
+
+        blockInitialized = [
+            decode_blockInitialized_event(event.event.data)
+            for event in data.events
+            if event.event.keys == [blockInitialized_key]
+        ]
+        print(f"Block Init", blockInitialized)
         
         boardSets = [
              decode_boardSet_event(event.event.data)
@@ -123,22 +123,30 @@ class DeathMachineIndexer(StarkNetIndexer):
         ]
         print(f"Board", boardSets)
         
-       # gameComplete = [
-       #      decode_gameComplete_event(event.event.data)
-       #      for event in data.events
-       #      if event.event.keys == [gameComplete_key]
-       # ]
-       # print(f"Game Complete", gameComplete)
-       # 
-       # non_empty_gameComplete = [gameComp for gameComp in gameComplete if gameComp]
-       # gameComplete_docs = [{"data": gameComplete[0].ships} for gameComp in non_empty_gameComplete]
-       # if gameComplete_docs:
-       #     await info.storage.insert_many("gameComplete_docs", gameComplete_docs)
+        gameComplete = [
+             decode_gameComplete_event(event.event.data)
+             for event in data.events
+             if event.event.keys == [gameComplete_key]
+        ]
+        print(f"Game Complete", gameComplete)
 
-       # non_empty_blockComplete = [blockComp for blockComp in blockComplete if blockComp]
-       # blockComplete_docs = [{"data": blockComplete[0].completed_block} for blockComp in non_empty_blockComplete]
-       # if blockComplete_docs:
-       #     await info.storage.insert_many("blockComplete_docs", blockComplete_docs)
+        non_empty_gameComplete = [gameComp for gameComp in gameComplete if gameComp]
+        gameComplete_docs = [{"ships": gameComp.ships, "score": gameComp.score, "address": str(gameComp.player_address)} for gameComp in non_empty_gameComplete]
+        if gameComplete_docs:
+            await info.storage.insert_many("gameComplete_docs", gameComplete_docs)
+
+        non_empty_blockComplete = [blockComp for blockComp in blockComplete if blockComp]
+        blockComplete_docs = [
+                {"number": blockComp.completed_block['number'],
+                 "time": blockComp.completed_block['timestamp'],
+                 "prover": str(blockComp.completed_block['prover']),
+                 "score": blockComp.completed_block['score']
+                 }
+            for blockComp in non_empty_blockComplete]
+
+        if blockComplete_docs:
+            print(f"Block Complete Docs", blockComplete_docs)
+            await info.storage.insert_many("blockComplete_docs", blockComplete_docs)
         
         #non_empty_blockInit = [blockInit for blockInit in blockInitialized if blockInit]
         #blockInitialized_docs = [{"data": blockInitialized[0].new_block} for blockInit in non_empty_blockInit]
@@ -153,7 +161,6 @@ class DeathMachineIndexer(StarkNetIndexer):
         for event_with_tx in data.events:
             tx_hash = felt.to_hex(event_with_tx.transaction.meta.hash)
             event = event_with_tx.event
-
             print(f"   Tx Hash: {tx_hash}")
 
 async def run_indexer(server_url=None, mongo_url=None, restart=None):

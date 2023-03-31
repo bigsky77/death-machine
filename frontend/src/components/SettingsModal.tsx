@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { BLANK_COLOR } from "../constants/constants";
+import  LeaderBoard from './LeaderBoard';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -169,11 +170,11 @@ function LeaderboardModal() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 200, color: 'black'}}>
+        <Box sx={{ ...style, width: 300, height: 400, color: 'black'}}>
           <h2 id="child-modal-title" sx={{color: 'black'}}></h2>
           <p id="child-modal-description" sx={{color: 'black'}}>
           </p>
-          <ConnectWallet sx={{color: 'black'}}>Connect Wallet</ConnectWallet> 
+          <LeaderBoard sx={{color: 'black'}}/>
           <Button onClick={handleClose} sx={{color: 'black'}}>Close</Button>
         </Box>
       </Modal>
@@ -200,11 +201,25 @@ function ManualModal() {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 200, color: 'black'}}>
+        <Box sx={{ ...style, width: 300, height: 400, color: 'black'}}>
           <h2 id="child-modal-title" sx={{color: 'black'}}></h2>
           <p id="child-modal-description" sx={{color: 'black'}}>
+          Welcome to Death-Machine!  We hope you survive... (jk)
           </p>
-          <ConnectWallet sx={{color: 'black'}}>Connect Wallet</ConnectWallet> 
+          <p id="man" sx={{color: 'black'}}>
+          <br></br>
+          <b>How to Play:</b>
+          <br></br>
+          <br></br>
+          <p>1. Connect your wallet</p>
+          <br></br>
+          <p>2. Place your ships</p>
+          <br></br>
+          <p>3. Input your moves</p>
+          <br></br>
+          <p>4. Submit on-chain!</p>
+          <br></br>
+          </p>
           <Button onClick={handleClose} sx={{color: 'black'}}>Close</Button>
         </Box>
       </Modal>

@@ -100,7 +100,6 @@ function _simulate_one_cycle (
     // Unpack frame
     const ships_curr = frame_curr.ships // array of {'id':'ship..', 'index':{x:..,y:..}, 'status':'..', 'typ':'..'}
     const atoms_curr = frame_curr.atoms // array of {'id':'atom..', 'index':{x:..,y:..}, 'status':'..', 'typ':'..'}
-    const operator_states_curr = frame_curr.operatorStates
     const grid_populated_bools = frame_curr.grid_populated_bools // mapping 'x..y..' => true/false
 
     var ships_new: Shipstate[] = []

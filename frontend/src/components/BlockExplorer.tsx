@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useEffect, useState } from "react";
 import { Box, Tooltip } from "@mui/material";
 import { BLANK_COLOR } from "../constants/constants";
+import { useBlockEvents } from "../../lib/api";
 
 interface BlockExplorerProps {
   blocks: number[];
@@ -13,7 +14,12 @@ export default function BlockExplorer() {
   const [blocks, setBlocks] = useState([...Array(30)].map((_, i) => i + 1));
 
   const blockSize = 50;
-  const visibleBlockCount = 25;
+  const visibleBlockCount = 20;
+
+  const { data } = useBlockEvents();
+  if(data){
+    console.log("block events", data.Blocks)
+  }
 
   useEffect(() => {
     const container = containerRef.current;
@@ -27,9 +33,6 @@ export default function BlockExplorer() {
       updateVisibleBlocks();
       return () => container.removeEventListener("scroll", updateVisibleBlocks);
     }
-    if(block_events){
-        console.log("block events", block_events.Block[0].data)
-      }
   }, []);
 
   const handleScrollLeft = () => {
@@ -101,12 +104,22 @@ return (
           {visibleBlocks.map((i) => (
             <Tooltip key={i} title={
                 <>
-                <div>Block {i}</div>
-                <div>Prover: {'0x123'}</div>
-                <div>BlockTimeStamp: {456}</div>
-                <div>BlockHash: {'0x128'}</div>
-                <div>Reward: {0.5}</div>
-                </>
+                   {data && data.Blocks[i] && (
+                    <>
+                      <div style={{color: '#FEB239'}}>Block: {data.Blocks[i].number}</div>
+                      <div>Prover: {data.Blocks[i].prover}</div>
+                      <div>Score: {data.Blocks[i].score}</div>
+                      <div>Time: {data.Blocks[i].time}</div>
+                    </>
+                  )}
+                {!data || !data.Blocks[i] && (
+                  <>
+                    <div>Prover: {'0x..'}</div>
+                    <div>Score: {}</div>
+                    <div>Time: {}</div>
+                  </>
+                )}
+              </>
             }>
               <Box
                 sx={{
@@ -115,16 +128,16 @@ return (
                   alignItems: "center",
                   width: 40,
                   height: 30,
-                  backgroundColor: BLANK_COLOR,
+                  backgroundColor: data && data.Blocks[i] ? "#7B1FA2" : BLANK_COLOR,
                   borderRadius: 0,
                   border: "1.5px solid #FC72FF",
-                  color: "black",
+                  color: data && data.Blocks[i] ? "white" : "black",
                   fontWeight: "bold",
                   mr: 0.5,
                   ml: 0.5,
                   cursor: "pointer",
                   "&:hover": {
-                    backgroundColor: "#7B1FA2",
+                    backgroundColor: "#FEB239",
                   },
                 }}
               >
