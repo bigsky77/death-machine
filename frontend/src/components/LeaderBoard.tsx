@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useGameCompleteEvents } from "../../lib/api";
-import { number } from 'starknet';
+import { number, address } from 'starknet';
+import BigNumber from 'bignumber.js';
 
 const columns = [
   { field: 'id', headerName: 'Rank', width: 30 },
@@ -32,13 +33,20 @@ export default function LeaderBoard() {
       const sortedData = data.gameComplete.sort((a, b) => b.score - a.score);
       const mappedData = sortedData.map((item, index) => ({
         id: index + 1,
-        Address: number.toHex(item.address),
+        Address: hex_convert(item.address),
+        //Address: address.validateAndParseAddress(item.address),
         Score: item.score
       }));
       console.log("mappedData", mappedData);
       setRows(mappedData);
     }
   }, [data]);
+  
+  function hex_convert(number){
+  const bigNumber = new BigNumber(number);
+  const hexAddress = "0x" + bigNumber.toString(16);
+  return hexAddress;
+  }
 
   return (
     <div style={{ height: 300, width: '100%' }}>

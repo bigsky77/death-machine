@@ -51,3 +51,14 @@ export function useGameCompleteEvents () {
     isError: error,
   };
 }
+
+export function useZKConnect () {
+  const { data, error } = useSWR('/api/subscriber/index', fetcher);
+
+  return {
+    data,
+    notFound: data && data.notFound,
+    isLoading: !error && !data,
+    isError: error,
+  };
+}

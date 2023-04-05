@@ -49,7 +49,7 @@ from src.utils.utils import cords_to_index
 @constructor
 func constructor{syscall_ptr: felt*, bitwise_ptr: BitwiseBuiltin*, pedersen_ptr: HashBuiltin*, range_check_ptr}(seed: felt) {
     alloc_locals;
-    Block.init(seed, 0);
+    Block.init(seed);
     return();
   }
 
@@ -136,7 +136,7 @@ func simulation_loop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, bitwise_ptr
     let (ships_arr: ShipState*) = alloc();
     let (block_arr: SingleBlock*) = alloc();
 
-    if(cycle  == n_cycles){
+    if(cycle == n_cycles){
       // emit ship state
       let (player_address) = get_caller_address();
       let (lens, state, score) = end_game_summary(ships_len, ships_arr, ships_dict, 0);

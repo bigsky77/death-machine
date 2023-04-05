@@ -2,6 +2,7 @@ import React, { useRef, useCallback, useEffect, useState } from "react";
 import { Box, Tooltip } from "@mui/material";
 import { BLANK_COLOR } from "../constants/constants";
 import { useBlockEvents } from "../../lib/api";
+import BigNumber from 'bignumber.js';
 
 interface BlockExplorerProps {
   blocks: number[];
@@ -19,6 +20,9 @@ export default function BlockExplorer() {
   const { data } = useBlockEvents();
   if(data){
     console.log("block events", data.Blocks)
+    const bigNumber = new BigNumber(data.Blocks[0].prover);
+    const hexAddress = "0x" + bigNumber.toString(16);
+    console.log("prover hex", hexAddress);
   }
 
   useEffect(() => {
@@ -60,6 +64,12 @@ export default function BlockExplorer() {
     visibleIndex,
     visibleIndex + visibleBlockCount
   );
+
+  function hex_convert(number){
+  const bigNumber = new BigNumber(number);
+  const hexAddress = "0x" + bigNumber.toString(16);
+  return hexAddress;
+  }
 
 return (
     <>
@@ -107,7 +117,7 @@ return (
                    {data && data.Blocks[i] && (
                     <>
                       <div style={{color: '#FEB239'}}>Block: {data.Blocks[i].number}</div>
-                      <div>Prover: {data.Blocks[i].prover}</div>
+                      <div>Prover: {hex_convert(data.Blocks[i].prover)}</div>
                       <div>Score: {data.Blocks[i].score}</div>
                       <div>Time: {data.Blocks[i].time}</div>
                     </>

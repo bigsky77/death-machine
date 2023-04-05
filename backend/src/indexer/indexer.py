@@ -114,21 +114,21 @@ class DeathMachineIndexer(StarkNetIndexer):
             for event in data.events
             if event.event.keys == [blockInitialized_key]
         ]
-        print(f"Block Init", blockInitialized)
+        #print(f"Block Init", blockInitialized)
         
         boardSets = [
              decode_boardSet_event(event.event.data)
              for event in data.events
              if event.event.keys == [boardSet_key]
         ]
-        print(f"Board", boardSets)
+        #print(f"Board", boardSets)
         
         gameComplete = [
              decode_gameComplete_event(event.event.data)
              for event in data.events
              if event.event.keys == [gameComplete_key]
         ]
-        print(f"Game Complete", gameComplete)
+        #print(f"Game Complete", gameComplete)
 
         non_empty_gameComplete = [gameComp for gameComp in gameComplete if gameComp]
         gameComplete_docs = [{"ships": gameComp.ships, "score": gameComp.score, "address": str(gameComp.player_address)} for gameComp in non_empty_gameComplete]

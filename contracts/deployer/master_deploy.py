@@ -11,10 +11,11 @@ from starknet_py.net.udc_deployer.deployer import Deployer
 import os
 from dotenv import load_dotenv
 
-load_dotenv(.env.local)
+#load_dotenv(.env.local)
 
 # Local network
-key = os.getenv('KEY')
+key=0x05b0bebc50f55961731ff367ac498a9f4d97c59cd2a8c49255541d8a3408c5ff
+#key = os.getenv('KEY')
 local_network_client = GatewayClient("http://localhost:5050")
 testnet_client = GatewayClient(TESTNET)
 

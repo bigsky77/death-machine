@@ -67,7 +67,7 @@ namespace Block {
       syscall_ptr: felt*, 
       bitwise_ptr: BitwiseBuiltin*, 
       pedersen_ptr: HashBuiltin*, 
-      range_check_ptr}(block_number: felt, score: felt) -> (){
+      range_check_ptr}(block_number: felt) -> (){
         alloc_locals;
 
         let (block_timestamp) = get_block_timestamp();
@@ -101,7 +101,7 @@ namespace Block {
       syscall_ptr: felt*, 
       pedersen_ptr: HashBuiltin*, 
       bitwise_ptr: BitwiseBuiltin*, 
-      range_check_ptr}(score: felt, player_address: felt) -> (){
+      range_check_ptr}(score: felt, player_address: felt){
       alloc_locals;
       let (block_number) = Current_Block.read();
       let (block) = Block_Storage.read(block_number);
@@ -112,7 +112,8 @@ namespace Block {
       // Returns 1 if a <= b (or more precisely 0 <= b - a < RANGE_CHECK_BOUND).
       let is_new_high_score = is_le(score, block.score);
       let full_time_elapsed = is_le(diff, BLOCK_TIME);
-
+  
+      // if new high score YES and full time elapsed YES
       if(is_new_high_score == 0 and full_time_elapsed == 0 ){
         tempvar updated_block = BlockData(
           block.number, 
@@ -125,11 +126,12 @@ namespace Block {
           score);   
 
           Block_Storage.write(block_number, updated_block);
-          init(block_number + 1, score);
           blockComplete.emit(updated_block);
+          init(block_number + 1);
         return();
       }
 
+      // if new high score YES and full time elapsed NO 
       if(is_new_high_score == 0 and full_time_elapsed == 1 ){
        tempvar updated_block = BlockData(
           block.number, 
@@ -145,6 +147,12 @@ namespace Block {
           return();
       }
       
+      // if new high score NO and full time elapsed NO 
+      if(is_new_high_score == 1 and full_time_elapsed == 1 ){
+          return();
+      }
+
+      // if new high score NO and full time elapsed YES 
       if(is_new_high_score == 1 and full_time_elapsed == 0 ){
        tempvar updated_block = BlockData(
           block.number, 
@@ -157,10 +165,11 @@ namespace Block {
           block.score);   
 
           Block_Storage.write(block_number, updated_block);
-          init(block_number + 1, score);
           blockComplete.emit(updated_block);
+          init(block_number + 1);
           return();
       }
+
     return();
     }
     
@@ -196,9 +205,8 @@ func board_summary{syscall_ptr: felt*, range_check_ptr}(board_size: felt,
       let (ptr) = dict_read{dict_ptr=board_dict}(key=board_size);
       tempvar board = cast(ptr, SingleBlock*);
       assert board_arr[board_size - 1] = SingleBlock(board.id, board.type, board.status, board.index, board.raw_index);
-
-      board_summary(board_size - 1, board_arr, board_dict);
-    return(board_size, board_arr);
+    
+    return board_summary(board_size - 1, board_arr, board_dict);
     }
 
 
